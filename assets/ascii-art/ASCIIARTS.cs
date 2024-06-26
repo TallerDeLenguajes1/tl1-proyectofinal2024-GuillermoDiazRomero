@@ -1,4 +1,6 @@
 namespace imagenesPersonajes{
+   /* private class asciiart{
+        
 
     string bardock = @"⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜
 ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
@@ -215,5 +217,6 @@ string gokumui = @".      :          :        - . ..:      : : :
 Console.WriteLine("\n\n"+gokumui);
 
 
-
+    }
+*/
 }
