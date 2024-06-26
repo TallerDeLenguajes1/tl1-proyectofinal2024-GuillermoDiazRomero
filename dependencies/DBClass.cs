@@ -26,28 +26,11 @@ namespace DBClass
         public string Description { get; set; }
 
     }
-    public class Links
-    {
-        [JsonPropertyName("first")]
-        public string First { get; set; }
-
-        [JsonPropertyName("previous")]
-        public string Previous { get; set; }
-
-        [JsonPropertyName("next")]
-        public string Next { get; set; }
-
-        [JsonPropertyName("last")]
-        public string Last { get; set; }
-    }
+    
     public class Root
     {
         [JsonPropertyName("items")]
         public List<Item> Items { get; set; }
-
-
-        [JsonPropertyName("links")]
-        public Links Links { get; set; }
     }
 }
 

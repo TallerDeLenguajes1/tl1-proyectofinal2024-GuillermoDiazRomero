@@ -1,13 +1,6 @@
 namespace CrearPersonajes
 {
-    public enum RazasDisponibles //Creo un enum con las razas de los personajes
-    {
-        Saiyajin,
-        Terricola,
-        Namekiano,
-        MrSatan,
-        Dios
-    }
+    
     public class FabricaDePersonajes
     {
         //Datos de los personajes
@@ -16,8 +9,6 @@ namespace CrearPersonajes
         public string Nombre1 { get => Nombre; set => Nombre = value; }
         public string Apellido1 { get => Apellido; set => Apellido = value; }
         public string Apodo1 { get => Apodo; set => Apodo = value; }
-        public DateTime FechaNac1 { get => FechaNac; set => FechaNac = value; }
-        public int Edad1 { get => Edad; set => Edad = value; }
 
         //Características
         //Hacer la conversión del enum

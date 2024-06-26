@@ -1,1 +1,2 @@
-# tl1-proyectofinal2024-GuillermoDiazRomero
+# DRAGON BALL SPARKING LUCKY
+*Juego de pelea con personajes Aleatorios de Dragon Ball*
