@@ -29,6 +29,8 @@ internal class Program
         Console.WriteLine("Probando backup");
         Console.ReadLine();
 */
+
+        //Seccion de aleatoriedad de personajes
         string respaldoDB = @"resources\backup\Respaldo.JSON";
         var texto = File.ReadAllText(respaldoDB);
         var datosDB = JsonSerializer.Deserialize<Root>(texto);
@@ -45,7 +47,7 @@ internal class Program
         string ingresado;
         do
         {
-            Console.WriteLine("Ingrese el tamaño del torneo (4, 8 o 16):");
+            Console.Write("\nIngrese el tamaño del torneo (4, 8 o 16): ");
             ingresado = Console.ReadLine();
             respuesta = int.TryParse(ingresado, out tamaTorneo);
         } while (!respuesta || (tamaTorneo != 4 && tamaTorneo != 8 && tamaTorneo != 16));
@@ -68,10 +70,12 @@ internal class Program
         Console.WriteLine("Mostrando Personajes que tocaron");
         foreach (Item item in Peleadores)
         {
-            Console.WriteLine("Id: " + item.Id);
-            Console.WriteLine("Nombre: " + item.Name);
-            Console.WriteLine("Raza: " + item.Race);
-            Console.WriteLine("Ki: " + item.Ki);
+            Console.WriteLine("------------------------------------------------------------------");
+            Console.WriteLine("|         Id:" + item.Id);
+            Console.WriteLine("|         Nombre: " + item.Name);
+            Console.WriteLine("|         Raza: " + item.Race);
+            Console.WriteLine("|         Ki: " + item.Ki);
+            Console.WriteLine("------------------------------------------------------------------");
             Console.WriteLine("\n");
         }
 
