@@ -5,7 +5,7 @@ namespace Mensajes
     {
         public static void TextoTiempo(string texto, int milisegundos, int tipo)
         {   //Uso el tipo para indicar si quiero que sea un texto con salto de linea (1) o sin salto de linea (0)
-            if (tipo == 1)
+            if (tipo == 1) //pregunto antes de realizar el foreach para no hacer un mal uso de la memoria, ya que si fuera adentro el programa haria muchas comparaciones innecesarias
             {
                 foreach (char c in texto)
                 {
@@ -14,14 +14,16 @@ namespace Mensajes
                 }
                 Console.WriteLine();
             }
-            else if (tipo == 0){
+            else if (tipo == 0)
+            {
                 foreach (char c in texto)
                 {
                     Console.Write(c);
                     Thread.Sleep(milisegundos / texto.Length);
                 }
             }
-            else{
+            else
+            {
                 Console.WriteLine("Ingresó un tipo equivocado de texto");
             }
         }
@@ -75,5 +77,59 @@ namespace Mensajes
                 case "Unknown": Console.ForegroundColor = ConsoleColor.Blue; break;
             }
         }
+
+        public static void TituloJuego()
+        {
+            string lineas = @"
+---------------------------------------";
+            string letraASCII = @"
+        |\        ,_ |)  ||
+        |/|`(|(|()|| |)(|||
+              _|           
+      (`      | .,_   |    _|   
+      _)|)(||`|<|||(| |_L|(_|<\/
+        |          _|         / ";
+        string titulo = lineas+letraASCII+lineas;
+        TextoTiempo(titulo,1250,1);
+        }
+    
     }
 }
+
+
+/* Probando tamaños
+    ___                                       ___         _  _ 
+   /   \ _ __   __ _   __ _   ___   _ __     / __\  __ _ | || |
+  / /\ /| '__| / _` | / _` | / _ \ | '_ \   /__\// / _` || || |
+ / /_// | |   | (_| || (_| || (_) || | | | / \/  \| (_| || || |
+/___,'  |_|    \__,_| \__, | \___/ |_| |_| \_____/ \__,_||_||_|
+                      |___/                                    
+ __                         _     _                   __                _           
+/ _\    _ __    __ _  _ __ | | __(_) _ __    __ _    / /   _   _   ___ | | __ _   _ 
+\ \    | '_ \  / _` || '__|| |/ /| || '_ \  / _` |  / /   | | | | / __|| |/ /| | | |
+_\ \   | |_) || (_| || |   |   < | || | | || (_| | / /___ | |_| || (__ |   < | |_| |
+\__/   | .__/  \__,_||_|   |_|\_\|_||_| |_| \__, | \____/  \__,_| \___||_|\_\ \__, |
+       |_|                                  |___/                             |___/ 
+
+
+
+  _                  _        
+ / | _ _  _  _  _   /_) _  / /
+/_.'/ /_|/_//_// / /_) /_|/ / 
+         _/                   
+  _                                     
+ /_`  _  _  _ /_ . _  _   /     _  /_   
+._/  /_//_|/ /\ / / //_/ /_,/_//_ /\ /_/
+    /                _/              _/ 
+
+
+|\        ,_ |)  ||
+|/|`(|(|()|| |)(|||
+      _|           
+(`      | .,_   |    _|   
+_)|)(||`|<|||(| |_L|(_|<\/
+  |          _|         / 
+
+
+
+*/
