@@ -1,12 +1,13 @@
 using System.Text.Json;
 using DBClass;
+using DBAPI; //Uso este using que me permite usar el namespace DBAPI para Actualizar el juego
 
 
 namespace DBAPI
 {
     public class ConsumiendoAPI
     {
-        public async Task Probando()
+        public async Task TraerAPI()
         {
             var url = "https://dragonball-api.com/api/characters?limit=58";
             try
@@ -30,9 +31,24 @@ namespace DBAPI
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Imposible contactar con Bills-Sama por internet... Usando las esferas del dragon...");
+                Console.WriteLine($"Imposible contactar con Bills-Sama por internet... Usando las esferas del dragon... {ex}");
             }
         }
-
     }
 }
+
+namespace ActualizarAPI
+{
+    public class Actualizar
+    {
+        public Actualizar()
+        {
+            ConsumiendoAPI respaldo = new ConsumiendoAPI();
+            respaldo.TraerAPI();
+
+            Console.WriteLine("Actualizando el listado de personajes");
+            Console.ReadLine();
+        }
+    }
+}
+
