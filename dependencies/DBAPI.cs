@@ -36,11 +36,7 @@ namespace DBAPI
             }
         }
     }
-}
-
-namespace ControlArchivosJSON
-{
-    public class Control()
+    public class ControlJSON()
     {
         public static async void ControlAPI() //Recordar agregar public al comienzo para poder utilizarlo en donde sea con Control.ControlApi()
         {

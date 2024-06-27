@@ -1,5 +1,4 @@
 using DBAPI;
-using ControlArchivosJSON;
 using DBClass;
 using Torneo;
 using Mensajes;
@@ -13,7 +12,7 @@ namespace StartGame
     {
         public static void GameRun()
         {
-            Control.ControlAPI();
+            ControlJSON.ControlAPI();
             Thread.Sleep(8000);
 
 
@@ -27,7 +26,6 @@ namespace StartGame
             
             Console.WriteLine("Tamaño: "+ tama);
             MenuPersonajes.MenuPjs(tama);
-            Console.ReadLine();
         }
     }
 
