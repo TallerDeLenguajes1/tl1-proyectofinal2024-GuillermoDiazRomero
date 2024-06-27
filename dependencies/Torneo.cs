@@ -53,7 +53,7 @@ namespace Torneo
                     case "Angel": temp.Velocidad = 20; temp.Destreza = 20; temp.Armadura = 20; temp.Fuerza = 20; temp.Salud = 200; break;
                     case "Evil": temp.Velocidad = 2; temp.Destreza = 3; temp.Armadura = 6; temp.Fuerza = 6; temp.Salud = 200; break;
                     case "Nucleico": temp.Velocidad = 2; temp.Destreza = 3; temp.Armadura = 5; temp.Fuerza = 4; temp.Salud = 200; break; //Gran-Kaio-samas 
-                    case "Nucleico venigno": temp.Velocidad = 5; temp.Destreza = 5; temp.Armadura = 2; temp.Fuerza = 4; temp.Salud = 200; break; //Sumpremos Kaio-samas
+                    case "Nucleico benigno": temp.Velocidad = 5; temp.Destreza = 5; temp.Armadura = 2; temp.Fuerza = 4; temp.Salud = 200; break; //Sumpremos Kaio-samas
                     case "Unknown": temp.Velocidad = 100; temp.Destreza = 100; temp.Armadura = 200; temp.Fuerza = 10000; temp.Salud = 200; break; //Zen Oh sama, personaje más fuerte del juego con una probabilidad de 1/58 de que salga
                 }
                 Peleadores.Add(temp);

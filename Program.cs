@@ -1,15 +1,12 @@
-﻿using DBClass;
-using System.Text.Json;
-using Mensajes;
-using Torneo;
-
+﻿using StartGame;
 
 
 internal class Program
 {
     public static void Main(string[] args)
     {
-        MenuPersonajes.MenuPjs();
+        GameStart.GameRun();
+        
     }
 }
 
