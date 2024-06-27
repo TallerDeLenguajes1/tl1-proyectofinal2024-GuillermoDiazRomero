@@ -12,14 +12,15 @@ namespace StartGame
     {
         public static void GameRun()
         {
+            Console.Clear();
             ControlJSON.ControlAPI();
             Thread.Sleep(8000);
 
-
-
+            /*  SACAR EL COMENTADO CUANDO EL JUEGO ESTE CASI COMPLETO   */
             // string soundtrack = @"resources\audio\LimitSurvivor.wav";
-            // SoundPLayer soundPLay = new SoundPLayer();
+            // SoundPlayer soundPLay = new SoundPlayer(soundtrack);
             // soundPLay.Play();
+            
 
             int tama = Menus.MenuEsqueleto();
 
