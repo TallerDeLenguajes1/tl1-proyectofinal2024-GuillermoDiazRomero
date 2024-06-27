@@ -28,7 +28,7 @@ namespace Mensajes
             }
         }
 
-        public static void mostrarPjs(Item item)
+        public static void mostrarPjs(Guerreros item)
         {
             //Creo un arreglo de string con todos los datos que llegan desde item para poder obtener las longitudes de los datos que se muestran por pantalla para así poder centrarlos
             string[] lineas = {

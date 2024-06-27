@@ -1,18 +1,20 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using DBClass;
 using Mensajes;
 
 namespace Torneo
 {
-    public class MenuPersonajes()
+    public class TorneoSet()
     {
         //Seccion de aleatoriedad de personajes
         private static string respaldoDB = @"resources\backup\Respaldo.JSON"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
-        public static void MenuPjs(int tama)
+        public static string ArchivoPJZ = @"json\characters.JSON";
+        public static void AleatorioZ(int tama)
         {
             var texto = File.ReadAllText(respaldoDB); //Leo la API
             var datosDB = JsonSerializer.Deserialize<Root>(texto); //Doy formato legible a la API
-            List<Item> Peleadores = new List<Item>();
+            List<Guerreros> Peleadores = new List<Guerreros>();
 
 
             int numeroAleatorio;
@@ -29,9 +31,21 @@ namespace Torneo
                     noRepetidos.Add(numeroAleatorio); //Añado el numero al HashSet
                 }
             }
+            
+            //Declaro la variable temporal Guerrero;
             for (int i = 0; i < tama; i++)
             {
-                var temp = datosDB.Items[noRepetidos.ElementAt(i)]; //Uso .ElementAt para usar el numero guardado en la posisión "i" del HashSet
+                var temp = new Guerreros //Simplifico el guardado de datos del tipo Item en la variable temp del tipo Guerreros
+                {
+                    //Uso .ElementAt para usar el numero guardado en la posisión "i" del HashSet
+                    Id = datosDB.Items[noRepetidos.ElementAt(i)].Id,
+                    Name = datosDB.Items[noRepetidos.ElementAt(i)].Name,
+                    Ki = datosDB.Items[noRepetidos.ElementAt(i)].Ki,
+                    Maxki = datosDB.Items[noRepetidos.ElementAt(i)].MaxKi,
+                    Race = datosDB.Items[noRepetidos.ElementAt(i)].Race,
+                    Description = datosDB.Items[noRepetidos.ElementAt(i)].Description
+                };
+
                 switch (temp.Race)
                 {
                     case "Human": temp.Velocidad = 3; temp.Destreza = 3; temp.Armadura = 2; temp.Fuerza = 4; temp.Armadura = 3; temp.Salud = 200; break;
@@ -50,10 +64,20 @@ namespace Torneo
                 }
                 Peleadores.Add(temp);
             }
-            Console.WriteLine("Mostrando Personajes que tocaron");
-            foreach (Item item in Peleadores)
+
+            //Guardado de personajes en un archivo Seleccion.JSON
+            if (!File.Exists(ArchivoPJZ))
             {
-                MensajesTerminal.mostrarPjs(item);
+                using (File.Create(ArchivoPJZ)){/*Creo y cierro el archivo*/}
+            }
+            
+            string DatosPeleadoresJSON = JsonSerializer.Serialize(Peleadores, new JsonSerializerOptions{WriteIndented = true}); //Permito que sea legible dandole formato
+            File.WriteAllText(ArchivoPJZ,DatosPeleadoresJSON);
+
+            Console.WriteLine("Mostrando Personajes que tocaron");
+            foreach (Guerreros datos in Peleadores)
+            {
+                MensajesTerminal.mostrarPjs(datos);
             }
             Console.ReadKey();
         }

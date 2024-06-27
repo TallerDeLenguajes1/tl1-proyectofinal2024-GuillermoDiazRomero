@@ -12,9 +12,9 @@ namespace StartGame
     {
         public static void GameRun()
         {
-            Console.Clear();
-            ControlJSON.ControlAPI();
-            Thread.Sleep(8000);
+            //Console.Clear();
+            //ControlJSON.ControlAPI();
+            //Thread.Sleep(8000);
 
             /*  SACAR EL COMENTADO CUANDO EL JUEGO ESTE CASI COMPLETO   */
             // string soundtrack = @"resources\audio\LimitSurvivor.wav";
@@ -26,7 +26,7 @@ namespace StartGame
 
             
             Console.WriteLine("Tamaño: "+ tama);
-            MenuPersonajes.MenuPjs(tama);
+            TorneoSet.AleatorioZ(tama);
         }
     }
 
