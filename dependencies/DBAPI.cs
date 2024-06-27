@@ -49,16 +49,18 @@ namespace ControlArchivosJSON
             string rutaRespaldo = @"resources\backup\Respaldo.JSON";
             if (control)
             { //Pregunto si se puede contactar con la API
-                MensajesTerminal.TextoTiempo("Se logró contactar con Zeno-Sama...\nIniciando juego...", 1500, 1);
+                MensajesTerminal.TextoTiempo("Se logró contactar con Zeno-Sama...\nIniciando juego...", 2000, 1);
+                Thread.Sleep(1000);
             }
             else if (File.Exists(rutaRespaldo))
             { //Pregunto si existe un JSON de respaldo
                 MensajesTerminal.TextoTiempo("Imposible contactar con Zeno-Sama...\nUsando las esferas del dragon... \nShenlong consederá nuestro deseo: Iniciando Juego...", 2500, 1);
+                Thread.Sleep(1000);
             }
             else
             { //No inicio el juego por falta de API y de backup
                 MensajesTerminal.TextoTiempo("Nos falta la esfera de 4 estrellas... Imposible iniciar el juego, presione una tecla para salir ", 1500, 1);
-                Console.ReadKey();
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
         }

@@ -2,7 +2,7 @@
 using StartGame;
 
 
-/*
+
 internal class Program
 {
     public static void Main(string[] args)
@@ -12,9 +12,9 @@ internal class Program
 
     }
 }
-*/
 
 
+/*
 internal class Program
 {
 
@@ -28,7 +28,7 @@ internal class Program
         Console.Clear(); //Limpia la consola para que se muestre solamente el juego
         bool estaSeleccionando = true;
         int indiceSeleccionado = 0;
-        int tamaToreno=0;
+        int tamaToreno=0; //Seteo en 0 para preguntar adentro del bucle del menu para usar operador ternario
 
         ConsoleKeyInfo tecla;
         Console.CursorVisible = false;
@@ -58,7 +58,6 @@ internal class Program
                         indiceSeleccionado--;
                         break;
                     default:
-                        Console.WriteLine("Error");
                         break;
                 }
 
@@ -94,6 +93,7 @@ internal class Program
                     break;
             }
         }
+        Console.WriteLine("Tamaño del toreno: "+tamaToreno);
     }
 
     private static void Menu(int indiceSeleccionado)
@@ -119,3 +119,4 @@ internal class Program
         });
     }
 }
+*/

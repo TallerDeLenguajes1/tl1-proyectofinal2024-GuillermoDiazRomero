@@ -58,7 +58,7 @@ namespace Mensajes
             Console.WriteLine("\n");
             Console.ForegroundColor = ConsoleColor.White; //Me aseguro que el color de la consola siempre vuelva a blanco despues de mostrar los personajes
         }
-        static void ColorTerminalRaza(string raza)
+        public static void ColorTerminalRaza(string raza)
         {
             switch (raza)
             {
@@ -81,55 +81,16 @@ namespace Mensajes
         public static void TituloJuego()
         {
             string lineas = @"
----------------------------------------";
+--------------------------------------";
             string letraASCII = @"
-        |\        ,_ |)  ||
+        |\         _ |)  ||
         |/|`(|(|()|| |)(|||
               _|           
-      (`      | .,_   |    _|   
-      _)|)(||`|<|||(| |_L|(_|<\/
-        |          _|         / ";
+      (`      | . _   |    _ |   
+      _)|)(||`|<|||(| |_L|(_ |<\/
+        |          _|          / ";
         string titulo = lineas+letraASCII+lineas;
         TextoTiempo(titulo,1250,1);
         }
-    
     }
 }
-
-
-/* Probando tamaños
-    ___                                       ___         _  _ 
-   /   \ _ __   __ _   __ _   ___   _ __     / __\  __ _ | || |
-  / /\ /| '__| / _` | / _` | / _ \ | '_ \   /__\// / _` || || |
- / /_// | |   | (_| || (_| || (_) || | | | / \/  \| (_| || || |
-/___,'  |_|    \__,_| \__, | \___/ |_| |_| \_____/ \__,_||_||_|
-                      |___/                                    
- __                         _     _                   __                _           
-/ _\    _ __    __ _  _ __ | | __(_) _ __    __ _    / /   _   _   ___ | | __ _   _ 
-\ \    | '_ \  / _` || '__|| |/ /| || '_ \  / _` |  / /   | | | | / __|| |/ /| | | |
-_\ \   | |_) || (_| || |   |   < | || | | || (_| | / /___ | |_| || (__ |   < | |_| |
-\__/   | .__/  \__,_||_|   |_|\_\|_||_| |_| \__, | \____/  \__,_| \___||_|\_\ \__, |
-       |_|                                  |___/                             |___/ 
-
-
-
-  _                  _        
- / | _ _  _  _  _   /_) _  / /
-/_.'/ /_|/_//_// / /_) /_|/ / 
-         _/                   
-  _                                     
- /_`  _  _  _ /_ . _  _   /     _  /_   
-._/  /_//_|/ /\ / / //_/ /_,/_//_ /\ /_/
-    /                _/              _/ 
-
-
-|\        ,_ |)  ||
-|/|`(|(|()|| |)(|||
-      _|           
-(`      | .,_   |    _|   
-_)|)(||`|<|||(| |_L|(_|<\/
-  |          _|         / 
-
-
-
-*/

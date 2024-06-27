@@ -8,7 +8,7 @@ namespace Torneo
     {
         //Seccion de aleatoriedad de personajes
         private static string respaldoDB = @"resources\backup\Respaldo.JSON"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
-        public static void MenuPjs()
+        public static void MenuPjs(int tama)
         {
             var texto = File.ReadAllText(respaldoDB); //Leo la API
             var datosDB = JsonSerializer.Deserialize<Root>(texto); //Doy formato legible a la API
@@ -20,16 +20,8 @@ namespace Torneo
             //Utilizo HashSet ya que me permite almacenar aleatorios único (sin repetirse) y es más eficiente para la memoria
             HashSet<int> noRepetidos = new HashSet<int>();
 
-            //Declaración de variables para el control del tamaño del torneo
-            int tamaTorneo; bool respuesta; string ingresado;
-            do
-            {
-                MensajesTerminal.TextoTiempo("\nIngrese el tamaño del torneo (4, 8 o 16): ", 200, 0);
-                ingresado = Console.ReadLine();
-                respuesta = int.TryParse(ingresado, out tamaTorneo);
-            } while (!respuesta || (tamaTorneo != 4 && tamaTorneo != 8 && tamaTorneo != 16));
 
-            while (noRepetidos.Count < tamaTorneo)
+            while (noRepetidos.Count < tama)
             { //Utilizo el .Count para saber la longitud del HashSet
                 numeroAleatorio = rand.Next(1, 58);
                 if (!noRepetidos.Contains(numeroAleatorio)) //Con .Contains pregunto si el numero aleatorio esta contenido adentro del HashSet
@@ -37,7 +29,7 @@ namespace Torneo
                     noRepetidos.Add(numeroAleatorio); //Añado el numero al HashSet
                 }
             }
-            for (int i = 0; i < tamaTorneo; i++)
+            for (int i = 0; i < tama; i++)
             {
                 var temp = datosDB.Items[noRepetidos.ElementAt(i)]; //Uso .ElementAt para usar el numero guardado en la posisión "i" del HashSet
                 switch (temp.Race)

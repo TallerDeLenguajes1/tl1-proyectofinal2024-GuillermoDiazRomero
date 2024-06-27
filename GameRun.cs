@@ -3,6 +3,8 @@ using ControlArchivosJSON;
 using DBClass;
 using Torneo;
 using Mensajes;
+using MenusDelJuego;
+using System.Media;
 
 
 namespace StartGame
@@ -12,8 +14,19 @@ namespace StartGame
         public static void GameRun()
         {
             Control.ControlAPI();
-            Console.ReadKey();
-            MenuPersonajes.MenuPjs();
+            Thread.Sleep(8000);
+
+
+
+            // string soundtrack = @"resources\audio\LimitSurvivor.wav";
+            // SoundPLayer soundPLay = new SoundPLayer();
+            // soundPLay.Play();
+
+            int tama = Menus.MenuEsqueleto();
+
+            
+            Console.WriteLine("Tamaño: "+ tama);
+            MenuPersonajes.MenuPjs(tama);
             Console.ReadLine();
         }
     }
