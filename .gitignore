@@ -7,6 +7,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+## Evito la subida del archivo de personajes ya que es un archivo que se genera cuando se inicia cada torneo
+characters.json
+
 # User-specific files
 *.rsuser
 *.suo

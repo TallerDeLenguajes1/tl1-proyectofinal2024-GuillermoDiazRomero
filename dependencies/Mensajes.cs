@@ -28,6 +28,14 @@ namespace Mensajes
             }
         }
 
+
+        public static void CentradoSimple (string centrado,int tiempo, int tipo){
+            int anchoTerminal = Console.WindowWidth;
+            int padding = (anchoTerminal - centrado.Length) / 2;
+                centrado = new string(' ', padding) + centrado;
+                TextoTiempo (centrado,tiempo,tipo);
+        }
+
         public static void mostrarPjs(Guerreros item)
         {
             //Creo un arreglo de string con todos los datos que llegan desde item para poder obtener las longitudes de los datos que se muestran por pantalla para así poder centrarlos
@@ -80,17 +88,33 @@ namespace Mensajes
 
         public static void TituloJuego()
         {
-            string lineas = @"
---------------------------------------";
-            string letraASCII = @"
-        |\         _ |)  ||
-        |/|`(|(|()|| |)(|||
-              _|           
-      (`      | . _   |    _ |   
-      _)|)(||`|<|||(| |_L|(_ |<\/
-        |          _|          / ";
-        string titulo = lineas+letraASCII+lineas;
-        TextoTiempo(titulo,1250,1);
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            string[] letraASCII =
+            [
+            "<<<<<<>>>>>>------------------------------<<<<<<>>>>>>",
+            @"|\         _ |)  ||",
+            @"|/|`(|(|()|| |)(|||",
+            @"      _|           ",
+            "",
+            @"  (`      | . _   |    _ |   ",
+            @"  _)|)(||`|<|||(| |_L|(_ |<\/",
+            @"    |          _|          / ",
+            "<<<<<<>>>>>>------------------------------<<<<<<>>>>>>"
+    ];
+
+            int anchoTerminal = Console.WindowWidth;
+            string centrado = "";
+
+
+            foreach (string linea in letraASCII)
+            {
+                int padding = (anchoTerminal - linea.Length) / 2;
+                centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.New line remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
+            }
+
+
+            TextoTiempo(centrado, 915, 1);
         }
     }
 }
+

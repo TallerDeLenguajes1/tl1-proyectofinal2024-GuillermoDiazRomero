@@ -17,7 +17,9 @@ namespace MenusDelJuego
             Console.CursorVisible = false;
             MensajesTerminal.TituloJuego();
 
-            MensajesTerminal.TextoTiempo("Seleccione un tamaño para el Torneo:", 1000, 1);
+
+            Console.ForegroundColor = ConsoleColor.White;
+            MensajesTerminal.CentradoSimple("Seleccione un tamaño para el Torneo:", 100, 1);
 
             x = Console.CursorLeft;
             y = Console.CursorTop;
@@ -63,7 +65,7 @@ namespace MenusDelJuego
                     case 2:
                         tamaToreno = (tamaToreno == 0) ? 16 : tamaToreno;
                         Console.WriteLine("");
-                        MensajesTerminal.TextoTiempo("Preparando luchadores", 1000, 0);
+                        MensajesTerminal.TextoTiempo("      Preparando luchadores", 1000, 0);
                         MensajesTerminal.TextoTiempo("......", 5000, 1);
                         estaSeleccionando = false;
                         Thread.Sleep(2000);
@@ -80,6 +82,10 @@ namespace MenusDelJuego
             return tamaToreno;
         }
 
+
+
+
+
         private static void Menu(int indiceSeleccionado)
         {
             int destacado = 0;
@@ -88,16 +94,17 @@ namespace MenusDelJuego
             {
                 if (destacado == indiceSeleccionado)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(" > " + element);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
-                else
+
+                // Cálculo del padding para centrar el texto
+                int padding = (Console.WindowWidth - element.Length - 3) / 2; // 3 extra characters for " > "
+                Console.SetCursorPosition(padding, Console.CursorTop);
+                Console.WriteLine((destacado == indiceSeleccionado ? " > " : "   ") + element + (destacado == indiceSeleccionado ? " < " : "   "));
+
+                if (destacado == indiceSeleccionado)
                 {
-                    Console.Write(new string(' ', Console.WindowWidth));
-                    Console.CursorLeft = 0;
-                    Console.WriteLine(element);
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 destacado++;
             });
