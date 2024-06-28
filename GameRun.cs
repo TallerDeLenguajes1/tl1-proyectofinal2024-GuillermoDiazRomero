@@ -25,7 +25,7 @@ namespace StartGame
             // string soundtrack = @"resources\audio\LimitSurvivor.wav";
             // SoundPlayer soundPLay = new SoundPlayer(soundtrack);
             // soundPLay.PlayLooping();
-            Thread.Sleep(10);
+            //Thread.Sleep(10);
 
             int tama = Menus.MenuEsqueleto();
 
