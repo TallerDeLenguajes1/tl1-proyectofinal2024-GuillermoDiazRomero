@@ -10,28 +10,71 @@ namespace StartGame
 {
     public class GameStart()
     {
+        private static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Salir del Juego" };
         public static void GameRun()
         {
-
             /*      Cosas Necesarias    */
+
             Console.CursorVisible = false;
+            Console.OutputEncoding = System.Text.Encoding.UTF8; //Permite mostrar emojis por consola
             Console.Clear();
 
+            /*--------------------------*/
 
-            //ControlJSON.ControlAPI();
-            //Thread.Sleep(8000);
+
+
+            /*       Control de la API     */
+
+            ControlJSON.ControlAPI();
+            Thread.Sleep(8000);
+
+            /*----------------------------*/
+
+
 
             /*  SACAR EL COMENTADO CUANDO EL JUEGO ESTE CASI COMPLETO   */
-            // string soundtrack = @"resources\audio\LimitSurvivor.wav";
-            // SoundPlayer soundPLay = new SoundPlayer(soundtrack);
-            // soundPLay.PlayLooping();
-            //Thread.Sleep(10);
 
-            int tama = Menus.MenuEsqueleto();
+            string soundtrack = @"resources\audio\LimitSurvivor.wav";
+            SoundPlayer soundPLay = new SoundPlayer(soundtrack);
+            soundPLay.PlayLooping();
+            Thread.Sleep(10);
 
-            
-            Console.WriteLine("Tamaño: "+ tama);
+            /*----------------------------------------------------------*/
+
+
+
+
+            /*      Menú de selección del tamaño del Torneo     */
+
+            int tama = Menus.Menu(menuRondas,1);
+
+            /*--------------------------------------------------*/
+
+
+
+
+            /*  Creo la cantidad "tama" de personajes aleatorios    */
+
             TorneoSet.AleatorioZ(tama);
+
+            /*------------------------------------------------------*/
+
+
+
+
+            /*      Mostrar el Menú con los personajes Aleatorios     */
+
+            TorneoSet.SeleccionGuerrero();
+
+            /*--------------------------------------------------------*/
+
+
+
+
+
+
+
+
         }
     }
 

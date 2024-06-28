@@ -109,7 +109,7 @@ namespace Mensajes
             foreach (string linea in letraASCII)
             {
                 int padding = (anchoTerminal - linea.Length) / 2;
-                centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.New line remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
+                centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.NewLine remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
             }
 
 

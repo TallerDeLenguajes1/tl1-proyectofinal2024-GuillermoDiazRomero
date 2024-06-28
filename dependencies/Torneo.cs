@@ -1,7 +1,9 @@
+using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using DBClass;
 using Mensajes;
+using MenusDelJuego;
 
 namespace Torneo
 {
@@ -9,7 +11,7 @@ namespace Torneo
     {
         //Seccion de aleatoriedad de personajes
         private static string respaldoDB = @"resources\backup\Respaldo.JSON"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
-        public static string ArchivoPJZ = @"resources\json\characters.JSON";
+        private static string ArchivoPJZ = @"resources\json\characters.JSON";
         public static void AleatorioZ(int tama)
         {
             var texto = File.ReadAllText(respaldoDB); //Leo la API
@@ -75,12 +77,42 @@ namespace Torneo
             File.WriteAllText(ArchivoPJZ,DatosPeleadoresJSON);
 
             
-            Console.WriteLine("Mostrando Personajes que tocaron");
-            foreach (Guerreros datos in Peleadores)
-            {
-                MensajesTerminal.mostrarPjs(datos);
-            }
-            Console.ReadKey();
+            
         }
+    
+        public static void SeleccionGuerrero(){
+            // int cantidadGuerreros = 8;
+            int elegido;
+            bool seleccionado = false;
+            var texto = File.ReadAllText(ArchivoPJZ);
+            var datosZ = JsonSerializer.Deserialize<List<Guerreros>>(texto);
+            int cantidadGuerreros = datosZ.Count; //Obtengo la cantidad de elementos de la lista
+
+            string[] ListadoGuerreros = new string[cantidadGuerreros];
+            
+            for (int i = 0; i < cantidadGuerreros; i++)
+            {
+                ListadoGuerreros[i] = datosZ[i].Name + " (" + datosZ[i].Race + ")";  
+            }
+
+            while (!seleccionado){
+                elegido = Menus.Menu(ListadoGuerreros,2);
+                Console.Clear();
+                MensajesTerminal.ColorTerminalRaza(datosZ[elegido].Race);
+                MensajesTerminal.CentradoSimple("-------------->   "+datosZ[elegido].Name+"   <--------------",200,1);
+
+                MensajesTerminal.TextoTiempo("Descripción: "+datosZ[elegido].Description,1000,1);
+                Console.ForegroundColor = ConsoleColor.White;
+                seleccionado = Menus.MenuDecision();
+
+            }
+            
+
+            //datosZ.Remove (elimina un item de la lista)
+        
+        
+        }
+    
+    
     }
 }
