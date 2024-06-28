@@ -201,7 +201,7 @@ namespace MenusDelJuego
                 }
 
                 // Cálculo del padding para centrar el texto
-                int padding = (Console.WindowWidth - element.Length - 3) / 2; // 3 extra characters for " > "
+                int padding = (Console.WindowWidth - element.Length - 3) / 2;
                 Console.SetCursorPosition(padding, Console.CursorTop);
                 Console.WriteLine((destacado == indiceSeleccionado ? " > " : "   ") + element + (destacado == indiceSeleccionado ? " < " : "   "));
 

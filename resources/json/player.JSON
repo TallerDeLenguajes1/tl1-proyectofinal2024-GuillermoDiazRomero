@@ -1,0 +1,13 @@
+{
+  "Id": 3,
+  "Name": "Piccolo",
+  "Race": "Namekian",
+  "Description": "Es un namekiano que surgi\u00F3 tras ser creado en los \u00FAltimos momentos de vida de su padre, siendo su actual reencarnaci\u00F3n. Aunque en un principio fue el archienemigo de Son Goku, con el paso del tiempo fue haci\u00E9ndose menos malvado hasta finalmente convertirse en un ser bondadoso y miembro de los Guerreros Z. A trav\u00E9s del tiempo, tambi\u00E9n comenz\u00F3 a tomarle cari\u00F1o a su disc\u00EDpulo Son Gohan, a quien ve\u00EDa como una especie de \u0022v\u00E1stago\u0022 y formando un lazo de amistad con este.",
+  "Ki": "2.000.000",
+  "Maxki": "500.000.000",
+  "Velocidad": 5,
+  "Destreza": 5,
+  "Fuerza": 5,
+  "Armadura": 6,
+  "Salud": 200
+}

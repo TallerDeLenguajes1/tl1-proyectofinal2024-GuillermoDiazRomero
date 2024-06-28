@@ -1,0 +1,54 @@
+[
+  {
+    "Id": 13,
+    "Name": "Yamcha",
+    "Race": "Human",
+    "Description": "Luchador que sol\u00EDa ser un bandido del desierto.",
+    "Ki": "1.980.000",
+    "Maxki": "4.000.000",
+    "Velocidad": 3,
+    "Destreza": 3,
+    "Fuerza": 4,
+    "Armadura": 2,
+    "Salud": 200
+  },
+  {
+    "Id": 43,
+    "Name": "Vermoudh",
+    "Race": "God",
+    "Description": "Es el individuo que actualmente ostenta el cargo de Dios de la Destrucci\u00F3n en el Universo 11, puesto que obtuvo tras abandonar su membres\u00EDa como Soldado del Orgullo dentro de las Tropas del Orgullo.",
+    "Ki": "9.9 Septillion",
+    "Maxki": "100 septillion",
+    "Velocidad": 10,
+    "Destreza": 10,
+    "Fuerza": 10,
+    "Armadura": 10,
+    "Salud": 200
+  },
+  {
+    "Id": 3,
+    "Name": "Piccolo",
+    "Race": "Namekian",
+    "Description": "Es un namekiano que surgi\u00F3 tras ser creado en los \u00FAltimos momentos de vida de su padre, siendo su actual reencarnaci\u00F3n. Aunque en un principio fue el archienemigo de Son Goku, con el paso del tiempo fue haci\u00E9ndose menos malvado hasta finalmente convertirse en un ser bondadoso y miembro de los Guerreros Z. A trav\u00E9s del tiempo, tambi\u00E9n comenz\u00F3 a tomarle cari\u00F1o a su disc\u00EDpulo Son Gohan, a quien ve\u00EDa como una especie de \u0022v\u00E1stago\u0022 y formando un lazo de amistad con este.",
+    "Ki": "2.000.000",
+    "Maxki": "500.000.000",
+    "Velocidad": 5,
+    "Destreza": 5,
+    "Fuerza": 5,
+    "Armadura": 6,
+    "Salud": 200
+  },
+  {
+    "Id": 78,
+    "Name": "Kibito",
+    "Race": "Nucleico",
+    "Description": "Kibito es el ayudante y guardaespaldas del Kaio-shin del Este. Es un experto combatiente y con ciertos poderes curativos y m\u00E1gicos como corresponde a su funci\u00F3n. Su t\u00E9cnica m\u00E1s conocida es el Kai-Kai.",
+    "Ki": "unknown",
+    "Maxki": "unknown",
+    "Velocidad": 2,
+    "Destreza": 3,
+    "Fuerza": 4,
+    "Armadura": 5,
+    "Salud": 200
+  }
+]

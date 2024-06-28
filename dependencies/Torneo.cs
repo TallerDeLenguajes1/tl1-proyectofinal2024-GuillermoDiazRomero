@@ -12,6 +12,8 @@ namespace Torneo
         //Seccion de aleatoriedad de personajes
         private static string respaldoDB = @"resources\backup\Respaldo.JSON"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
         private static string ArchivoPJZ = @"resources\json\characters.JSON";
+        private static string jugadorPJZ = @"resources\json\player.JSON";
+        private static string enemigosZ = @"resources\json\enemies.JSON";
         public static void AleatorioZ(int tama)
         {
             var texto = File.ReadAllText(respaldoDB); //Leo la API
@@ -82,7 +84,7 @@ namespace Torneo
     
         public static void SeleccionGuerrero(){
             // int cantidadGuerreros = 8;
-            int elegido;
+            int elegido = 0;
             bool seleccionado = false;
             var texto = File.ReadAllText(ArchivoPJZ);
             var datosZ = JsonSerializer.Deserialize<List<Guerreros>>(texto);
@@ -106,11 +108,25 @@ namespace Torneo
                 seleccionado = Menus.MenuDecision();
 
             }
-            
 
-            //datosZ.Remove (elimina un item de la lista)
-        
-        
+
+            if (!File.Exists(jugadorPJZ))
+            {
+                using (File.Create(jugadorPJZ)){}
+            }
+            if (!File.Exists(enemigosZ))
+            {
+                using (File.Create(enemigosZ)){}
+            }
+
+            string DatosJugadorJSON = JsonSerializer.Serialize(datosZ[elegido], new JsonSerializerOptions{WriteIndented = true}); //Permito que sea legible dandole formato
+            File.WriteAllText(jugadorPJZ,DatosJugadorJSON);
+
+            datosZ.Remove(datosZ[elegido]); //elimino un item de la lista
+            string DatosEnemigosJSON = JsonSerializer.Serialize(datosZ, new JsonSerializerOptions{WriteIndented = true}); //Permito que sea legible dandole formato
+            File.WriteAllText(enemigosZ,DatosEnemigosJSON);
+
+
         }
     
     
