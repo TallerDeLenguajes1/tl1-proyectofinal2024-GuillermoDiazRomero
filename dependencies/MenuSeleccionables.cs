@@ -5,136 +5,163 @@ namespace MenusDelJuego
     {
         public static int x;
         public static int y;
-        private static string[] decision = {"Aceptar","Volver"};
-        public static int Menu(string[] opcionesMenu, int tipo)
+        private static string[] decision = { "Aceptar", "Volver" };
+        public static int MenuTorneo(string[] opcionesMenu, int tipo)
         {
-            Console.Clear(); //Limpia la consola para que se muestre solamente el juego
-
             bool estaSeleccionando = true;
             int indiceSeleccionado = 0;
             int tamaToreno = 0; //Seteo en 0 para preguntar adentro del bucle del menu para usar operador ternario
+            int tiempo = 0;
 
+            Console.Clear(); //Limpia la consola para que se muestre solamente el juego  
+
+            if (tipo == 1)
+            {
+                tiempo = 915; 
+            }
+
+            
             ConsoleKeyInfo tecla;
             Console.CursorVisible = false;
 
 
-            if (tipo == 1) //Menu de opciones del torneo
+            MensajesTerminal.TituloJuego(tiempo);
+            Console.ForegroundColor = ConsoleColor.White;
+            MensajesTerminal.CentradoSimple("Seleccione un tamaño para el Torneo:", 100, 1);
+
+            x = Console.CursorLeft;
+            y = Console.CursorTop;
+
+            MenuCentrado(indiceSeleccionado, opcionesMenu);
+
+            while (estaSeleccionando)
             {
-                MensajesTerminal.TituloJuego();
-                Console.ForegroundColor = ConsoleColor.White;
-                MensajesTerminal.CentradoSimple("Seleccione un tamaño para el Torneo:", 100, 1);
-
-                x = Console.CursorLeft;
-                y = Console.CursorTop;
-
-                MenuCentrado(indiceSeleccionado, opcionesMenu);
-
-                while (estaSeleccionando)
+                while ((tecla = Console.ReadKey(true)).Key != ConsoleKey.Enter)
                 {
-                    while ((tecla = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+                    switch (tecla.Key)
                     {
-                        switch (tecla.Key)
-                        {
-                            case ConsoleKey.DownArrow:
-                                if (indiceSeleccionado == (opcionesMenu.Length - 1))
-                                    continue;
+                        case ConsoleKey.DownArrow:
+                            if (indiceSeleccionado == (opcionesMenu.Length - 1))
+                                continue;
 
-                                indiceSeleccionado++;
-                                break;
-                            case ConsoleKey.UpArrow:
-                                if (indiceSeleccionado == 0)
-                                    continue;
-
-                                indiceSeleccionado--;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        Console.CursorLeft = x;
-                        Console.CursorTop = y;
-
-                        MenuCentrado(indiceSeleccionado, opcionesMenu);
-                    }
-
-                    switch (indiceSeleccionado)
-                    {
-                        case 0:
-                            tamaToreno = (tamaToreno == 0) ? 4 : tamaToreno;
-                            goto case 1; //goto sirve para que el case se cumpla y no use break para que siga con el resto del codigo
-                        case 1:
-                            tamaToreno = (tamaToreno == 0) ? 8 : tamaToreno;
-                            goto case 2;
-                        case 2:
-                            tamaToreno = (tamaToreno == 0) ? 16 : tamaToreno;
-                            MensajesTerminal.TextoTiempo("\n      Preparando luchadores", 1000, 0);
-                            MensajesTerminal.TextoTiempo("......", 5000, 1);
-                            estaSeleccionando = false;
-                            Thread.Sleep(2000);
+                            indiceSeleccionado++;
                             break;
-                        case 3:
-                            MensajesTerminal.TextoTiempo("Mr. Satan si se la banca...", 2500, 0);
-                            Thread.Sleep(1000);
-                            Environment.Exit(0);
+                        case ConsoleKey.UpArrow:
+                            if (indiceSeleccionado == 0)
+                                continue;
+
+                            indiceSeleccionado--;
                             break;
                         default:
                             break;
                     }
+
+                    Console.CursorLeft = x;
+                    Console.CursorTop = y;
+
+                    MenuCentrado(indiceSeleccionado, opcionesMenu);
                 }
-                return tamaToreno;
-            }
-            else if (tipo == 2) //Menu de personajes
-            {
-                MensajesTerminal.TextoTiempo("\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA Listado de Guerreros \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA", 100, 1);
-                x = Console.CursorLeft;
-                y = Console.CursorTop;
-                MenuIzquierda(indiceSeleccionado, opcionesMenu);
-                while (estaSeleccionando)
+
+                switch (indiceSeleccionado)
                 {
-                    while ((tecla = Console.ReadKey(true)).Key != ConsoleKey.Enter)
-                    {
-                        switch (tecla.Key)
-                        {
-                            case ConsoleKey.DownArrow:
-                                if (indiceSeleccionado == (opcionesMenu.Length - 1))
-                                    continue;
-
-                                indiceSeleccionado++;
-                                break;
-                            case ConsoleKey.UpArrow:
-                                if (indiceSeleccionado == 0)
-                                    continue;
-
-                                indiceSeleccionado--;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        Console.CursorLeft = x;
-                        Console.CursorTop = y;
-
-                        MenuIzquierda(indiceSeleccionado, opcionesMenu);
-                    }
-
-                    switch (indiceSeleccionado)
-                    {
-                        case 0:case 1:case 2:case 3:case 5:case 4:case 6:case 7:case 8:case 9:case 10:case 11:case 12:case 13:case 14:case 15:case 16:
-                            estaSeleccionando = false;
-                            break;
-                        default:
-                            break;
-                    }
+                    case 0:
+                        tamaToreno = (tamaToreno == 0) ? 4 : tamaToreno;
+                        goto case 1; //goto sirve para que el case se cumpla y no use break para que siga con el resto del codigo
+                    case 1:
+                        tamaToreno = (tamaToreno == 0) ? 8 : tamaToreno;
+                        goto case 2;
+                    case 2:
+                        tamaToreno = (tamaToreno == 0) ? 16 : tamaToreno;
+                        MensajesTerminal.TextoTiempo("\n      Preparando luchadores", 1000, 0);
+                        MensajesTerminal.TextoTiempo("......", 5000, 1);
+                        estaSeleccionando = false;
+                        Thread.Sleep(2000);
+                        break;
+                    case 3:
+                        MensajesTerminal.TextoTiempo("Mr. Satan si se la banca...", 2500, 0);
+                        Thread.Sleep(1000);
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
                 }
-                return indiceSeleccionado;
             }
-            else
-            {
-                Console.WriteLine("No existe este tipo de menú");
-                Environment.Exit(0);
-                return 0;
-            }
+            return tamaToreno;
+
+
         }
+
+
+        public static int MenuGuerreros(string[] opcionesMenu)
+        {
+            Console.Clear(); //Limpia la consola para que se muestre solamente el juego
+            Console.WriteLine();
+            bool estaSeleccionando = true;
+            int indiceSeleccionado = 0;
+
+            ConsoleKeyInfo tecla;
+            Console.CursorVisible = false;
+
+            MensajesTerminal.TextoTiempo("\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA Listado de Guerreros \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA", 100, 1);
+            x = Console.CursorLeft;
+            y = Console.CursorTop;
+            MenuIzquierda(indiceSeleccionado, opcionesMenu);
+            while (estaSeleccionando)
+            {
+                while ((tecla = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+                {
+                    switch (tecla.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            if (indiceSeleccionado == (opcionesMenu.Length - 1))
+                                continue;
+
+                            indiceSeleccionado++;
+                            break;
+                        case ConsoleKey.UpArrow:
+                            if (indiceSeleccionado == 0)
+                                continue;
+
+                            indiceSeleccionado--;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Console.CursorLeft = x;
+                    Console.CursorTop = y;
+
+                    MenuIzquierda(indiceSeleccionado, opcionesMenu);
+                }
+
+                switch (indiceSeleccionado)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 5:
+                    case 4:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                        estaSeleccionando = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return indiceSeleccionado;
+        }
+
 
         public static bool MenuDecision() //Creo esta función para evitar problemas de compatibilidad con el resto de menus
         {
@@ -145,7 +172,7 @@ namespace MenusDelJuego
             Console.CursorVisible = false;
 
             Console.ForegroundColor = ConsoleColor.White;
-            MensajesTerminal.TextoTiempo ("\n¿Quiere usar este guerrero?",100,1);
+            MensajesTerminal.TextoTiempo("\n¿Quiere usar este guerrero?", 100, 1);
             x = Console.CursorLeft;
             y = Console.CursorTop;
 
@@ -181,7 +208,8 @@ namespace MenusDelJuego
 
                 switch (indiceSeleccionado)
                 {
-                    case 0: return true; case 1: return false;
+                    case 0: return true;
+                    case 1: return false;
                     default:
                         break;
                 }

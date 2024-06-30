@@ -11,6 +11,8 @@ namespace StartGame
     public class GameStart()
     {
         private static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Salir del Juego" };
+        private static bool iteracionesMenu = true;
+        public static bool IteracionesMenu { get => iteracionesMenu; set => iteracionesMenu = value; }
         public static void GameRun()
         {
             /*      Cosas Necesarias    */
@@ -46,30 +48,34 @@ namespace StartGame
 
             /*      Menú de selección del tamaño del Torneo     */
 
-            int tama = Menus.Menu(menuRondas,1);
+            int tama = Menus.MenuTorneo(menuRondas, 1);
 
             /*--------------------------------------------------*/
 
+            //Creo este while para poder navegar entre los menus
+            while (IteracionesMenu)
+            {
+
+
+                /*  Creo la cantidad "tama" de personajes aleatorios    */
+
+                TorneoSet.AleatorioZ(tama);
+
+                /*------------------------------------------------------*/
 
 
 
-            /*  Creo la cantidad "tama" de personajes aleatorios    */
 
-            TorneoSet.AleatorioZ(tama);
+                /*      Mostrar el Menú con los personajes Aleatorios     */
 
-            /*------------------------------------------------------*/
+                IteracionesMenu = TorneoSet.SeleccionGuerrero();
 
-
-
-
-            /*      Mostrar el Menú con los personajes Aleatorios     */
-
-            TorneoSet.SeleccionGuerrero();
-
-            /*--------------------------------------------------------*/
-
-
-
+                /*--------------------------------------------------------*/
+                if (IteracionesMenu)
+                {
+                    tama = Menus.MenuTorneo(menuRondas, 0);
+                }
+            }
 
 
 

@@ -86,7 +86,7 @@ namespace Mensajes
             }
         }
 
-        public static void TituloJuego()
+        public static void TituloJuego(int tiempo)
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             string[] letraASCII =
@@ -113,7 +113,7 @@ namespace Mensajes
             }
 
 
-            TextoTiempo(centrado, 915, 1);
+            TextoTiempo(centrado, tiempo, 1);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Torneo
 
         }
 
-        public static void SeleccionGuerrero()
+        public static bool SeleccionGuerrero()
         {
             // int cantidadGuerreros = 8;
             int elegido = 0;
@@ -102,16 +102,21 @@ namespace Torneo
             var datosZ = JsonSerializer.Deserialize<List<Guerreros>>(texto);
             int cantidadGuerreros = datosZ.Count; //Obtengo la cantidad de elementos de la lista
 
-            string[] ListadoGuerreros = new string[cantidadGuerreros];
+            string[] ListadoGuerreros = new string[cantidadGuerreros + 1];
 
             for (int i = 0; i < cantidadGuerreros; i++)
             {
                 ListadoGuerreros[i] = datosZ[i].Name + " (" + datosZ[i].Race + ")";
             }
+            ListadoGuerreros[cantidadGuerreros] = "Salir";
 
             while (!seleccionado)
             {
-                elegido = Menus.Menu(ListadoGuerreros, 2);
+                elegido = Menus.MenuGuerreros(ListadoGuerreros);
+                if (ListadoGuerreros[elegido] == "Salir")
+                {
+                    return true;
+                }
                 Console.Clear();
                 MensajesTerminal.ColorTerminalRaza(datosZ[elegido].Race);
                 MensajesTerminal.CentradoSimple("-------------->   " + datosZ[elegido].Name + "   <--------------", 200, 1);
@@ -121,7 +126,6 @@ namespace Torneo
                 seleccionado = Menus.MenuDecision();
 
             }
-
 
             if (!File.Exists(jugadorPJZ))
             {
@@ -138,6 +142,7 @@ namespace Torneo
             datosZ.Remove(datosZ[elegido]); //elimino un item de la lista
             string DatosEnemigosJSON = JsonSerializer.Serialize(datosZ, new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
             File.WriteAllText(enemigosZ, DatosEnemigosJSON);
+            return false;
 
 
         }
