@@ -1,14 +1,17 @@
 ﻿using StartGame;
-using Torneo;
+using DBClass;
+using CombateZ;
 
 internal class Program
 {
     public static void Main(string[] args)
     {
-        GameStart.GameRun();
-        Console.CursorVisible = false;
-
+        //Console.CursorVisible = false;
+        //GameStart.GameRun();
+        InterfazCombate.ModuloDeCombate();
+        
 
 
     }
+    
 }

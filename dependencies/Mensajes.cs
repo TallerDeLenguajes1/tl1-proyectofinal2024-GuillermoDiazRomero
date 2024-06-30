@@ -114,6 +114,12 @@ namespace Mensajes
 
             TextoTiempo(centrado, tiempo, 1);
         }
+    
+        public static void ErrorSalir(){
+            TextoTiempo("Nos robaron el radar del dragon...",1000,1);
+            TextoTiempo("Saliendo del juego...",2000,1);
+            Environment.Exit(0);
+        }
     }
 }
 

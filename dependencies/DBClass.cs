@@ -27,6 +27,9 @@ namespace DBClass
     public class Guerreros
     {
         private int id; private string name; private string race; private string description; private string ki; private string maxki; private string status; private int kiCombate; private int velocidad; private int destreza; private int fuerza; private int armadura; private int salud;
+
+        
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Race { get => race; set => race = value; }

@@ -1,6 +1,4 @@
-using System.Reflection.Metadata;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using DBClass;
 using Mensajes;
 using MenusDelJuego;
@@ -12,10 +10,14 @@ namespace Torneo
         //Seccion de aleatoriedad de personajes
         private static string respaldoDB = @"resources\backup\Respaldo.JSON"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
         private static string ArchivoPJZ = @"resources\json\characters.JSON";
-        private static string jugadorPJZ = @"resources\json\player.JSON";
-        private static string enemigosZ = @"resources\json\enemies.JSON";
+        public static string jugadorPJZ = @"resources\json\player.JSON";
+        public static string enemigosZ = @"resources\json\enemies.JSON";
         public static void AleatorioZ(int tama)
         {
+            if (!File.Exists(respaldoDB))
+            {
+                MensajesTerminal.ErrorSalir();
+            }
             var texto = File.ReadAllText(respaldoDB); //Leo la API
             var datosDB = JsonSerializer.Deserialize<Root>(texto); //Doy formato legible a la API
             List<Guerreros> Peleadores = new List<Guerreros>();
@@ -92,12 +94,15 @@ namespace Torneo
 
 
         }
-
         public static bool SeleccionGuerrero()
         {
-            // int cantidadGuerreros = 8;
             int elegido = 0;
             bool seleccionado = false;
+            if (!File.Exists(ArchivoPJZ))
+            {
+                MensajesTerminal.ErrorSalir();
+
+            }
             var texto = File.ReadAllText(ArchivoPJZ);
             var datosZ = JsonSerializer.Deserialize<List<Guerreros>>(texto);
             int cantidadGuerreros = datosZ.Count; //Obtengo la cantidad de elementos de la lista
@@ -146,8 +151,6 @@ namespace Torneo
 
 
         }
-
-
         public static string MedicionDeKi(string kimax)
         {
             //Esta función devolverá un string con el "Titulo" segun el kimaximo de los guerreros
