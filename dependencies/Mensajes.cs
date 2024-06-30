@@ -65,7 +65,7 @@ namespace Mensajes
             Console.WriteLine("\n");
             Console.ForegroundColor = ConsoleColor.White; //Me aseguro que el color de la consola siempre vuelva a blanco despues de mostrar los personajes
         }
-        public static void ColorTerminalRaza(string raza)
+        public static ConsoleColor ColorTerminalRaza(string raza)
         {
             switch (raza)
             {
@@ -83,6 +83,7 @@ namespace Mensajes
                 case "Nucleico venigno": Console.ForegroundColor = ConsoleColor.Gray; break;  //Sumpremos Kaio-samas
                 case "Unknown": Console.ForegroundColor = ConsoleColor.Blue; break;
             }
+            return Console.ForegroundColor;
         }
 
         public static void TituloJuego(int tiempo)

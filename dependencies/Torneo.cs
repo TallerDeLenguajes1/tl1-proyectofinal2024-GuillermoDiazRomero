@@ -117,7 +117,7 @@ namespace Torneo
 
             while (!seleccionado)
             {
-                elegido = Menus.MenuGuerreros(ListadoGuerreros);
+                elegido = Menus.MenuGuerreros(ListadoGuerreros,"Listado");
                 if (ListadoGuerreros[elegido] == "Salir")
                 {
                     return true;

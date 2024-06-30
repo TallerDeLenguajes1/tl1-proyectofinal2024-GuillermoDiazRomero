@@ -2,11 +2,13 @@ using DBClass;
 using Mensajes;
 using Torneo;
 using System.Text.Json;
+
 namespace CombateZ
 {
     public class InterfazCombate
     {
         //public bool verCombates = 
+        public static ConsoleColor seleccionPlayer;
         public static void ModuloDeCombate()
         {
             if (!File.Exists(TorneoSet.jugadorPJZ) || !File.Exists(TorneoSet.enemigosZ))
@@ -29,14 +31,14 @@ namespace CombateZ
             Random random = new Random();
             OrdenAleatorio = OrdenAleatorio.OrderBy(x => random.Next()).ToList();
 
-        
 
-            for (int i = 0; i < OrdenAleatorio.Count; i+=2)
+
+            for (int i = 0; i < OrdenAleatorio.Count; i += 2)
             {
-                if (OrdenAleatorio[i] == datosPlayer || OrdenAleatorio[i+1] == datosPlayer)
+                if (OrdenAleatorio[i] == datosPlayer || OrdenAleatorio[i + 1] == datosPlayer)
                 {
-                    Combate1v1(OrdenAleatorio[i], OrdenAleatorio[i+1]);
-                    
+                    Combate1v1(OrdenAleatorio[i], OrdenAleatorio[i + 1]);
+
                 }
 
             }
@@ -46,90 +48,87 @@ namespace CombateZ
 
 
 
-        public static List<Guerreros> Combate1v1(Guerreros item1, Guerreros item2)
+        public static void Combate1v1(Guerreros jugador, Guerreros item2)
         {
 
+            
+            for (int i = 0; i < 3; i++)
+            {
+                Console.Clear();
+                Console.CursorVisible = false;
+                // Asignar colores a los bloques según la raza
+                ConsoleColor colorItem1 = MensajesTerminal.ColorTerminalRaza(jugador.Race);
+                ConsoleColor colorItem2 = MensajesTerminal.ColorTerminalRaza(item2.Race);
+
+
+                // Mostrar los datos de item1 e item2 en paralelo con colores diferentes
+                MostrarBloquesParalelos(jugador, item2, colorItem1, colorItem2);
+
+                jugador.Salud -= 20;
+                item2.Salud -= 50;
+                string[] probando = {"Atacar","Esquivar","Ataque","Especial","Rendirse"};
+                seleccionPlayer = MensajesTerminal.ColorTerminalRaza(jugador.Race);
+                MenusDelJuego.Menus.MenuGuerreros(probando,"Combate");
+
+            Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
+
+            }
+
+
+
+
+
+        }
+
+        private static void MostrarBloquesParalelos(Guerreros item1, Guerreros item2, ConsoleColor colorItem1, ConsoleColor colorItem2)
+        {
+            int ajusteDelAncho = Console.WindowWidth;
+            int anchoTotal = ajusteDelAncho /2;
+            //Defino los string adentro de esta función para poder crear el efecto de actualización de pantalla durante el combate
             string[] lineas1 = {
                 $"Salud: {item1.Salud}",
                 $"Nombre: {item1.Name}",
                 $"Raza: {item1.Race}",
-                $"Ki: {item1.Ki}",
+                $"Ki: {item1.KiCombate}",
                 $"Velocidad: {item1.Velocidad}",
                 $"Fuerza: {item1.Fuerza}",
                 $"Armadura: {item1.Armadura}",
             };
-
             string[] lineas2 = {
                 $"Salud: {item2.Salud}",
                 $"Nombre: {item2.Name}",
                 $"Raza: {item2.Race}",
-                $"Ki: {item2.Ki}",
+                $"Ki: {item2.KiCombate}",
                 $"Velocidad: {item2.Velocidad}",
                 $"Fuerza: {item2.Fuerza}",
                 $"Armadura: {item2.Armadura}",
             };
-
-            int ajusteDelAncho = 50;
-
-            // Asignar colores a los bloques según la raza
-            ConsoleColor colorItem1 = ObtenerColorPorRaza(item1.Race);
-            ConsoleColor colorItem2 = ObtenerColorPorRaza(item2.Race);
-
-            // Mostrar los datos de item1 e item2 en paralelo con colores diferentes
-            MostrarBloquesParalelos(lineas1, lineas2, ajusteDelAncho, colorItem1, colorItem2);
-            Console.ForegroundColor = ConsoleColor.White; // Me aseguro que el color de la consola siempre vuelva a blanco después de mostrar los personajes
-            
-        }
-
-        private static void MostrarBloquesParalelos(string[] lineas1, string[] lineas2, int ajusteDelAncho, ConsoleColor colorItem1, ConsoleColor colorItem2)
-        {
-            // Calcular el ancho total de la consola necesario para mostrar ambos bloques
-            int anchoTotal = (ajusteDelAncho * 2) + 2;
-
-            // Imprimir la línea superior de ambos bloques
             Console.ForegroundColor = colorItem1;
-            Console.Write(new string('-', ajusteDelAncho));
+            Console.Write(new string('-', anchoTotal+1));
             Console.ForegroundColor = colorItem2;
+            Console.WriteLine(" "+new string('-', anchoTotal-1));
 
-            Console.WriteLine("  " + new string('-', ajusteDelAncho));
-
-            // Imprimir los bloques en paralelo
             for (int i = 0; i < lineas1.Length; i++)
             {
-                // Cambiar el color para el primer bloque
-                int padding1 = (ajusteDelAncho - 2 - lineas1[i].Length) / 2;
-                string paddedLinea1 = "|" + new string(' ', padding1) + lineas1[i] + new string(' ', ajusteDelAncho - 2 - lineas1[i].Length - padding1) + "|";
+                //Bloque Izquierda
+                int padding1 = 1+ (anchoTotal - 2 - lineas1[i].Length) / 2;
+                string paddedLinea1 = new string(' ', padding1) + lineas1[i] + new string(' ', anchoTotal  - lineas1[i].Length - padding1) + "|";
+                //Bloque Derecha
+                int padding2 = (anchoTotal - 2 - lineas2[i].Length) / 2;
+                string paddedLinea2 = "|" + new string(' ', padding2) + lineas2[i] + new string(' ', anchoTotal - 2 - lineas2[i].Length - padding2);
 
-                // Cambiar el color para el segundo bloque
-                int padding2 = (ajusteDelAncho - 2 - lineas2[i].Length) / 2;
-                string paddedLinea2 = "|" + new string(' ', padding2) + lineas2[i] + new string(' ', ajusteDelAncho - 2 - lineas2[i].Length - padding2) + "|";
-
-                // Imprimir ambas líneas en paralelo
                 Console.ForegroundColor = colorItem1;
                 Console.Write(paddedLinea1);
                 Console.ForegroundColor = colorItem2;
-                Console.WriteLine("  " + paddedLinea2);
+                Console.WriteLine(" "+paddedLinea2);
             }
 
-            // Imprimir la línea inferior de ambos bloques
             Console.ForegroundColor = colorItem1;
-            Console.Write(new string('-', ajusteDelAncho));
+            Console.Write(new string('-', anchoTotal+1));
             Console.ForegroundColor = colorItem2;
-            Console.Write("  " + new string('-', ajusteDelAncho));
+            Console.Write(" " +new string('-', anchoTotal-1));
         }
 
-        private static ConsoleColor ObtenerColorPorRaza(string raza)
-        {
-            switch (raza.ToLower())
-            {
-                case "saiyan":
-                    return ConsoleColor.Yellow;
-                case "android":
-                    return ConsoleColor.Cyan;
-                // Agregar más casos para otras razas si es necesario
-                default:
-                    return ConsoleColor.White;
-            }
-        }
+
     }
 }

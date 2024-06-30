@@ -1,4 +1,6 @@
+using System.Drawing;
 using Mensajes;
+using CombateZ;
 namespace MenusDelJuego
 {
     public static class Menus
@@ -17,10 +19,10 @@ namespace MenusDelJuego
 
             if (tipo == 1)
             {
-                tiempo = 915; 
+                tiempo = 915;
             }
 
-            
+
             ConsoleKeyInfo tecla;
             Console.CursorVisible = false;
 
@@ -32,7 +34,7 @@ namespace MenusDelJuego
             x = Console.CursorLeft;
             y = Console.CursorTop;
 
-            MenuCentrado(indiceSeleccionado, opcionesMenu);
+            MenuCentrado(indiceSeleccionado, opcionesMenu,"Listado");
 
             while (estaSeleccionando)
             {
@@ -59,7 +61,7 @@ namespace MenusDelJuego
                     Console.CursorLeft = x;
                     Console.CursorTop = y;
 
-                    MenuCentrado(indiceSeleccionado, opcionesMenu);
+                    MenuCentrado(indiceSeleccionado, opcionesMenu,"Listado");
                 }
 
                 switch (indiceSeleccionado)
@@ -92,20 +94,38 @@ namespace MenusDelJuego
         }
 
 
-        public static int MenuGuerreros(string[] opcionesMenu)
+        public static int MenuGuerreros(string[] opcionesMenu, string tipo)
         {
-            Console.Clear(); //Limpia la consola para que se muestre solamente el juego
-            Console.WriteLine();
+
             bool estaSeleccionando = true;
             int indiceSeleccionado = 0;
 
             ConsoleKeyInfo tecla;
             Console.CursorVisible = false;
 
-            MensajesTerminal.TextoTiempo("\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA Listado de Guerreros \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA", 100, 1);
+            if (tipo == "Listado")
+            {
+                Console.Clear(); //Limpia la consola para que se muestre solamente el juego
+                Console.WriteLine();
+                MensajesTerminal.TextoTiempo("\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA Listado de Guerreros \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA", 100, 1);
+
+            }
+            else if (tipo == "Combate")
+            {
+                Console.WriteLine();
+                Console.WriteLine();
+            }
             x = Console.CursorLeft;
             y = Console.CursorTop;
-            MenuIzquierda(indiceSeleccionado, opcionesMenu);
+
+            if (tipo == "Listado")
+            {
+                MenuIzquierda(indiceSeleccionado, opcionesMenu);
+            }
+            else if (tipo == "Combate")
+            {
+                MenuCentrado(indiceSeleccionado, opcionesMenu, tipo);
+            }
             while (estaSeleccionando)
             {
                 while ((tecla = Console.ReadKey(true)).Key != ConsoleKey.Enter)
@@ -130,15 +150,22 @@ namespace MenusDelJuego
 
                     Console.CursorLeft = x;
                     Console.CursorTop = y;
+                    if (tipo == "Listado")
+                    {
+                        MenuIzquierda(indiceSeleccionado, opcionesMenu);
+                    }
+                    else if (tipo == "Combate")
+                    {
+                        MenuCentrado(indiceSeleccionado, opcionesMenu,tipo);
+                    }
 
-                    MenuIzquierda(indiceSeleccionado, opcionesMenu);
                 }
 
                 if (indiceSeleccionado >= 0 && indiceSeleccionado <= 16)
                 {
                     estaSeleccionando = false;
                 }
-                
+
             }
             return indiceSeleccionado;
         }
@@ -198,7 +225,7 @@ namespace MenusDelJuego
             return false;
         }
 
-        private static void MenuCentrado(int indiceSeleccionado, string[] opciones)
+        private static void MenuCentrado(int indiceSeleccionado, string[] opciones , string tipo)
         {
             int destacado = 0;
 
@@ -206,7 +233,14 @@ namespace MenusDelJuego
             {
                 if (destacado == indiceSeleccionado)
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (tipo == "Listado"){
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                    else if (tipo == "Combate")
+                    {
+                        Console.ForegroundColor = InterfazCombate.seleccionPlayer;
+                        
+                    }
                 }
 
                 // Cálculo del padding para centrar el texto
