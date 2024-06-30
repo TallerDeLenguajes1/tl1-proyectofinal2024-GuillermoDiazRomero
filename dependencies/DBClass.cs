@@ -16,7 +16,7 @@ namespace DBClass
         public string Race { get; set; }
         [JsonPropertyName("description")]
         public string Description { get; set; }
-    }  
+    }
     public class Root
     {
         [JsonPropertyName("items")]
@@ -24,15 +24,17 @@ namespace DBClass
     }
 
 
-    public class Guerreros{
-        private int id; private string name;private string race;private string description;private string ki;private string maxki;private int velocidad;private int destreza;private int fuerza;private int armadura;private int salud;
+    public class Guerreros
+    {
+        private int id; private string name; private string race; private string description; private string ki; private string maxki; private string status; private int kiCombate; private int velocidad; private int destreza; private int fuerza; private int armadura; private int salud;
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Race { get => race; set => race = value; }
         public string Description { get => description; set => description = value; }
         public string Ki { get => ki; set => ki = value; }
         public string Maxki { get => maxki; set => maxki = value; }
-        
+        public string Status { get => status; set => status = value; }
+        public int KiCombate { get => kiCombate; set => kiCombate = value; }
         public int Velocidad { get => velocidad; set => velocidad = value; }
         public int Destreza { get => destreza; set => destreza = value; }
         public int Fuerza { get => fuerza; set => fuerza = value; }

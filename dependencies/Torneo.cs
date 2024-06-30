@@ -35,7 +35,7 @@ namespace Torneo
                     noRepetidos.Add(numeroAleatorio); //Añado el numero al HashSet
                 }
             }
-            
+
             //Declaro la variable temporal Guerrero;
             for (int i = 0; i < tama; i++)
             {
@@ -50,6 +50,8 @@ namespace Torneo
                     Description = datosDB.Items[noRepetidos.ElementAt(i)].Description
                 };
 
+
+                //Se añadió los parametros para identificar a Zeno-sama, el Gran Sacerdote y asignar el ki a los gran kaios
                 switch (temp.Race)
                 {
                     case "Human": temp.Velocidad = 3; temp.Destreza = 3; temp.Armadura = 2; temp.Fuerza = 4; temp.Salud = 200; break;
@@ -60,29 +62,39 @@ namespace Torneo
                     case "Android": temp.Velocidad = 5; temp.Destreza = 5; temp.Armadura = 5; temp.Fuerza = 6; temp.Salud = 200; break;
                     case "Jiren Race": temp.Velocidad = 8; temp.Destreza = 7; temp.Armadura = 8; temp.Fuerza = 8; temp.Salud = 200; break;
                     case "God": temp.Velocidad = 10; temp.Destreza = 10; temp.Armadura = 10; temp.Fuerza = 10; temp.Salud = 200; break;
-                    case "Angel": temp.Velocidad = 20; temp.Destreza = 20; temp.Armadura = 20; temp.Fuerza = 20; temp.Salud = 200; break;
+                    case "Angel":
+                        if (temp.Name.Contains("Grand Priest")) { temp.Velocidad = 9999; temp.Destreza = 9999; temp.Armadura = 9999; temp.Fuerza = 9999; temp.Salud = 9999; }
+                        else { temp.Velocidad = 20; temp.Destreza = 20; temp.Armadura = 20; temp.Fuerza = 20; temp.Salud = 200; }
+                        break;
                     case "Evil": temp.Velocidad = 2; temp.Destreza = 3; temp.Armadura = 6; temp.Fuerza = 6; temp.Salud = 200; break;
-                    case "Nucleico": temp.Velocidad = 2; temp.Destreza = 3; temp.Armadura = 5; temp.Fuerza = 4; temp.Salud = 200; break; //Gran-Kaio-samas 
-                    case "Nucleico benigno": temp.Velocidad = 5; temp.Destreza = 5; temp.Armadura = 2; temp.Fuerza = 4; temp.Salud = 200; break; //Sumpremos Kaio-samas
-                    case "Unknown": temp.Velocidad = 100; temp.Destreza = 100; temp.Armadura = 200; temp.Fuerza = 10000; temp.Salud = 200; break; //Zen Oh sama, personaje más fuerte del juego con una probabilidad de 1/58 de que salga
+                    case "Nucleico":
+                        temp.Velocidad = 2; temp.Destreza = 3; temp.Armadura = 5; temp.Fuerza = 4; temp.Salud = 200;
+                        if (temp.Ki.Contains("unknown") || temp.Maxki.Contains("unknown")) { temp.Ki = "10000"; temp.Maxki = "10000"; }
+                        break; //Gran-Kaio-samas 
+                    case "Nucleico benigno": temp.Velocidad = 5; temp.Destreza = 5; temp.Armadura = 2; temp.Fuerza = 4; temp.Salud = 200; if (temp.Ki.Contains("unknown") || temp.Maxki.Contains("unknown")) { temp.Ki = "10000"; temp.Maxki = "10000"; } break; //Sumpremos Kaio-samas
+                    case "Unknown": temp.Velocidad = 10000; temp.Destreza = 10000; temp.Armadura = 10000; temp.Fuerza = 10000; temp.Salud = 10000; temp.Ki = "Zeno-sama"; temp.Maxki = "Zeno-sama"; break; //Zen Oh sama, personaje más fuerte del juego con una probabilidad de 1/58 de que salga
                 }
+                temp.Status = MedicionDeKi(temp.Maxki);
+                temp.KiCombate = BalanceoDeKi(temp.Ki);
+
                 Peleadores.Add(temp);
             }
 
             //Guardado de personajes en un archivo Seleccion.JSON
             if (!File.Exists(ArchivoPJZ))
             {
-                using (File.Create(ArchivoPJZ)){/*Creo y cierro el archivo*/}
+                using (File.Create(ArchivoPJZ)) {/*Creo y cierro el archivo*/}
             }
 
-            string DatosPeleadoresJSON = JsonSerializer.Serialize(Peleadores, new JsonSerializerOptions{WriteIndented = true}); //Permito que sea legible dandole formato
-            File.WriteAllText(ArchivoPJZ,DatosPeleadoresJSON);
+            string DatosPeleadoresJSON = JsonSerializer.Serialize(Peleadores, new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
+            File.WriteAllText(ArchivoPJZ, DatosPeleadoresJSON);
 
-            
-            
+
+
         }
-    
-        public static void SeleccionGuerrero(){
+
+        public static void SeleccionGuerrero()
+        {
             // int cantidadGuerreros = 8;
             int elegido = 0;
             bool seleccionado = false;
@@ -91,19 +103,20 @@ namespace Torneo
             int cantidadGuerreros = datosZ.Count; //Obtengo la cantidad de elementos de la lista
 
             string[] ListadoGuerreros = new string[cantidadGuerreros];
-            
+
             for (int i = 0; i < cantidadGuerreros; i++)
             {
-                ListadoGuerreros[i] = datosZ[i].Name + " (" + datosZ[i].Race + ")";  
+                ListadoGuerreros[i] = datosZ[i].Name + " (" + datosZ[i].Race + ")";
             }
 
-            while (!seleccionado){
-                elegido = Menus.Menu(ListadoGuerreros,2);
+            while (!seleccionado)
+            {
+                elegido = Menus.Menu(ListadoGuerreros, 2);
                 Console.Clear();
                 MensajesTerminal.ColorTerminalRaza(datosZ[elegido].Race);
-                MensajesTerminal.CentradoSimple("-------------->   "+datosZ[elegido].Name+"   <--------------",200,1);
+                MensajesTerminal.CentradoSimple("-------------->   " + datosZ[elegido].Name + "   <--------------", 200, 1);
 
-                MensajesTerminal.TextoTiempo("Descripción: "+datosZ[elegido].Description,1000,1);
+                MensajesTerminal.TextoTiempo("Descripción: " + datosZ[elegido].Description, 1000, 1);
                 Console.ForegroundColor = ConsoleColor.White;
                 seleccionado = Menus.MenuDecision();
 
@@ -112,23 +125,116 @@ namespace Torneo
 
             if (!File.Exists(jugadorPJZ))
             {
-                using (File.Create(jugadorPJZ)){}
+                using (File.Create(jugadorPJZ)) { }
             }
             if (!File.Exists(enemigosZ))
             {
-                using (File.Create(enemigosZ)){}
+                using (File.Create(enemigosZ)) { }
             }
 
-            string DatosJugadorJSON = JsonSerializer.Serialize(datosZ[elegido], new JsonSerializerOptions{WriteIndented = true}); //Permito que sea legible dandole formato
-            File.WriteAllText(jugadorPJZ,DatosJugadorJSON);
+            string DatosJugadorJSON = JsonSerializer.Serialize(datosZ[elegido], new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
+            File.WriteAllText(jugadorPJZ, DatosJugadorJSON);
 
             datosZ.Remove(datosZ[elegido]); //elimino un item de la lista
-            string DatosEnemigosJSON = JsonSerializer.Serialize(datosZ, new JsonSerializerOptions{WriteIndented = true}); //Permito que sea legible dandole formato
-            File.WriteAllText(enemigosZ,DatosEnemigosJSON);
+            string DatosEnemigosJSON = JsonSerializer.Serialize(datosZ, new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
+            File.WriteAllText(enemigosZ, DatosEnemigosJSON);
 
 
         }
-    
-    
+
+
+        public static string MedicionDeKi(string kimax)
+        {
+            //Esta función devolverá un string con el "Titulo" segun el kimaximo de los guerreros
+            string tipoKi = "";
+            if (double.TryParse(kimax, out double resultado))
+            {
+                //"Humano"
+                if (resultado == 0)
+                {
+                    tipoKi = "Humano";
+                    return tipoKi;
+                }
+                //"SuperHumano"
+                if (resultado > 0 && resultado < 1000000)
+                {
+                    tipoKi = "SuperHumano";
+                    return tipoKi;
+                }
+                //"Guerrero Z"
+                if (resultado >= 1000000)
+                {
+                    tipoKi = "Guerrero Z";
+                    return tipoKi;
+                }
+            }
+            kimax = kimax.ToLower();
+            //Guerrero Z
+            if (kimax.Contains("billion") || kimax.Contains("trillion"))
+            {
+                tipoKi = "Guerrero Z";
+                return tipoKi;
+            }
+            //Hakaishin
+            if (kimax.Contains("quadrillion") || kimax.Contains("quintillion") || kimax.Contains("sextillion") || kimax.Contains("septillion"))
+            {
+                tipoKi = "Hakaishin";
+                return tipoKi;
+            }
+            //Todo Poderoso (Zeno-sama y El Gran Sarcedote)
+            if (kimax.Contains("zeno-sama") || kimax.Contains("googolplex"))
+            {
+                tipoKi = "Todo Poderoso";
+                return tipoKi;
+            }
+            return tipoKi = "Error";
+        }
+        public static int BalanceoDeKi(string ki)
+        {
+            //Esta función devolverá un numero entero ki que serán capaces de utilizar los peleadores durante la lucha
+            int cantiadadKi = 0;
+            if (double.TryParse(ki, out double resultado))
+            {
+                //"Humano"
+                if (resultado == 0)
+                {
+                    cantiadadKi = 0;
+                    return cantiadadKi;
+                }
+                //"SuperHumano"
+                if (resultado > 0 && resultado < 1000000)
+                {
+                    cantiadadKi = 4;
+                    return cantiadadKi;
+                }
+                //"Guerrero Z"
+                if (resultado >= 1000000)
+                {
+                    cantiadadKi = 6;
+                    return cantiadadKi;
+                }
+            }
+            ki = ki.ToLower();
+            //Guerrero Z
+            if (ki.Contains("billion") || ki.Contains("trillion"))
+            {
+                cantiadadKi = 6;
+                return cantiadadKi;
+            }
+            //Hakaishin
+            if (ki.Contains("quadrillion") || ki.Contains("quintillion") || ki.Contains("sextillion") || ki.Contains("septillion"))
+            {
+                cantiadadKi = 10;
+                return cantiadadKi;
+            }
+            //Todo Poderoso (Zeno-sama y El Gran Sarcedote)
+            if (ki.Contains("zeno-sama") || ki.Contains("googolplex"))
+            {
+                cantiadadKi = 10000;
+                return cantiadadKi;
+            }
+            return cantiadadKi = -9999;
+        }
+
     }
 }

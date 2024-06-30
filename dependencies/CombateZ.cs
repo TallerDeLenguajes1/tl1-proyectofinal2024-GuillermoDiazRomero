@@ -1,0 +1,7 @@
+using DBClass;
+
+namespace CombateZ
+{
+
+
+}
