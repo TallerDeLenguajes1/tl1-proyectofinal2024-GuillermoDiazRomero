@@ -28,7 +28,6 @@ namespace Mensajes
             }
         }
 
-
         public static void CentradoSimple (string centrado,int tiempo, int tipo){
             int anchoTerminal = Console.WindowWidth;
             int padding = (anchoTerminal - centrado.Length) / 2;
