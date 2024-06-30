@@ -34,7 +34,6 @@ namespace Mensajes
                 centrado = new string(' ', padding) + centrado;
                 TextoTiempo (centrado,tiempo,tipo);
         }
-
         public static void mostrarPjs(Guerreros item)
         {
             //Creo un arreglo de string con todos los datos que llegan desde item para poder obtener las longitudes de los datos que se muestran por pantalla para así poder centrarlos
@@ -85,7 +84,6 @@ namespace Mensajes
             }
             return Console.ForegroundColor;
         }
-
         public static void TituloJuego(int tiempo)
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;

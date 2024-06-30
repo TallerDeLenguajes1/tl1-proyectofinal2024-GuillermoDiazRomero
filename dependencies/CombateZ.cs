@@ -5,8 +5,10 @@ using System.Text.Json;
 
 namespace CombateZ
 {
+    
     public class InterfazCombate
     {
+        private static string GanadoresZ = @"resources\json\ganadores.json";
         //public bool verCombates = 
         public static ConsoleColor seleccionPlayer;
         public static void ModuloDeCombate()
@@ -31,59 +33,121 @@ namespace CombateZ
             Random random = new Random();
             OrdenAleatorio = OrdenAleatorio.OrderBy(x => random.Next()).ToList();
 
-
-
-            for (int i = 0; i < OrdenAleatorio.Count; i += 2)
+            List<Guerreros> Cuartos = new List<Guerreros>();
+            List<Guerreros> Semis = new List<Guerreros>();
+            List<Guerreros> Final = new List<Guerreros>();
+            Guerreros GanadorTorneo = new Guerreros();
+            if (OrdenAleatorio.Count == 16)
             {
-                if (OrdenAleatorio[i] == datosPlayer || OrdenAleatorio[i + 1] == datosPlayer)
+                Cuartos = Simulador(OrdenAleatorio, datosPlayer);
+                Semis = Simulador(OrdenAleatorio, datosPlayer);
+                Final = Simulador(OrdenAleatorio, datosPlayer);
+            }
+            else if (OrdenAleatorio.Count == 8)
+            {
+                Semis = Simulador(OrdenAleatorio,datosPlayer);
+                Final = Simulador(OrdenAleatorio, datosPlayer);
+            } else if (OrdenAleatorio.Count == 4)
+            {
+                Final = Simulador(OrdenAleatorio, datosPlayer);
+            }
+
+            GanadorTorneo = Combate1v1(Final[0],Final[1],1);
+
+            if (GanadorTorneo == datosPlayer)
+            {
+                GanadorTorneo.EleccionUsuario = true;
+            }
+            else{
+                GanadorTorneo.EleccionUsuario = false;
+            }
+
+            if (!File.Exists(GanadoresZ))
+            {
+                using (File.Create(GanadoresZ)) {/*Creo y cierro el archivo*/}
+            }
+
+            string DatosPeleadoresJSON = JsonSerializer.Serialize(GanadorTorneo, new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
+            File.AppendAllText(GanadoresZ, DatosPeleadoresJSON + Environment.NewLine);
+
+
+        }
+
+        public static List<Guerreros> Simulador(List<Guerreros> ronda, Guerreros jugador)
+        {
+            List<Guerreros> Avanzan = new List<Guerreros>();
+            Guerreros ganadorRonda;
+
+            for (int i = 0; i < ronda.Count; i+=2)
+            {
+                if (ronda[i] == jugador || ronda[i + 1] == jugador)
                 {
-                    Combate1v1(OrdenAleatorio[i], OrdenAleatorio[i + 1]);
+                    ganadorRonda = Combate1v1(ronda[i], ronda[i + 1], 1);
+                    if (ganadorRonda.Name == jugador.Name)
+                    {
+                        Console.WriteLine("Avanzas a la siguiente ronda");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Fuiste eliminado");
+                    }
+                }
+                else
+                {
+                    ganadorRonda = Combate1v1(ronda[i], ronda[i + 1], 0);
+                }
+                Avanzan.Add(ganadorRonda);
+            }
+            return Avanzan;
+        }
+
+
+        public static Guerreros Combate1v1(Guerreros jugador, Guerreros enemigo, int tipo)
+        {
+            if (tipo == 1)
+            {
+                while (sigueVivo(jugador.Salud) && sigueVivo(enemigo.Salud))
+                {
+                    Console.Clear();
+                    Console.CursorVisible = false;
+                    // Asignar colores a los bloques según la raza
+                    ConsoleColor colorL = MensajesTerminal.ColorTerminalRaza(jugador.Race);
+                    ConsoleColor colorR = MensajesTerminal.ColorTerminalRaza(enemigo.Race);
+
+
+                    // Mostrar los datos de jugador e enemigo en paralelo con colores diferentes
+                    MostrarBloquesParalelos(jugador, enemigo, colorL, colorR);
+
+                    jugador.Salud -= 50;
+                    enemigo.Salud -= 10;
+                    string[] probando = { "Atacar", "Esquivar", "Ataque", "Especial", "Rendirse" };
+                    seleccionPlayer = MensajesTerminal.ColorTerminalRaza(jugador.Race);
+                    MenusDelJuego.Menus.MenuGuerreros(probando, "Combate");
+                    Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
 
                 }
-
             }
-
-        }
-
-
-
-
-        public static void Combate1v1(Guerreros jugador, Guerreros item2)
-        {
-
-            
-            for (int i = 0; i < 3; i++)
+            else
             {
-                Console.Clear();
-                Console.CursorVisible = false;
-                // Asignar colores a los bloques según la raza
-                ConsoleColor colorItem1 = MensajesTerminal.ColorTerminalRaza(jugador.Race);
-                ConsoleColor colorItem2 = MensajesTerminal.ColorTerminalRaza(item2.Race);
-
-
-                // Mostrar los datos de item1 e item2 en paralelo con colores diferentes
-                MostrarBloquesParalelos(jugador, item2, colorItem1, colorItem2);
-
-                jugador.Salud -= 20;
-                item2.Salud -= 50;
-                string[] probando = {"Atacar","Esquivar","Ataque","Especial","Rendirse"};
-                seleccionPlayer = MensajesTerminal.ColorTerminalRaza(jugador.Race);
-                MenusDelJuego.Menus.MenuGuerreros(probando,"Combate");
-
-            Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
+                //Aca tiene que ir el combate automatico del resto de los participantes en el cual no se encuentra el jugador
+                jugador.Salud -= 50;
+                enemigo.Salud -= 10;
+            }
+            if (sigueVivo(jugador.Salud))
+            {
+                return jugador;
+            }
+            else
+            {
+                return enemigo;
 
             }
-
-
-
-
-
         }
 
-        private static void MostrarBloquesParalelos(Guerreros item1, Guerreros item2, ConsoleColor colorItem1, ConsoleColor colorItem2)
+        private static void MostrarBloquesParalelos(Guerreros item1, Guerreros enemigo, ConsoleColor colorL, ConsoleColor colorR)
         {
             int ajusteDelAncho = Console.WindowWidth;
-            int anchoTotal = ajusteDelAncho /2;
+            int anchoTotal = ajusteDelAncho / 2;
             //Defino los string adentro de esta función para poder crear el efecto de actualización de pantalla durante el combate
             string[] lineas1 = {
                 $"Salud: {item1.Salud}",
@@ -95,40 +159,43 @@ namespace CombateZ
                 $"Armadura: {item1.Armadura}",
             };
             string[] lineas2 = {
-                $"Salud: {item2.Salud}",
-                $"Nombre: {item2.Name}",
-                $"Raza: {item2.Race}",
-                $"Ki: {item2.KiCombate}",
-                $"Velocidad: {item2.Velocidad}",
-                $"Fuerza: {item2.Fuerza}",
-                $"Armadura: {item2.Armadura}",
+                $"Salud: {enemigo.Salud}",
+                $"Nombre: {enemigo.Name}",
+                $"Raza: {enemigo.Race}",
+                $"Ki: {enemigo.KiCombate}",
+                $"Velocidad: {enemigo.Velocidad}",
+                $"Fuerza: {enemigo.Fuerza}",
+                $"Armadura: {enemigo.Armadura}",
             };
-            Console.ForegroundColor = colorItem1;
-            Console.Write(new string('-', anchoTotal+1));
-            Console.ForegroundColor = colorItem2;
-            Console.WriteLine(" "+new string('-', anchoTotal-1));
-
+            Console.ForegroundColor = colorL;
+            Console.Write(new string('-', anchoTotal + 1));
+            Console.ForegroundColor = colorR;
+            Console.WriteLine(" " + new string('-', anchoTotal - 2));
             for (int i = 0; i < lineas1.Length; i++)
             {
                 //Bloque Izquierda
-                int padding1 = 1+ (anchoTotal - 2 - lineas1[i].Length) / 2;
-                string paddedLinea1 = new string(' ', padding1) + lineas1[i] + new string(' ', anchoTotal  - lineas1[i].Length - padding1) + "|";
+                int padding1 = 1 + (anchoTotal - 2 - lineas1[i].Length) / 2;
+                string paddedLinea1 = new string(' ', padding1) + lineas1[i] + new string(' ', anchoTotal - lineas1[i].Length - padding1) + "|";
                 //Bloque Derecha
                 int padding2 = (anchoTotal - 2 - lineas2[i].Length) / 2;
                 string paddedLinea2 = "|" + new string(' ', padding2) + lineas2[i] + new string(' ', anchoTotal - 2 - lineas2[i].Length - padding2);
-
-                Console.ForegroundColor = colorItem1;
+                Console.ForegroundColor = colorL;
                 Console.Write(paddedLinea1);
-                Console.ForegroundColor = colorItem2;
-                Console.WriteLine(" "+paddedLinea2);
+                Console.ForegroundColor = colorR;
+                Console.WriteLine(" " + paddedLinea2);
             }
-
-            Console.ForegroundColor = colorItem1;
-            Console.Write(new string('-', anchoTotal+1));
-            Console.ForegroundColor = colorItem2;
-            Console.Write(" " +new string('-', anchoTotal-1));
+            Console.ForegroundColor = colorL;
+            Console.Write(new string('-', anchoTotal + 1));
+            Console.ForegroundColor = colorR;
+            Console.Write(" " + new string('-', anchoTotal - 2));
         }
 
+
+
+        public static bool sigueVivo(int hp)
+        {
+            return hp > 0;
+        }
 
     }
 }

@@ -78,7 +78,33 @@ namespace Torneo
                 }
                 temp.Status = MedicionDeKi(temp.Maxki);
                 temp.KiCombate = BalanceoDeKi(temp.Ki);
+                switch (temp.Status)
+                {
+                    case "Humano":
+                        temp.AtaqueEspecial1 = false;
+                        temp.AtaqueEspecial2 = false;
+                        break;
+                    case "SuperHumano":
+                        temp.AtaqueEspecial1 = true;
+                        temp.AtaqueEspecial2 = false;
+                        break;
+                    case "Guerrero Z":
+                        temp.AtaqueEspecial1 = true;
+                        temp.AtaqueEspecial2 = false;
+                        break;
+                    case "Hakaishin":
+                        temp.AtaqueEspecial1 = true;
+                        temp.AtaqueEspecial2 = true;
+                        break;
+                    case "Todo Poderoso":
+                        temp.AtaqueEspecial1 = true;
+                        temp.AtaqueEspecial2 = true;
+                        break;
 
+
+                    default:
+                        break;
+                }
                 Peleadores.Add(temp);
             }
 
@@ -117,7 +143,7 @@ namespace Torneo
 
             while (!seleccionado)
             {
-                elegido = Menus.MenuGuerreros(ListadoGuerreros,"Listado");
+                elegido = Menus.MenuGuerreros(ListadoGuerreros, "Listado");
                 if (ListadoGuerreros[elegido] == "Salir")
                 {
                     return true;

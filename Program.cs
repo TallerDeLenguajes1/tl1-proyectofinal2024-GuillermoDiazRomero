@@ -6,8 +6,8 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-        //Console.CursorVisible = false;
-        //GameStart.GameRun();
+        Console.CursorVisible = false;
+        GameStart.GameRun();
         InterfazCombate.ModuloDeCombate();
         
 
