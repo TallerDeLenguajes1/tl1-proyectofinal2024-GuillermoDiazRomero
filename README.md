@@ -14,10 +14,12 @@
 *1. Torneo de 16 participantes.*  
 *2. Torneo de 8 participantes.*  
 *3. Torneo de 4 participantes.*  
+
 *Cada uno le ofrecerá una lista de "X" cantidad de personajes aleatorios (con su respectiva raza) para seleccionar y comenzar su largo trayecto hacia la cima.*  
 
 ***Durante el combate***
-*El usuario tendrá un menú interactivo donde podra decidir entre Atacar, Esquivar, Rendirse, Ataque especial (si tiene) o Super Ataque (si tiene)*  
+*El usuario tendrá un menú interactivo donde podra decidir entre Atacar, Esquivar, Rendirse, Ataque especial (si tiene) o Super Ataque (si tiene).* 
+ 
 *Cada decisión tendrá su impacto en la partida y cada error puede llevar a recibir daño del oponente. Deberán tener cuidado al momento de realizar un movimiento porque puede significar entre aprovechar o desperdiciar su turno.*  
 
 ---
@@ -35,4 +37,9 @@
     dotnet run
 ```
 
-
+## Frases Importante:
+> **Si un perdedor hace muchos esfuerzos quizás pueda sobrepasar el poder que tiene un guerrero distinguido...**  
+***.                                                                            Goku***  
+> **Yo no moriré, no me importa que mi cuerpo sea destruido por completo, mis deseos de pelear me levantaran porque son muy grandes...**  
+***.                                                                            Gohan del Futuro***  
+***Gracias Akira Toriyama QEPD***
