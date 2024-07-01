@@ -1,5 +1,4 @@
 # DRAGON BALL SPARKING LUCKY
----
 
 ***Dragon Ball Sparking Lucky es un juego de simulación de batallas inspirado en la obra origial Dragon Ball, creada por Akira Toriyama, teniendo la posibilidad de realizar combates con los personajes más icónicos de la serie hasta el momento. Incluyendo personajes desde la saga de los Saiyajins hasta la del Torneo del Poder.***
 
