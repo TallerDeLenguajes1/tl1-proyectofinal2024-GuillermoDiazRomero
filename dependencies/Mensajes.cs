@@ -169,6 +169,17 @@ namespace Mensajes
         }
 
 
+        public static void Preparate(){
+            Console.WriteLine("\n\n");
+            TextoTiempo(@" ____,  ____,  ____,  ____,   ____, ____,   ____, ____,  ____, 
+(-|__) (-|__) (-|_,  (-|__)  (-/_| (-|__)  (-/_| (-|    (-|_,  
+ _|     _|  \, _|__,  _|     _/  |, _|  \, _/  |, _|,    _|__, 
+(      (      (      (      (      (      (      (      (      
+",900,1);
+        }
+
+
+
         public static void CartelDerrota(int tiempo)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;

@@ -70,7 +70,7 @@ namespace CombateZ
                 GanadorTorneo = Combate1v1(Final[0], Final[1], 0);
             }
 
-            if (GanadorTorneo.EleccionUsuario)
+            if (GanadorTorneo.EleccionUsuario == true)
             {
                 Console.Clear();
                 MensajesTerminal.CartelVictoria(1);

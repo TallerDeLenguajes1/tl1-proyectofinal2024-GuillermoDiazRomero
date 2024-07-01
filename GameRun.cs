@@ -89,12 +89,7 @@ namespace StartGame
 
             Thread.Sleep(1000);
 
-            Console.WriteLine("\n\n");
-            MensajesTerminal.TextoTiempo(@" ____,  ____,  ____,  ____,   ____, ____,   ____, ____,  ____, 
-(-|__) (-|__) (-|_,  (-|__)  (-/_| (-|__)  (-/_| (-|    (-|_,  
- _|     _|  \, _|__,  _|     _/  |, _|  \, _/  |, _|,    _|__, 
-(      (      (      (      (      (      (      (      (      
-",700,1);
+            MensajesTerminal.Preparate();
             Thread.Sleep(10);
             Console.Clear();
 

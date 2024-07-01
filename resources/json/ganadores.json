@@ -88,3 +88,39 @@
   "AtaqueEspecial1": true,
   "AtaqueEspecial2": false
 }
+{
+  "EleccionUsuario": false,
+  "Id": 70,
+  "Name": "Kaio del este",
+  "Race": "Nucleico benigno",
+  "Description": "La Kai\u014D del Este es una Kaio que solo aparece en el anime. Le gustan los retos y de entrenar duramente a sus disc\u00EDpulos, que destacan por ser guerreros muy veloces, siendo el ejemplo m\u00E1s claro Chapuchai.",
+  "Salud": 101,
+  "Ki": "10000",
+  "Maxki": "10000",
+  "Status": "SuperHumano",
+  "KiCombate": 4,
+  "Velocidad": 5,
+  "Destreza": 5,
+  "Fuerza": 4,
+  "Armadura": 2,
+  "AtaqueEspecial1": true,
+  "AtaqueEspecial2": false
+}
+{
+  "EleccionUsuario": true,
+  "Id": 44,
+  "Name": "Grand Priest ",
+  "Race": "Angel",
+  "Description": "El Gran Sacerdote es el supervisor del torneo y uno de los seres m\u00E1s poderosos. Gran Ministro de los Omni-Reyes , es un \u00E1ngel que act\u00FAa como asesor cercano y figura gu\u00EDa de Zen\u00F3n y del Futuro Zen\u00F3n . De vez en cuando hace cumplir los Decretos Divinos de los Zenos y da la bienvenida a los invitados a su palacio . El Gran Ministro es tambi\u00E9n padre de trece \u00C1ngeles, de los cuales doce sirven a los Dioses de la Destrucci\u00F3n . Por su posici\u00F3n y poder, es quiz\u00E1s el segundo ser m\u00E1s fuerte del Multiverso .",
+  "Salud": 10399,
+  "Ki": "969 Googolplex",
+  "Maxki": "969 Googolplex",
+  "Status": "Todo Poderoso",
+  "KiCombate": 10000,
+  "Velocidad": 9999,
+  "Destreza": 9999,
+  "Fuerza": 9999,
+  "Armadura": 9999,
+  "AtaqueEspecial1": true,
+  "AtaqueEspecial2": true
+}
