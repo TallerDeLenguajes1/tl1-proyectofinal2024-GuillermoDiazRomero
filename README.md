@@ -27,7 +27,7 @@
 *2. Tener instalado .Net versión 8.0 en su PC. Si no lo tiene descargado puede hacerlo desde [aqui](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)*  
 *3. Clonar el repositorio actual desde una terminal de VisualStudioCode o desde la Bash de Git con el siguiente comando:*  
 ``` bash
-git clone https://github.com/TallerDeLenguajes1/tl1-proyectofinal2024-GuillermoDiazRomero
+    git clone https://github.com/TallerDeLenguajes1/tl1-proyectofinal2024-GuillermoDiazRomero
 ``` 
 *De esta forma se descargará todo el juego en una carpeta con el nombre tl1-proyectofinal2024-GuillermoDiazRomero*  
 *Luego debe abrir dicha carpeta con VisualStudioCode, abrir una nueva terminal y ejecutar el siguiente comando:*  
