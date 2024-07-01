@@ -8,10 +8,11 @@ namespace Torneo
     public class TorneoSet()
     {
         //Seccion de aleatoriedad de personajes
-        private static string respaldoDB = @"resources\backup\Respaldo.JSON"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
-        private static string ArchivoPJZ = @"resources\json\characters.JSON";
-        public static string jugadorPJZ = @"resources\json\player.JSON";
-        public static string enemigosZ = @"resources\json\enemies.JSON";
+        private static string respaldoDB = @"resources\backup\Respaldo.json"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
+        private static string ArchivoPJZ = @"resources\json\characters.json";
+        public static string jugadorPJZ = @"resources\json\player.json";
+        public static string enemigosZ = @"resources\json\enemies.json";
+        public static string rutaCarpeta = @"resources\json";
         public static void AleatorioZ(int tama)
         {
             if (!File.Exists(respaldoDB))
@@ -108,6 +109,10 @@ namespace Torneo
                 Peleadores.Add(temp);
             }
 
+            if (!Directory.Exists(rutaCarpeta))
+            {
+                Directory.CreateDirectory(rutaCarpeta);
+            }
             //Guardado de personajes en un archivo Seleccion.JSON
             if (!File.Exists(ArchivoPJZ))
             {

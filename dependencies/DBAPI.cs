@@ -10,6 +10,8 @@ namespace DBAPI
         public async Task<bool> TraerAPI() //Creo el Task de tipo bool para poder hacer un control de conexión con la API web
         {
             var url = "https://dragonball-api.com/api/characters?limit=58";
+            string rutaCarpeta = @"resources\backup";
+
             try
             {
                 HttpClient cliente = new HttpClient();
@@ -18,9 +20,14 @@ namespace DBAPI
                 string responseBody = await respuesta.Content.ReadAsStringAsync();
                 var contenidoAPI = JsonSerializer.Deserialize<Root>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 //Creo un archivo JSON que contenga toda la información de la API por si en algun momento el juego se ejecuta de forma offline
-                string RespaldoJSON = @"resources\backup\Respaldo.JSON";
+                string RespaldoJSON = @"resources\backup\Respaldo.json";
                 //Pongo los foreach adentro de los ifs para evitar recorrer la API si ocurre algún error
                 List<Item> LineasJSON = new List<Item>();
+
+                if(!Directory.Exists(rutaCarpeta)){
+                    Directory.CreateDirectory(rutaCarpeta);
+                }
+
                 if (!File.Exists(RespaldoJSON))
                 {
                     using (File.Create(RespaldoJSON)) {/*Soluciona un error de acceso al archivo, porque al crearlo el FileStream deja al archivo abierto mientras que de esta forma se cierra el archivo*/};
