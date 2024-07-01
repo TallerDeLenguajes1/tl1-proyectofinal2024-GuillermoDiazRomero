@@ -4,6 +4,7 @@ using Torneo;
 using Mensajes;
 using MenusDelJuego;
 using System.Media;
+using CombateZ;
 
 
 namespace StartGame
@@ -11,6 +12,10 @@ namespace StartGame
     public class GameStart()
     {
         private static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Salir del Juego" };
+
+        private static string[] menuSongs = {@"resources\audio\LimitSurvivor.wav",@"resources\audio\SolidStateScouter.wav"};
+
+         
         private static bool iteracionesMenu = true;
         public static bool IteracionesMenu { get => iteracionesMenu; set => iteracionesMenu = value; }
         public static void GameRun()
@@ -36,9 +41,8 @@ namespace StartGame
 
             /*  SACAR EL COMENTADO CUANDO EL JUEGO ESTE CASI COMPLETO   */
 
-            string soundtrack = @"resources\audio\LimitSurvivor.wav";
-            SoundPlayer soundPLay = new SoundPlayer(soundtrack);
-            soundPLay.PlayLooping();
+            SoundPlayer Opening = new SoundPlayer(menuSongs[0]);
+            Opening.PlayLooping();
             Thread.Sleep(10);
 
             /*----------------------------------------------------------*/
@@ -79,7 +83,22 @@ namespace StartGame
 
 
             /*      Sección de Combate      */ 
+            Opening.Stop();
+            SoundPlayer CombatSong = new SoundPlayer(menuSongs[1]);
+            CombatSong.PlayLooping();
 
+            Thread.Sleep(1000);
+
+            Console.WriteLine("\n\n");
+            MensajesTerminal.TextoTiempo(@" ____,  ____,  ____,  ____,   ____, ____,   ____, ____,  ____, 
+(-|__) (-|__) (-|_,  (-|__)  (-/_| (-|__)  (-/_| (-|    (-|_,  
+ _|     _|  \, _|__,  _|     _/  |, _|  \, _/  |, _|,    _|__, 
+(      (      (      (      (      (      (      (      (      
+",700,1);
+            Thread.Sleep(10);
+            Console.Clear();
+
+            InterfazCombate.ModuloDeCombate();
 
 
         }

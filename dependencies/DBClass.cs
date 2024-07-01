@@ -26,7 +26,7 @@ namespace DBClass
 
     public class Guerreros
     {
-        private int id; private string name; private string race; private string description; private int salud; private string ki; private string maxki; private string status; private int kiCombate; private int velocidad; private int destreza; private int fuerza; private int armadura; 
+        private int id; private string name; private string race; private string description; private double salud; private string ki; private string maxki; private string status; private int kiCombate; private int velocidad; private int destreza; private int fuerza; private int armadura; 
 
         private bool ataqueEspecial1;
         private bool ataqueEspecial2;
@@ -37,7 +37,7 @@ namespace DBClass
         public string Name { get => name; set => name = value; }
         public string Race { get => race; set => race = value; }
         public string Description { get => description; set => description = value; }
-        public int Salud { get => salud; set => salud = value; }
+        public double Salud { get => salud; set => salud = value; }
         public string Ki { get => ki; set => ki = value; }
         public string Maxki { get => maxki; set => maxki = value; }
         public string Status { get => status; set => status = value; }

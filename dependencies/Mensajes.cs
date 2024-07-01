@@ -28,11 +28,12 @@ namespace Mensajes
             }
         }
 
-        public static void CentradoSimple (string centrado,int tiempo, int tipo){
+        public static void CentradoSimple(string centrado, int tiempo, int tipo)
+        {
             int anchoTerminal = Console.WindowWidth;
             int padding = (anchoTerminal - centrado.Length) / 2;
-                centrado = new string(' ', padding) + centrado;
-                TextoTiempo (centrado,tiempo,tipo);
+            centrado = new string(' ', padding) + centrado;
+            TextoTiempo(centrado, tiempo, tipo);
         }
         public static void mostrarPjs(Guerreros item)
         {
@@ -79,7 +80,7 @@ namespace Mensajes
                 case "Angel": Console.ForegroundColor = ConsoleColor.White; break;
                 case "Evil": Console.ForegroundColor = ConsoleColor.DarkRed; break;
                 case "Nucleico": Console.ForegroundColor = ConsoleColor.Gray; break; //Gran-Kaio-samas
-                case "Nucleico venigno": Console.ForegroundColor = ConsoleColor.Gray; break;  //Sumpremos Kaio-samas
+                case "Nucleico benigno": Console.ForegroundColor = ConsoleColor.Gray; break;  //Sumpremos Kaio-samas
                 case "Unknown": Console.ForegroundColor = ConsoleColor.Blue; break;
             }
             return Console.ForegroundColor;
@@ -113,11 +114,162 @@ namespace Mensajes
 
             TextoTiempo(centrado, tiempo, 1);
         }
-    
-        public static void ErrorSalir(){
-            TextoTiempo("Nos robaron el radar del dragon...",1000,1);
-            TextoTiempo("Saliendo del juego...",2000,1);
+
+        public static void ErrorSalir()
+        {
+            TextoTiempo("Nos robaron el radar del dragon...", 1000, 1);
+            TextoTiempo("Saliendo del juego...", 2000, 1);
             Environment.Exit(0);
+        }
+
+        public static void MostrarBloquesParalelos(Guerreros pjL, Guerreros pjR, ConsoleColor colorJ, ConsoleColor colorE)
+        {
+            int ajusteDelAncho = Console.WindowWidth;
+            int anchoTotal = ajusteDelAncho / 2;
+            //Defino los string adentro de esta función para poder crear el efecto de actualización de pantalla durante el combate
+            string[] lineas1 = {
+                $"Salud: {pjL.Salud}",
+                $"Nombre: {pjL.Name}",
+                $"Raza: {pjL.Race}",
+                $"Ki: {pjL.KiCombate}",
+                $"Velocidad: {pjL.Velocidad}",
+                $"Fuerza: {pjL.Fuerza}",
+                $"Armadura: {pjL.Armadura}",
+            };
+            string[] lineas2 = {
+                $"Salud: {pjR.Salud}",
+                $"Nombre: {pjR.Name}",
+                $"Raza: {pjR.Race}",
+                $"Ki: {pjR.KiCombate}",
+                $"Velocidad: {pjR.Velocidad}",
+                $"Fuerza: {pjR.Fuerza}",
+                $"Armadura: {pjR.Armadura}",
+            };
+            Console.ForegroundColor = colorJ;
+            Console.Write(new string('-', anchoTotal + 1));
+            Console.ForegroundColor = colorE;
+            Console.WriteLine(" " + new string('-', anchoTotal - 2));
+            for (int i = 0; i < lineas1.Length; i++)
+            {
+                //Bloque Izquierda
+                int padding1 = 1 + (anchoTotal - 2 - lineas1[i].Length) / 2;
+                string paddedLinea1 = new string(' ', padding1) + lineas1[i] + new string(' ', anchoTotal - lineas1[i].Length - padding1) + "|";
+                //Bloque Derecha
+                int padding2 = (anchoTotal - 2 - lineas2[i].Length) / 2;
+                string paddedLinea2 = "|" + new string(' ', padding2) + lineas2[i] + new string(' ', anchoTotal - 2 - lineas2[i].Length - padding2);
+                Console.ForegroundColor = colorJ;
+                Console.Write(paddedLinea1);
+                Console.ForegroundColor = colorE;
+                Console.WriteLine(" " + paddedLinea2);
+            }
+            Console.ForegroundColor = colorJ;
+            Console.Write(new string('-', anchoTotal + 1));
+            Console.ForegroundColor = colorE;
+            Console.Write(" " + new string('-', anchoTotal - 2));
+        }
+
+
+        public static void CartelDerrota(int tiempo)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            string[] letraASCII =
+            [
+@"⠀⠀⠀⠀⠀⠀⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⡟⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢡⠇⢸⣿⣿⣿⣿⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢛⣿⣿⣿⣿⣿⡿⠁⠀⡞⠀⠸⣿⣿⣿⡏⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⣸⣿⣿⣿⣿⠟⠀⠀⢰⠇⠀⠀⣿⣿⣿⠁⠀⡀⠀⠀⢸⣿⣿⣿⣿⣿⣿⡿⢋⠙⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⣿⣿⣿⣿⠏⠀⠀⠀⣿⠀⠀⠀⣿⣿⣿⣿⣷⣿⠷⠀⢸⣿⣿⣿⣿⣿⡿⢠⣟⢳⠘⣿⣿⣿⣿⣿⣿",
+@"⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠸⣿⣿⠃⠀⠀⠀⢀⡏⠀⢀⣴⣿⣿⠿⠛⣯⠀⠀⠀⣿⡿⢻⣿⣿⣿⠁⡜⣬⠁⠀⢹⣿⣿⣿⣿⣿",
+@"⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⠀⣿⡏⠀⠀⠀⠀⢸⠁⣰⣾⠿⠋⠁⠀⠀⣿⠀⠀⠰⠟⠀⣸⣿⠟⠁⠀⠳⢾⡇⠀⢸⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠙⠛⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡙⢿⠷⣿⣄⣀⢀⣀⢀⣼⡿⠛⣁⡀⠀⠀⠀⣀⡿⠀⠀⠀⠀⠀⡿⠃⠀⠀⠀⣴⣾⡇⠀⣼⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⡈⢧⡀⠹⡿⣦⣿⠻⠋⠻⣤⠭⠗⠒⢊⣉⣁⣤⣤⠄⠀⠀⠀⠁⠀⠀⠀⢰⡿⠉⣠⣾⣿⣿⣿⡟⣫⣵",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠙⠶⣗⡛⠀⠀⠀⠀⠤⠴⠒⠒⠛⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡷⡾⠻⠿⠟⠋⠀⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠉⠉⣸⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠿⣷⠃⠀⠀⠀⠀⢠⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⠿⠿⠟⠛⠛⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠛⠛⠻⣆⣼⣃⡤⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣾⣿⡷⡆⠀⠀⠀⣸⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣦⡀⠉⠁⠀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⠛⢯⣛⣿⠇⠀⠀⢠⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⡀⠀⠀⠈⠙⢦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠫⡴⠂⠀⠉⡄⠀⠀⠀⣸⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠶⠋⠉⠀⠀⠀⠀⠉⠉⠓⠦⣄⣀⣨⠷⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡴⠋⢤⠍⠁⠀⠀⠀⡇⠀⠀⢠⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣀⠀⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣇⠀⠀⠙⠳⣤⡀⠀⠀⠀⣀⣴⣞⠁⢠⢤⠏⠀⠀⠀⠀⠀⣇⣠⣶⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠟⠁⡇⠈⠙⣾⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠋⠀⠀⠀⠀⠀⠉⢻⠛⠋⠉⢹⣿⣷⣤⣨⣀⣀⠀⣀⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⢀⣤⡶⢤⣀⡋⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠸⡇⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡏⠀⡴⠛⠁⡇⠀⠀⣹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡏⣠⢾⡁⠀⠀⢱⡖⢶⡟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡆⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢠⡇⡞⠁⠰⠴⠯⣽⣄⣙⡇⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣧⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁",
+@"⠀⠀⠀⠀⠀⠀⠀⣠⣼⡇⠀⣴⠇⠀⠀⠀⠀⠀⠈⣿⣇⠠⠖⠒⠒⠶⠤⠄⠀⣼⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠀⠀",
+@"⠀⠀⠀⠀⠀⢠⣾⣿⡿⠀⠀⢻⠆⠀⠛⠉⠉⠙⣾⠁⢈⣽⣶⣦⣤⣤⣤⣤⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣧⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀",
+@"⠀⠀⠀⠀⢀⣿⣿⣿⠃⠀⠀⢻⡄⣀⣠⣤⡤⠶⣣⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠠⠀⠀⠀⠀⠀⠈⢷⡀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⢸⣿⣿⠇⠀⠀⠀⠀⠀⠀⣺⣿⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⢸⡄⠀⠀⠀⠀⠀⠈⢻⡄⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⡀",
+@"⠀⠀⠀⠀⣿⣿⣿⡀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⡈⣧⠀⠀⠀⠀⠀⠀⠀⠹⣶⣄⠀⠀⠈⢿⣿⣿⣿⡟⠁⠀⠀⠀⠀⡐⠀",
+@"⠀⠀⠀⠀⣿⣿⣿⣷⣄⣀⣀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⢷⢸⣆⠀⠀⠀⠀⠀⠀⠀⠙⢿⣦⣀⠀⠀⠙⣿⠏⠀⠀⠀⢀⣀⠔⠀⠀"
+    ];
+
+            int anchoTerminal = Console.WindowWidth;
+            string centrado = "";
+
+
+            foreach (string linea in letraASCII)
+            {
+                int padding = (anchoTerminal - linea.Length) / 2;
+                centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.NewLine remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
+            }
+
+
+            TextoTiempo(centrado, tiempo, 1);
+        }
+
+        public static void CartelVictoria(int tiempo)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            string[] letraASCII =
+            [
+@"⠀⠀⠀⠀⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⢠⣄⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠁⣿⣿⣿⣿⣿⣿⣿⠟⠁⡞⠙⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠘⣇⠉⠳⠦⣀⠀⠀⠀⠀",
+@"⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⢸⣿⣿⣿⣿⣿⠟⠁⠀⡼⠀⢀⣿⣿⣿⠇⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⢸⡄⠀⠀⠀⠉⠓⠦⠄",
+@"⠀⠀⠉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣦⠀⠀⠀⣼⣿⣿⣿⠟⠁⠀⠀⣸⣣⣴⣾⣿⣿⣿⣶⣄⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠈⢻⣆⠀⠀⣿⣿⣿⠋⠀⠀⢀⣴⣿⡿⢻⣿⣿⡏⠙⠻⠿⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⡴⠒⠶⣿⡄⠀⣿⡿⠁⠀⢀⣴⣿⡟⠉⠀⢀⣿⠟⢧⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢸⠁⠀⠀⠀⠉⠠⠿⠀⠀⣠⠞⠋⠈⠁⠀⠀⠈⠁⠀⢸⡄⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⡀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⣁⣤⡄⠀⠀⠀⠀⣀⡀⠀⢸⠇⠀⠀⣠⣿⠿⣿⣿⣿⣿⡿⠛⠉⢻⡟⠿⣿⡟⠁⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⣀⣤⣤⣶⣶⣾⣿⠿⣿⣿⣿⣿⣿⠷⠼⡄⠀⠀⢰⣿⡆⠀⠀⠀⠈⠿⠋⠀⠀⠀⢸⡋⠙⢦⣼⠀⠀⠐⠛⠉⣼⣿⣿⣿⠛⢠⡶⠀⠘⣷⠀⠈⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠲⢿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠹⣿⣿⣿⣿⡀⠀⣷⠀⢀⣀⠁⠀⠀⠀⠀⠀⠀⢴⣲⣾⣽⡟⠳⡀⠀⠙⣗⢦⡀⠀⣸⠟⠁⠟⠁⢠⣿⡀⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠈⠉⠛⠿⣿⣿⠃⠸⡄⠀⡏⢻⣿⣿⡇⠀⠘⢏⣩⣴⠾⠃⠀⠀⠰⠖⠚⠉⠁⠀⡾⢧⡀⠈⢦⡀⠘⢦⡙⢾⡁⠀⠀⠀⠀⣟⠀⠁⠀⠀⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⢠⡟⡇⠀⠀⡇⠀⡇⠀⣿⣿⣿⠐⠛⠉⠹⣄⠒⣶⠄⠀⠀⣀⡤⠚⠙⣆⢳⡀⠉⢧⡀⠙⢦⡀⠙⢌⠳⡀⠀⠀⠀⠻⢙⡦⠀⢀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⢼⠁⣿⠀⠀⡇⠀⡇⠀⢸⣿⣿⡄⠀⠀⠀⠘⠋⣁⡠⠴⢛⣁⣤⣴⣶⣿⡀⠙⡄⠀⠙⢦⠀⠙⣆⠈⢳⣳⡄⠀⡠⢴⡞⠁⢀⣾⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⡟⠀⣿⠀⠘⡅⠀⡇⠀⢸⡏⠻⡇⠀⠀⠀⠀⠀⣏⠀⠚⢻⣿⣿⣿⡿⠛⣇⠀⠙⣆⠀⠈⢳⡀⠈⠓⠦⠙⣷⣴⠟⠉⢀⣴⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⢸⠀⠀⡇⠀⢳⠀⠀⣇⣠⡷⣄⠀⠀⠀⠀⠘⢷⣶⣿⣿⣿⠟⠁⠀⢸⠀⠀⠸⣆⠀⠀⠙⣄⠀⠀⠀⠈⢳⡶⠶⢿⠿⠿⠛⠉⠙⡇⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⢸⡀⠀⡇⠀⣺⣀⣀⣾⠁⠀⠈⣇⠀⠀⠀⠀⠈⢿⣿⡿⡏⠀⠀⠀⢸⠀⠀⠀⠹⡄⠀⠀⣮⢳⡀⠀⢆⠀⢷⠀⠀⠀⠀⠀⠀⢠⡇⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⢸⣆⣠⠟⠋⠀⠀⠀⢸⡄⠀⠀⢸⢦⣀⠀⠀⠀⠀⠹⣄⠹⢤⡤⢴⡟⠀⠀⠀⠀⢻⠀⠀⠘⠛⠙⠀⠀⠀⠘⣦⠀⠰⣦⠤⠖⠛⠁⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠾⠋⠁⣠⡴⠂⠀⠀⠀⡧⢶⠀⣿⠀⠙⠳⣄⡀⠀⠀⠈⠓⠤⠔⠚⠁⠀⠀⠀⠀⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠻⡄⠀⠘⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⣷⠀⠀⢠⠞⠁⠀⣀⣤⠴⢎⡇⠀⠀⣿⣰⡀⠀⣯⠙⠲⢤⡀⠀⠀⠀⠀⠀⠀⠀⣀⣤⠾⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⢳⡀⠀⠘⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⢹⡀⠀⠀⠠⠚⠉⠁⠀⢀⡾⠓⠂⠀⡏⢷⢧⠀⢸⡄⠀⠀⢻⠳⠦⠤⠤⢶⣶⠋⠉⠉⠉⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⣠⣤⣹⡄⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠘⡇⠀⠶⣦⣀⠀⠀⢀⠟⠀⠀⠀⠀⡇⠈⢟⣆⢸⡇⠀⠀⠈⣇⠀⠀⠀⠀⠙⢳⣄⠀⠀⠀⢷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⠀⠀⠀⠈⠛⠒⠀⠀⠀⠀⢀⣼⠃⠀⠘⣟⠀⢷⠀⠀⠀⢹⡦⠤⠤⠤⢤⣀⣙⢦⡀⠀⠘⣧⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⢀⣼⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡞⠁⠀⠀⠀⠀⠀⠸⡄⠀⠀⠈⢷⠀⠀⠀⠀⠀⠉⠙⠳⢤⣀⣘⣦⡀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣷⣤⡀⠀⢀⣤⣤⣶⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⢳⡀⠀⠀⠈⢣⡀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠀⠙⠲⢦⣄⣠⣾⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣭⣼⣷⣿⣿⣿⡏⠘⣆⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⢿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠹⡄⠹⡄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠙⠦⣄⠀⠀⠀⠀⣶⠀⠀⠀⠀⠀⠀⣽⢿⣿⣿⣿⣇⣤⡄⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⣠⠜⠋⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠘⣄⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⢤⣀⡀⠀⠈⠳⢤⣀⠀⢹⡄⠀⠀⠀⢀⡼⠃⠀⠉⠻⣿⣿⣿⣧⡄⠀⠀⠀⠀⠀⠀",
+    ];
+
+            int anchoTerminal = Console.WindowWidth;
+            string centrado = "";
+
+
+            foreach (string linea in letraASCII)
+            {
+                int padding = (anchoTerminal - linea.Length) / 2;
+                centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.NewLine remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
+            }
+
+
+            TextoTiempo(centrado, tiempo, 1);
         }
     }
 }

@@ -166,7 +166,7 @@ namespace Torneo
             {
                 using (File.Create(enemigosZ)) { }
             }
-
+            datosZ[elegido].EleccionUsuario = true;
             string DatosJugadorJSON = JsonSerializer.Serialize(datosZ[elegido], new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
             File.WriteAllText(jugadorPJZ, DatosJugadorJSON);
 
