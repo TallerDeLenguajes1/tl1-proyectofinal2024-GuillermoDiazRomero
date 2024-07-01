@@ -39,7 +39,7 @@
 
 ## Frases Importante:
 > **Si un perdedor hace muchos esfuerzos quizás pueda sobrepasar el poder que tiene un guerrero distinguido...**  
-***.                                                                            Goku***  
+***-Goku***  
 > **Yo no moriré, no me importa que mi cuerpo sea destruido por completo, mis deseos de pelear me levantaran porque son muy grandes...**  
-***.                                                                            Gohan del Futuro***  
+***-Gohan del Futuro***  
 ***Gracias Akira Toriyama QEPD***
