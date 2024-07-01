@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/csharp,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,visualstudiocode
 
@@ -8,8 +15,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 ## Evito la subida del archivo de personajes ya que es un archivo que se genera cuando se inicia cada torneo
+json/
 characters.json
-enemigos.json
+enemies.json
 player.json
 
 # User-specific files
