@@ -3,7 +3,7 @@ using Mensajes;
 using Torneo;
 using System.Text.Json;
 using MenusDelJuego;
-using MenusDelJuego;
+
 
 namespace CombateZ
 {
@@ -132,60 +132,15 @@ namespace CombateZ
                 if (pjL.EleccionUsuario)
                 {
                     //Selección del menú adecuado al personaje
-                    if (pjL.AtaqueEspecial2)
-                    {
-                        opciones1 = OpcionesCombate1;
-                    }
-                    else if (pjL.AtaqueEspecial1)
-                    {
-                        opciones1 = OpcionesCombate2;
-                    }
-                    else
-                    {
-                        opciones1 = OpcionesCombate3;
-                    }
-                    if (pjR.AtaqueEspecial2)
-                    {
-                        opciones2 = OpcionesCombate4;
-                    }
-                    else if (pjR.AtaqueEspecial1)
-                    {
-                        opciones2 = OpcionesCombate5;
-                    }
-                    else
-                    {
-                        opciones2 = OpcionesCombate6;
-                    }
+                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1: pjL.AtaqueEspecial2 ? OpcionesCombate2 : OpcionesCombate3;
+                    opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4: pjR.AtaqueEspecial1? OpcionesCombate5: OpcionesCombate6;
                 }
                 else
                 {
                     //Selección del menú adecuado al personaje
-                    if (pjR.AtaqueEspecial2)
-                    {
-                        opciones1 = OpcionesCombate1;
-                    }
-                    else if (pjR.AtaqueEspecial1)
-                    {
-                        opciones1 = OpcionesCombate2;
-                    }
-                    else
-                    {
-                        opciones1 = OpcionesCombate3;
-                    }
-                    if (pjL.AtaqueEspecial2)
-                    {
-                        opciones2 = OpcionesCombate4;
-                    }
-                    else if (pjL.AtaqueEspecial1)
-                    {
-                        opciones2 = OpcionesCombate5;
-                    }
-                    else
-                    {
-                        opciones2 = OpcionesCombate6;
-                    }
+                    opciones1 = pjR.AtaqueEspecial2 ? OpcionesCombate1: pjR.AtaqueEspecial2 ? OpcionesCombate2 : OpcionesCombate3;
+                    opciones2 = pjL.AtaqueEspecial2 ? OpcionesCombate4: pjL.AtaqueEspecial1? OpcionesCombate5: OpcionesCombate6;
                 }
-
                 while (sigueVivo(pjL.Salud) && sigueVivo(pjR.Salud))
                 {
                     Console.Clear();
@@ -535,7 +490,7 @@ namespace CombateZ
             {
                 if (exito2)
                 {
-                    Console.WriteLine(primero.Name + " esquivó con éxito");
+                    Console.WriteLine(segundo.Name + " esquivó con éxito");
                     Thread.Sleep(2000);
                 }
                 if (!fallo1)
@@ -549,7 +504,7 @@ namespace CombateZ
             {
                 if (sigueVivo(salud2))
                 {
-                    salud1 -= ataque1;
+                    salud1 -= ataque2;
                     salud1 = Math.Round(salud1, 2);
                 }
             }
@@ -557,7 +512,7 @@ namespace CombateZ
             {
                 if (exito1)
                 {
-                    Console.WriteLine(segundo.Name + " esquivó con éxito");
+                    Console.WriteLine(primero.Name + " esquivó con éxito");
                     Thread.Sleep(1000);
                 }
                 if (!fallo2)
