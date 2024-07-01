@@ -154,3 +154,61 @@
     "AtaqueEspecial2": false
   }
 ]
+[
+  {
+    "EleccionUsuario": false,
+    "Id": 11,
+    "Name": "Krillin",
+    "Race": "Human",
+    "Description": "Amigo cercano de Goku y guerrero valiente, es un personaje del manga y anime de Dragon Ball. Es uno de los principales disc\u00EDpulos de Kame-Sen\u0027nin, Guerrero Z, y el mejor amigo de Son Goku. Es junto a Bulma uno de los personajes de apoyo principales de Dragon Ball, Dragon Ball Z y Dragon Ball Super. Aparece en Dragon Ball GT como personaje secundario. En el Arco de Majin Boo, se retira de las artes marciales, optando por formar una familia, como el esposo de la Androide N\u00FAmero 18 y el padre de Marron.",
+    "Salud": 161,
+    "Ki": "1.000.000",
+    "Maxki": "1 Billion",
+    "Status": "Guerrero Z",
+    "KiCombate": 6,
+    "Velocidad": 3,
+    "Destreza": 3,
+    "Fuerza": 4,
+    "Armadura": 2,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": false
+  }
+]
+[
+  {
+    "EleccionUsuario": false,
+    "Id": 33,
+    "Name": "Bills",
+    "Race": "God",
+    "Description": "Dios de la Destrucci\u00F3n Beerus, conocido tambi\u00E9n como Beers, o Bills en Hispanoam\u00E9rica e inicialmente en Espa\u00F1a[1], es un personaje que fue introducido en la pel\u00EDcula Dragon Ball Z: La batalla de los dioses, donde es el antagonista principal de la pel\u00EDcula, y que aparece en el manga y anime de Dragon Ball Super como un personaje principal. Ocupa el puesto de Dios de la Destrucci\u00F3n de todo el Universo 7 siendo el lugar donde se desarrolla la historia de Dragon Ball.",
+    "Salud": 291,
+    "Ki": "102 Billion",
+    "Maxki": "100 septillion",
+    "Status": "Hakaishin",
+    "KiCombate": 6,
+    "Velocidad": 10,
+    "Destreza": 10,
+    "Fuerza": 10,
+    "Armadura": 10,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": true
+  },
+  {
+    "EleccionUsuario": true,
+    "Id": 66,
+    "Name": "Vegetto",
+    "Race": "Saiyan",
+    "Description": "Vegetto es el personaje m\u00E1s fuerte dentro del manga original y uno de los personajes m\u00E1s poderosos de toda la serie en general. Su poder es el resultado del m\u00E1ximo poder combinado de Goku y Vegeta, multiplicado varias veces su fuerza, siendo una de las fusiones m\u00E1s poderosas dentro de la franquicia.",
+    "Salud": 191.2,
+    "Ki": "180 Billion",
+    "Maxki": "10.8 Septillion",
+    "Status": "Hakaishin",
+    "KiCombate": 6,
+    "Velocidad": 6,
+    "Destreza": 6,
+    "Fuerza": 7,
+    "Armadura": 7,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": true
+  }
+]

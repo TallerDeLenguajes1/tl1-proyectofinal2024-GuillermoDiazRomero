@@ -256,7 +256,7 @@ namespace CombateZ
 
                         }
                     }
-                    else if (pjR.EleccionUsuario == false)
+                    else if (pjR.EleccionUsuario == true)
                     {
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
                         seleccion = Menus.MenuGuerreros(opciones1, "Combate");
