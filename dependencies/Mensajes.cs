@@ -1,3 +1,4 @@
+using System.Media;
 using DBClass;
 namespace Mensajes
 {
@@ -104,14 +105,11 @@ namespace Mensajes
             int anchoTerminal = Console.WindowWidth;
             string centrado = "";
 
-
             foreach (string linea in letraASCII)
             {
                 int padding = (anchoTerminal - linea.Length) / 2;
                 centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.NewLine remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
             }
-
-
             TextoTiempo(centrado, tiempo, 1);
         }
 
@@ -169,13 +167,14 @@ namespace Mensajes
         }
 
 
-        public static void Preparate(){
+        public static void Preparate()
+        {
             Console.WriteLine("\n\n");
             TextoTiempo(@" ____,  ____,  ____,  ____,   ____, ____,   ____, ____,  ____, 
 (-|__) (-|__) (-|_,  (-|__)  (-/_| (-|__)  (-/_| (-|    (-|_,  
  _|     _|  \, _|__,  _|     _/  |, _|  \, _/  |, _|,    _|__, 
 (      (      (      (      (      (      (      (      (      
-",900,1);
+", 900, 1);
         }
 
 
@@ -227,11 +226,19 @@ namespace Mensajes
 
 
             TextoTiempo(centrado, tiempo, 1);
+            Console.ForegroundColor = ConsoleColor.White;
+            SoundPlayer player = new SoundPlayer(FraseDerrota);
+            player.Play();
+            Thread.Sleep(4500);
         }
 
         public static void CartelVictoria(int tiempo)
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
+            SoundPlayer player = new SoundPlayer(FraseVictoria);
+            player.Play();
+            Thread.Sleep(10250);
+
             string[] letraASCII =
             [
 @"⠀⠀⠀⠀⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
@@ -281,7 +288,12 @@ namespace Mensajes
 
 
             TextoTiempo(centrado, tiempo, 1);
+            Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(9000);
+
         }
+        private static string FraseDerrota = @"resources\audio\Frase Final Derrota.wav";
+        private static string FraseVictoria = @"resources\audio\Frase Final Victoria.wav";
     }
 }
 

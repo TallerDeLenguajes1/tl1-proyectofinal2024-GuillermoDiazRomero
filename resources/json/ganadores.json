@@ -1,0 +1,156 @@
+[
+  {
+    "EleccionUsuario": true,
+    "Id": 34,
+    "Name": "Whis",
+    "Race": "Angel",
+    "Description": "Whis es uno de los hijos del Gran Sacerdote, hermano menor de Vados, Korn y Kus. Es el \u00E1ngel gu\u00EDa encargado de asistir y servir como maestro al Dios de la Destrucci\u00F3n del Universo 7, Beerus.",
+    "Salud": 161,
+    "Ki": "15 septillion",
+    "Maxki": "110 septillion",
+    "Status": "Hakaishin",
+    "KiCombate": 10,
+    "Velocidad": 20,
+    "Destreza": 20,
+    "Fuerza": 20,
+    "Armadura": 20,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": true
+  },
+  {
+    "EleccionUsuario": false,
+    "Id": 42,
+    "Name": "Marcarita ",
+    "Race": "Angel",
+    "Description": "Marcarita es el \u00E1ngel gu\u00EDa del Universo 11, sirviente y maestra de artes marciales del Dios de la Destrucci\u00F3n Vermoud. Es un personaje de la Arco de la Supervivencia Universal de Dragon Ball Super.",
+    "Salud": 500,
+    "Ki": "10 septillion",
+    "Maxki": "99.5 septillion",
+    "Status": "Hakaishin",
+    "KiCombate": 10,
+    "Velocidad": 20,
+    "Destreza": 20,
+    "Fuerza": 20,
+    "Armadura": 20,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": true
+  }
+]
+[
+  {
+    "EleccionUsuario": true,
+    "Id": 15,
+    "Name": "Gotenks",
+    "Race": "Saiyan",
+    "Description": " Gotenks tambi\u00E9n conocido inicialmente como Gotrunk en el doblaje al espa\u00F1ol de Espa\u00F1a, es el resultado de la Danza de la Fusi\u00F3n llevada a cabo correctamente por Goten y Trunks.",
+    "Salud": 107,
+    "Ki": "65.600.000",
+    "Maxki": "34.8 Billion",
+    "Status": "Guerrero Z",
+    "KiCombate": 6,
+    "Velocidad": 6,
+    "Destreza": 6,
+    "Fuerza": 7,
+    "Armadura": 7,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": false
+  },
+  {
+    "EleccionUsuario": false,
+    "Id": 32,
+    "Name": "Majin Buu",
+    "Race": "Majin",
+    "Description": "Tambi\u00E9n conocido como Boo original, es la forma original y pura de Majin-Boo, y la \u00FAltima forma de Boo que aparece en Dragon Ball Z.",
+    "Salud": 117,
+    "Ki": "8 Billion",
+    "Maxki": "100 Trillion",
+    "Status": "Guerrero Z",
+    "KiCombate": 6,
+    "Velocidad": 4,
+    "Destreza": 5,
+    "Fuerza": 5,
+    "Armadura": 3,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": false
+  }
+]
+[
+  {
+    "EleccionUsuario": false,
+    "Id": 43,
+    "Name": "Vermoudh",
+    "Race": "God",
+    "Description": "Es el individuo que actualmente ostenta el cargo de Dios de la Destrucci\u00F3n en el Universo 11, puesto que obtuvo tras abandonar su membres\u00EDa como Soldado del Orgullo dentro de las Tropas del Orgullo.",
+    "Salud": 242.2,
+    "Ki": "9.9 Septillion",
+    "Maxki": "100 septillion",
+    "Status": "Hakaishin",
+    "KiCombate": 10,
+    "Velocidad": 10,
+    "Destreza": 10,
+    "Fuerza": 10,
+    "Armadura": 10,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": true
+  }
+]
+[
+  {
+    "EleccionUsuario": true,
+    "Id": 8,
+    "Name": "Ginyu",
+    "Race": "Frieza Race",
+    "Description": "Ginyu es el l\u00EDder del la \u00E9lite de mercenarios de mayor prestigio del Ej\u00E9rcito de Freeza, la cual lleva el nombre de Fuerzas Especiales Ginew en su honor[9].",
+    "Salud": 210,
+    "Ki": "9.000",
+    "Maxki": "25.000",
+    "Status": "SuperHumano",
+    "KiCombate": 4,
+    "Velocidad": 6,
+    "Destreza": 6,
+    "Fuerza": 6,
+    "Armadura": 8,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": false
+  }
+]
+[
+  {
+    "EleccionUsuario": false,
+    "Id": 25,
+    "Name": "Android 20 (Dr. Gero)",
+    "Race": "Android",
+    "Description": "Dr. Gero es el cient\u00EDfico loco que cre\u00F3 a los androides 17, 18 y 19.",
+    "Salud": 148,
+    "Ki": "128.000.000",
+    "Maxki": "158.100.000",
+    "Status": "Guerrero Z",
+    "KiCombate": 6,
+    "Velocidad": 5,
+    "Destreza": 5,
+    "Fuerza": 6,
+    "Armadura": 5,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": false
+  }
+]
+[
+  {
+    "EleccionUsuario": true,
+    "Id": 9,
+    "Name": "Celula",
+    "Race": "Android",
+    "Description": "Cell conocido como C\u00E9lula en Espa\u00F1a, es un bioandroide creado por la computadora del Dr. Gero, quien vino del futuro de la l\u00EDnea 3 con la intenci\u00F3n de vengarse de Goku por haber acabado con el Ej\u00E9rcito del List\u00F3n Rojo, y con ello el sue\u00F1o de todo villano: dominar el mundo. Es el antagonista principal del Arco de los Androides y Cell.",
+    "Salud": 203,
+    "Ki": "250.000.000",
+    "Maxki": "5 Billion",
+    "Status": "Guerrero Z",
+    "KiCombate": 6,
+    "Velocidad": 5,
+    "Destreza": 5,
+    "Fuerza": 6,
+    "Armadura": 5,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": false
+  }
+]

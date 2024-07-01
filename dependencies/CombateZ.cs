@@ -22,8 +22,8 @@ namespace CombateZ
             Guerreros datosPlayer = JsonSerializer.Deserialize<Guerreros>(texto1);
             var texto2 = File.ReadAllText(TorneoSet.enemigosZ);
             List<Guerreros> datosEnemigos = JsonSerializer.Deserialize<List<Guerreros>>(texto2);
-
             List<Guerreros> OrdenAleatorio = [datosPlayer];
+
 
             for (int i = 0; i < datosEnemigos.Count; i++)
             {
@@ -37,7 +37,7 @@ namespace CombateZ
             List<Guerreros> Cuartos = new List<Guerreros>();
             List<Guerreros> Semis = new List<Guerreros>();
             List<Guerreros> Final = new List<Guerreros>();
-            Guerreros GanadorTorneo = new Guerreros();
+            List<Guerreros> GanadorTorneo = new List<Guerreros>();
             if (OrdenAleatorio.Count == 16)
             {
                 Cuartos = Simulador(OrdenAleatorio);
@@ -54,23 +54,10 @@ namespace CombateZ
                 Final = Simulador(OrdenAleatorio);
             }
 
+            GanadorTorneo = Simulador(Final);
+            
 
-
-            if (Final[0].EleccionUsuario)
-            {
-                GanadorTorneo = Combate1v1(Final[0], Final[1], 1);
-
-            }
-            else if (Final[1].EleccionUsuario)
-            {
-                GanadorTorneo = Combate1v1(Final[0], Final[1], 1);
-            }
-            else
-            {
-                GanadorTorneo = Combate1v1(Final[0], Final[1], 0);
-            }
-
-            if (GanadorTorneo.EleccionUsuario == true)
+            if (GanadorTorneo[0].EleccionUsuario == true)
             {
                 Console.Clear();
                 MensajesTerminal.CartelVictoria(1);
@@ -101,13 +88,13 @@ namespace CombateZ
             List<Guerreros> Avanzan = new List<Guerreros>();
             Guerreros ganadorRonda;
 
-            for (int i = 0; i < ronda.Count; i = i + 2)
+            for (int i = 0; i < ronda.Count; i += 2)
             {
-                if (ronda[i].EleccionUsuario || ronda[i + 1].EleccionUsuario)
+                if (ronda[i].EleccionUsuario == true || ronda[i + 1].EleccionUsuario == true)
                 {
                     ganadorRonda = Combate1v1(ronda[i], ronda[i + 1], 1);
 
-                    if (ganadorRonda.EleccionUsuario)
+                    if (ganadorRonda.EleccionUsuario == true)
                     {
                         Console.WriteLine("Avanzas a la siguiente ronda");
                     }
@@ -210,7 +197,7 @@ namespace CombateZ
                     MensajesTerminal.MostrarBloquesParalelos(pjL, pjR, colorIzquierda, colorDerecha);
 
                     //Sección de daño de los personajes
-                    if (pjL.EleccionUsuario)
+                    if (pjL.EleccionUsuario == true)
                     {
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjL.Race);
                         seleccion = Menus.MenuGuerreros(opciones1, "Combate");
@@ -269,7 +256,7 @@ namespace CombateZ
 
                         }
                     }
-                    else if (pjR.EleccionUsuario)
+                    else if (pjR.EleccionUsuario == false)
                     {
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
                         seleccion = Menus.MenuGuerreros(opciones1, "Combate");

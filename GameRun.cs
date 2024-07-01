@@ -87,7 +87,7 @@ namespace StartGame
             SoundPlayer CombatSong = new SoundPlayer(menuSongs[1]);
             CombatSong.PlayLooping();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(1200);
 
             MensajesTerminal.Preparate();
             Thread.Sleep(10);

@@ -163,6 +163,11 @@ namespace Torneo
 
             }
 
+            if (!Directory.Exists(rutaCarpeta))
+            {
+                Directory.CreateDirectory(rutaCarpeta);
+            }
+
             if (!File.Exists(jugadorPJZ))
             {
                 using (File.Create(jugadorPJZ)) { }
