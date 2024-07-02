@@ -55,7 +55,7 @@ namespace CombateZ
             }
 
             GanadorTorneo = Simulador(Final);
-            
+
 
             if (GanadorTorneo[0].EleccionUsuario == true)
             {
@@ -126,38 +126,52 @@ namespace CombateZ
             KiOriginal2 = pjR.KiCombate;
 
             Random numeroAleatorio = new Random();
-
+            
+            //El tipo me define si la batalla será para el usuario o para la pc
             if (tipo == 1)
             {
                 if (pjL.EleccionUsuario)
                 {
                     //Selección del menú adecuado al personaje
-                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1: pjL.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
-                    opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4: pjR.AtaqueEspecial1? OpcionesCombate5: OpcionesCombate6;
+                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1 : pjL.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
+                    opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4 : pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
                 }
                 else
                 {
                     //Selección del menú adecuado al personaje
-                    opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4: pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
-                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1: pjL.AtaqueEspecial1? OpcionesCombate2: OpcionesCombate3;
+                    opciones1 = pjR.AtaqueEspecial2 ? OpcionesCombate4 : pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
+                    opciones2 = pjL.AtaqueEspecial2 ? OpcionesCombate1 : pjL.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
                 }
                 while (sigueVivo(pjL.Salud) && sigueVivo(pjR.Salud))
                 {
+
                     Console.Clear();
                     Console.CursorVisible = false;
+
+
+                    //Obtengo los colores los Peleadores para ser mostrados por pantalla
                     ConsoleColor colorIzquierda = MensajesTerminal.ColorTerminalRaza(pjL.Race);
                     ConsoleColor colorDerecha = MensajesTerminal.ColorTerminalRaza(pjR.Race);
+
 
                     // Muestro los datos del jugador y del enemigo en paralelo con colores diferentes
                     MensajesTerminal.MostrarBloquesParalelos(pjL, pjR, colorIzquierda, colorDerecha);
 
-                    //Sección de daño de los personajes
+
+
+                    /*  Sección de daño de los personajes   */
+
+                    //Creo la opción aleatoria de la PC
+                    opcionAleatoria1 = numeroAleatorio.Next(opciones2.Length) + 1;
+
+
+                    //Este if me indica si el usuario esta ubicado a la Izquierda o a la Derecha
                     if (pjL.EleccionUsuario == true)
                     {
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjL.Race);
                         seleccion = Menus.MenuGuerreros(opciones1, "Combate");
                         switch (opciones1[seleccion])
-                        { 
+                        {
                             case "Atacar":
                                 AEAS = 1;
                                 break;
@@ -178,8 +192,9 @@ namespace CombateZ
                         }
 
                         Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
+
                         //Creo la opción elegida por el enemigo de forma aleatoria
-                        opcionAleatoria1 = numeroAleatorio.Next(opciones2.Length) + 1;
+                        
 
                         if (pjL.Velocidad >= pjR.Velocidad)
                         {
@@ -211,6 +226,7 @@ namespace CombateZ
 
                         }
                     }
+
                     else if (pjR.EleccionUsuario == true)
                     {
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
@@ -236,8 +252,6 @@ namespace CombateZ
                                 break;
                         }
                         Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
-                        //Creo la opción elegida por el enemigo de forma aleatoria
-                        opcionAleatoria1 = numeroAleatorio.Next(opciones2.Length) + 1;
 
                         if (pjL.Velocidad >= pjR.Velocidad)
                         {
@@ -273,31 +287,9 @@ namespace CombateZ
             }
             else
             {
-
-                if (pjL.AtaqueEspecial2)
-                {
-                    opciones1 = OpcionesCombate4;
-                }
-                else if (pjL.AtaqueEspecial1)
-                {
-                    opciones1 = OpcionesCombate5;
-                }
-                else
-                {
-                    opciones1 = OpcionesCombate6;
-                }
-                if (pjR.AtaqueEspecial2)
-                {
-                    opciones2 = OpcionesCombate4;
-                }
-                else if (pjR.AtaqueEspecial1)
-                {
-                    opciones2 = OpcionesCombate5;
-                }
-                else
-                {
-                    opciones2 = OpcionesCombate6;
-                }
+                opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate4 : pjL.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
+                opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4 : pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
+  
                 while (sigueVivo(pjL.Salud) && sigueVivo(pjR.Salud))
                 {
                     opcionAleatoria1 = numeroAleatorio.Next(opciones1.Length) + 1;
@@ -349,7 +341,7 @@ namespace CombateZ
             }
         }
 
-        public static void DanioEnBatalla(Guerreros primero, Guerreros segundo, int movPrimero, int movSegundo)
+        public static void DanioEnBatalla(Guerreros pjL, Guerreros pjR, int movpjL, int movpjR)
         {
             //Todo lo que contiene un 1 es para el más rápido mientras que el 2 es para el otro
             double ataque1;
@@ -363,10 +355,32 @@ namespace CombateZ
             Random random = new Random();
             int efectividad = random.Next(1, 101);
 
-            ataque1 = (((primero.Destreza + primero.Fuerza) * efectividad) - segundo.Armadura) / AjusteAtaque;
-            ataque2 = (((segundo.Destreza + segundo.Fuerza) * efectividad) - primero.Armadura) / AjusteAtaque;
+            if (pjR.Velocidad >= pjL.Velocidad)
+            {
+                salud1 = pjR.Salud;
+                ki1 = pjR.KiCombate;
 
-            switch (primero.Status)
+                salud2 = pjL.Salud;
+                ki2 = pjL.KiCombate;
+
+                ataque1 = (((pjL.Destreza + pjL.Fuerza) * efectividad) - pjR.Armadura) / AjusteAtaque;
+                ataque2 = (((pjR.Destreza + pjR.Fuerza) * efectividad) - pjL.Armadura) / AjusteAtaque;
+            }
+            else
+            {
+                salud1 = pjL.Salud;
+                ki1 = pjL.KiCombate;
+
+                salud2 = pjR.Salud;
+                ki2 = pjR.KiCombate;
+
+                ataque1 = (((pjR.Destreza + pjR.Fuerza) * efectividad) - pjL.Armadura) / AjusteAtaque;
+                ataque2 = (((pjL.Destreza + pjL.Fuerza) * efectividad) - pjR.Armadura) / AjusteAtaque;
+            }
+
+
+
+            switch (pjL.Status)
             {
                 case "Guerrero Z":
                     multiplicador1 = 1.5;
@@ -380,7 +394,7 @@ namespace CombateZ
                 default:
                     break;
             }
-            switch (segundo.Status)
+            switch (pjR.Status)
             {
                 case "Guerrero Z":
                     multiplicador2 = 1.5;
@@ -395,15 +409,14 @@ namespace CombateZ
                     break;
             }
 
-
-            switch (movPrimero)
+            switch (movpjL)
             {
                 //Atacar
                 case 1:
                     break;
                 //Esquivar
                 case 2:
-                    exito1 = Esquivar(primero, segundo);
+                    exito1 = Esquivar(pjL, pjR);
                     break;
                 //Ataque especial
                 case 3:
@@ -437,14 +450,14 @@ namespace CombateZ
                 default:
                     break;
             }
-            switch (movSegundo)
+            switch (movpjR)
             {
                 //Atacar
                 case 1:
                     break;
                 //Esquivar
                 case 2:
-                    exito2 = Esquivar(segundo, primero);
+                    exito2 = Esquivar(pjR, pjL);
                     break;
                 //Ataque especial
                 case 3:
@@ -481,7 +494,7 @@ namespace CombateZ
             }
 
 
-            if (!exito2 && fallo1 && movPrimero != 2)
+            if (!exito2 && fallo1 && movpjL != 2)
             {
                 salud2 -= ataque1;
                 salud2 = Math.Round(salud2);
@@ -490,17 +503,17 @@ namespace CombateZ
             {
                 if (exito2)
                 {
-                    Console.WriteLine(segundo.Name + " esquivó con éxito");
+                    Console.WriteLine(pjR.Name + " esquivó con éxito");
                     Thread.Sleep(2000);
                 }
                 if (!fallo1)
                 {
-                    Console.WriteLine(primero.Name + " no tiene Ki suficiente para realizar ese ataque");
+                    Console.WriteLine(pjL.Name + " no tiene Ki suficiente para realizar ese ataque");
                     Thread.Sleep(2000);
                 }
 
             }
-            if (!exito1 && fallo2 && movSegundo != 2)
+            if (!exito1 && fallo2 && movpjR != 2)
             {
                 if (sigueVivo(salud2))
                 {
@@ -512,12 +525,12 @@ namespace CombateZ
             {
                 if (exito1)
                 {
-                    Console.WriteLine(primero.Name + " esquivó con éxito");
+                    Console.WriteLine(pjL.Name + " esquivó con éxito");
                     Thread.Sleep(1000);
                 }
                 if (!fallo2)
                 {
-                    Console.WriteLine(segundo.Name + " no tiene Ki suficiente para realizar ese ataque");
+                    Console.WriteLine(pjR.Name + " no tiene Ki suficiente para realizar ese ataque");
                     Thread.Sleep(1000);
                 }
             }
@@ -526,9 +539,9 @@ namespace CombateZ
 
 
 
-        private static bool Esquivar(Guerreros primero, Guerreros segundo)
+        private static bool Esquivar(Guerreros pjL, Guerreros pjR)
         {
-            int probabilidadEsquivar = primero.Velocidad - segundo.Destreza;
+            int probabilidadEsquivar = pjL.Velocidad - pjR.Destreza;
             Random rnd = new Random();
             return rnd.Next(0, 20) < probabilidadEsquivar;
         }

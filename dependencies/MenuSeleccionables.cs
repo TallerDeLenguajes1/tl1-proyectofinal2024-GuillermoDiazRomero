@@ -93,7 +93,6 @@ namespace MenusDelJuego
 
         }
 
-
         public static int MenuGuerreros(string[] opcionesMenu, string tipo)
         {
 
@@ -103,6 +102,7 @@ namespace MenusDelJuego
             ConsoleKeyInfo tecla;
             Console.CursorVisible = false;
 
+            //Defino si quiero mostrar un titulo o no antes de borrar el textp de la consola
             if (tipo == "Listado")
             {
                 Console.Clear(); //Limpia la consola para que se muestre solamente el juego
@@ -115,6 +115,7 @@ namespace MenusDelJuego
                 Console.WriteLine();
                 Console.WriteLine();
             }
+
             x = Console.CursorLeft;
             y = Console.CursorTop;
 
@@ -126,6 +127,7 @@ namespace MenusDelJuego
             {
                 MenuCentrado(indiceSeleccionado, opcionesMenu, tipo);
             }
+
             while (estaSeleccionando)
             {
                 while ((tecla = Console.ReadKey(true)).Key != ConsoleKey.Enter)
@@ -169,7 +171,6 @@ namespace MenusDelJuego
             }
             return indiceSeleccionado;
         }
-
 
         public static bool MenuDecision() //Creo esta función para evitar problemas de compatibilidad con el resto de menus
         {
@@ -256,7 +257,6 @@ namespace MenusDelJuego
             });
         }
 
-
         private static void MenuIzquierda(int indiceSeleccionado, string[] opciones)
         { //Menu traido desde un commit a causa de muchos errores durante la codeada
             int destacado = 0;
@@ -279,7 +279,6 @@ namespace MenusDelJuego
                 destacado++;
             });
         }
-
 
     }
 }
