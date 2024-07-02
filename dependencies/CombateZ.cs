@@ -132,14 +132,14 @@ namespace CombateZ
                 if (pjL.EleccionUsuario)
                 {
                     //Selección del menú adecuado al personaje
-                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1: pjL.AtaqueEspecial2 ? OpcionesCombate2 : OpcionesCombate3;
+                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1: pjL.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
                     opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4: pjR.AtaqueEspecial1? OpcionesCombate5: OpcionesCombate6;
                 }
                 else
                 {
                     //Selección del menú adecuado al personaje
-                    opciones1 = pjR.AtaqueEspecial2 ? OpcionesCombate1: pjR.AtaqueEspecial2 ? OpcionesCombate2 : OpcionesCombate3;
-                    opciones2 = pjL.AtaqueEspecial2 ? OpcionesCombate4: pjL.AtaqueEspecial1? OpcionesCombate5: OpcionesCombate6;
+                    opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4: pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
+                    opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate1: pjL.AtaqueEspecial1? OpcionesCombate2: OpcionesCombate3;
                 }
                 while (sigueVivo(pjL.Salud) && sigueVivo(pjR.Salud))
                 {
@@ -157,7 +157,7 @@ namespace CombateZ
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjL.Race);
                         seleccion = Menus.MenuGuerreros(opciones1, "Combate");
                         switch (opciones1[seleccion])
-                        {
+                        { 
                             case "Atacar":
                                 AEAS = 1;
                                 break;
