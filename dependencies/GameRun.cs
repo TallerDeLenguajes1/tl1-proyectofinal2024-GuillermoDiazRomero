@@ -23,12 +23,14 @@ namespace StartGame
             /*       Control de la API     */
             ControlJSON.ControlAPI();
             Thread.Sleep(10000);
+            LecturaEscritura.LimpiarBuffer();
             /*----------------------------*/
 
             /*      Sección Comienzo del opening del juego      */
             SoundPlayer Opening = new SoundPlayer(Rutas.menuSongs[0]);
             Opening.PlayLooping(); //Pongo el opening en loop
             Thread.Sleep(10);
+            LecturaEscritura.LimpiarBuffer();
             /*--------------------------------------------------*/
 
             /*      Menú de selección del tamaño del Torneo     */
@@ -68,11 +70,13 @@ namespace StartGame
             SoundPlayer CombatSong = new SoundPlayer(Rutas.menuSongs[1]);
             CombatSong.PlayLooping(); //Pongo play al soundtrak de combate
             Thread.Sleep(1800);
+            LecturaEscritura.LimpiarBuffer();
             /*------------------------------------*/
 
             /*      Sección Inicio del Combate      */
             MensajesTerminal.Preparate(); //Mensaje para prepararse para el combate
             Thread.Sleep(10);
+            LecturaEscritura.LimpiarBuffer();
             Console.Clear();
             InterfazCombate.ModuloDeCombate();
             /*--------------------------------------*/
@@ -81,6 +85,7 @@ namespace StartGame
             CombatSong.Stop();
             Console.WriteLine();
             Thread.Sleep(3000);
+            LecturaEscritura.LimpiarBuffer();
             MensajesTerminal.TextoTiempo("Gracias por jugar",3000,0);
             MensajesTerminal.TextoTiempo(".",2000,0);
             /*--------------------------------------------------------*/

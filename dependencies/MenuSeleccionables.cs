@@ -1,5 +1,6 @@
 using Mensajes;
 using CombateZ;
+using LogicaArchivos;
 namespace MenusDelJuego
 {
     public static class Menus
@@ -32,7 +33,7 @@ namespace MenusDelJuego
             x = Console.CursorLeft;
             y = Console.CursorTop;
 
-            MenuCentrado(indiceSeleccionado, opcionesMenu,"Listado");
+            MenuCentrado(indiceSeleccionado, opcionesMenu, "Listado");
 
             while (estaSeleccionando)
             {
@@ -59,7 +60,7 @@ namespace MenusDelJuego
                     Console.CursorLeft = x;
                     Console.CursorTop = y;
 
-                    MenuCentrado(indiceSeleccionado, opcionesMenu,"Listado");
+                    MenuCentrado(indiceSeleccionado, opcionesMenu, "Listado");
                 }
 
                 //Este switch es importante ya que me permite seleccionar el tamaño del torneo y manejo 2 parametros (tamaTorneo y estaSeleccionando)
@@ -77,6 +78,7 @@ namespace MenusDelJuego
                         MensajesTerminal.TextoTiempo("......", 3500, 1);
                         estaSeleccionando = false;
                         Thread.Sleep(2000);
+                        LecturaEscritura.LimpiarBuffer();
                         break;
                     case 3:
                         estaSeleccionando = false;
@@ -84,6 +86,7 @@ namespace MenusDelJuego
                     case 4:
                         MensajesTerminal.TextoTiempo("Mr. Satan si se la banca...", 2500, 0);
                         Thread.Sleep(1000);
+                        LecturaEscritura.LimpiarBuffer();
                         Environment.Exit(0);
                         break;
                     default:
@@ -158,7 +161,7 @@ namespace MenusDelJuego
                     }
                     else if (tipo == "Combate")
                     {
-                        MenuCentrado(indiceSeleccionado, opcionesMenu,tipo);
+                        MenuCentrado(indiceSeleccionado, opcionesMenu, tipo);
                     }
 
                 }
@@ -225,7 +228,7 @@ namespace MenusDelJuego
             return false;
         }
 
-        private static void MenuCentrado(int indiceSeleccionado, string[] opciones , string tipo)
+        private static void MenuCentrado(int indiceSeleccionado, string[] opciones, string tipo)
         {
             int destacado = 0;
 
@@ -233,13 +236,14 @@ namespace MenusDelJuego
             {
                 if (destacado == indiceSeleccionado)
                 {
-                    if (tipo == "Listado"){
+                    if (tipo == "Listado")
+                    {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                     }
                     else if (tipo == "Combate")
                     {
                         Console.ForegroundColor = InterfazCombate.seleccionColorPlayer;
-                        
+
                     }
                 }
 

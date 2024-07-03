@@ -13,6 +13,7 @@ namespace Mensajes
                 {
                     Console.Write(c);
                     Thread.Sleep(milisegundos / texto.Length);
+                    LecturaEscritura.LimpiarBuffer();
                 }
                 Console.WriteLine();
             }
@@ -22,6 +23,7 @@ namespace Mensajes
                 {
                     Console.Write(c);
                     Thread.Sleep(milisegundos / texto.Length);
+                    LecturaEscritura.LimpiarBuffer();
                 }
             }
             else
@@ -191,6 +193,7 @@ namespace Mensajes
             SoundPlayer player = new SoundPlayer(Rutas.FraseDerrota);
             player.Play();
             Thread.Sleep(4500);
+            LecturaEscritura.LimpiarBuffer();
         }
         public static void CartelVictoria(int tiempo)
         {
@@ -198,6 +201,7 @@ namespace Mensajes
             SoundPlayer player = new SoundPlayer(Rutas.FraseVictoria);
             player.Play();
             Thread.Sleep(10250);
+            LecturaEscritura.LimpiarBuffer();
 
             string[] letraASCII =
             [
@@ -250,6 +254,7 @@ namespace Mensajes
             TextoTiempo(centrado, tiempo, 1);
             Console.ForegroundColor = ConsoleColor.White;
             Thread.Sleep(9000);
+            LecturaEscritura.LimpiarBuffer();
 
         }
 
@@ -261,7 +266,8 @@ namespace Mensajes
             {
                 eleccion = "Sí";
             }
-            else{
+            else
+            {
                 eleccion = "No";
             }
             //Creo un arreglo de string con todos los datos que llegan desde item para poder obtener las longitudes de los datos que se muestran por pantalla para así poder centrarlos

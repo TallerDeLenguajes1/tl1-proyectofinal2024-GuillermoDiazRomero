@@ -5,7 +5,7 @@ using Mensajes;
 namespace LogicaArchivos
 {
     public class LecturaEscritura()
-    {   
+    {
         //Deserializo los datos guardados en el .json y los devuelvo en formato texto del tipo Root
         public static Root ObtenerListaAPI(string ruta)
         {
@@ -13,13 +13,13 @@ namespace LogicaArchivos
             var datos = JsonSerializer.Deserialize<Root>(texto);
             return datos;
         }
-     
+
         public static void EscrituraJson(List<Guerreros> lista, string ruta)
         {
             string datos = JsonSerializer.Serialize(lista, new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
             File.WriteAllText(ruta, datos);
         }
- 
+
         //Si no existe la ruta cancelo la ejecución del juego
         public static void ExisteError(string ruta)
         {
@@ -28,7 +28,7 @@ namespace LogicaArchivos
                 MensajesTerminal.ErrorSalir();
             }
         }
- 
+
         public static void ExisteCrearRuta(string rutaCarpeta, string rutaArchivo)
         {
             if (!Directory.Exists(rutaCarpeta))
@@ -49,11 +49,19 @@ namespace LogicaArchivos
             return datos;
         }
 
+        public static void LimpiarBuffer()
+        {
+            // Limpio el buffer para evitar bugs con las teclas que haya presionado el usuario durante el período de sleep
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+            }
+        }
     }
 
     public class LogicaPersonajes()
     {
-        
+
         public static List<Guerreros> CreacionListadoGuerreros(int tama, Root datosDB, HashSet<int> noRepetidos)
         {
             List<Guerreros> Peleadores = new List<Guerreros>();
@@ -128,7 +136,7 @@ namespace LogicaArchivos
             return Peleadores;
         }
 
-        
+
         public static string MedicionDeKi(string kimax)
         {
             //Esta función devolverá un string con el "Titulo" segun el kimaximo de los guerreros
@@ -169,7 +177,7 @@ namespace LogicaArchivos
             return "Error";
         }
 
-        
+
         public static int BalanceoDeKi(string ki)
         {
             //Esta función devolverá un numero entero de ki que serán capaces de utilizar los peleadores durante la lucha
@@ -218,6 +226,7 @@ namespace LogicaArchivos
                 MensajesTerminal.CentradoSimple("No se encuentran ganadores por todavía", 2000, 1);
                 MensajesTerminal.CentradoSimple("Tu puedes ser el primero...", 1500, 1);
                 Thread.Sleep(3000);
+                LecturaEscritura.LimpiarBuffer();
             }
             else
             {
@@ -228,17 +237,19 @@ namespace LogicaArchivos
                     MensajesTerminal.CentradoSimple("No se encontraron ganadores todavía", 2000, 1);
                     MensajesTerminal.CentradoSimple("Puedes ser el primero...", 1500, 1);
                     Thread.Sleep(3000);
+                    LecturaEscritura.LimpiarBuffer();
                 }
                 else
                 {
                     List<Guerreros> ListaGanadores = LecturaEscritura.ObtenerPeleadores(Rutas.GanadoresZ);
-                    MensajesTerminal.CentradoSimple("Ganadores de torneos anteriores:",1000,1);
+                    MensajesTerminal.CentradoSimple("Ganadores de torneos anteriores:", 1000, 1);
                     foreach (Guerreros Z in ListaGanadores)
                     {
                         MensajesTerminal.mostrarGanadores(Z);
                         Thread.Sleep(2000);
+                        LecturaEscritura.LimpiarBuffer();
                     }
-                    MensajesTerminal.TextoTiempo("Presiona cualquier tecla para salir",2000,1);
+                    MensajesTerminal.TextoTiempo("Presiona cualquier tecla para salir", 2000, 1);
                     Console.ReadKey();
                 }
             }
