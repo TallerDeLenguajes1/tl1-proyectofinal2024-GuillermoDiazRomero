@@ -1,22 +1,20 @@
 using DBClass;
 using Mensajes;
-using Torneo;
-using System.Text.Json;
 using MenusDelJuego;
-using LogicaDeArchivos;
+using LogicaArchivos;
 
 namespace CombateZ
 {
-
     public class InterfazCombate
     {
 
+        //Checkeado
         public static void ModuloDeCombate()
         {
 
-            LecturaEscritura.ExisteError(TorneoSet.RutaFightersSelectedJSON);
-            
-            List<Guerreros> OrdenAleatorio = LecturaEscritura.ObtenerPeleadores(TorneoSet.RutaFightersSelectedJSON);
+            LecturaEscritura.ExisteError(Rutas.FightersSelectedJSON);
+
+            List<Guerreros> OrdenAleatorio = LecturaEscritura.ObtenerPeleadores(Rutas.FightersSelectedJSON);
 
 
             //Randomizo el orden para el torneo
@@ -28,12 +26,12 @@ namespace CombateZ
             List<Guerreros> Semis = new List<Guerreros>();
             List<Guerreros> Final = new List<Guerreros>();
             List<Guerreros> GanadorTorneo = new List<Guerreros>();
+
+
             if (OrdenAleatorio.Count == 16)
             {
                 Cuartos = Simulador(OrdenAleatorio);
-                OrdenAleatorio.Clear(); //Vacío las lista para no acumular memoria basura
                 Semis = Simulador(Cuartos);
-                Cuartos.Clear();
                 Final = Simulador(Semis);
             }
             else if (OrdenAleatorio.Count == 8)
@@ -47,7 +45,6 @@ namespace CombateZ
             }
 
             GanadorTorneo = Simulador(Final);
-            Final.Clear();
 
             if (GanadorTorneo[0].EleccionUsuario == true)
             {
@@ -64,17 +61,33 @@ namespace CombateZ
 
             }
 
-            if (!File.Exists(GanadoresZ))
+            LecturaEscritura.ExisteCrearRuta(Rutas.CarpetaJson, Rutas.GanadoresZ);
+
+            string lecturaArchivoGanadores = File.ReadAllText(Rutas.GanadoresZ);
+
+            //Me asegiró que el archivo no esté vacío para evitar un error al deserializar el json
+            if (string.IsNullOrEmpty(lecturaArchivoGanadores))
             {
-                using (File.Create(GanadoresZ)) {/*Creo y cierro el archivo*/}
+                LecturaEscritura.EscrituraJson(GanadorTorneo, Rutas.GanadoresZ);
+            }
+            else
+            {
+                List<Guerreros> ListaGanadores = LecturaEscritura.ObtenerPeleadores(Rutas.GanadoresZ);
+                ListaGanadores.Add(GanadorTorneo[0]);
+                LecturaEscritura.EscrituraJson(ListaGanadores, Rutas.GanadoresZ);
             }
 
-            string DatosPeleadoresJSON = JsonSerializer.Serialize(GanadorTorneo, new JsonSerializerOptions { WriteIndented = true }); //Permito que sea legible dandole formato
-            File.AppendAllText(GanadoresZ, DatosPeleadoresJSON + Environment.NewLine);
+
+
+            //Elimino todos los datos de las listas para evitar tener memoria basura
+            Cuartos.Clear();
+            Semis.Clear();
+            Final.Clear();
             GanadorTorneo.Clear();
 
         }
 
+        //Checkeado
         public static List<Guerreros> Simulador(List<Guerreros> ronda)
         {
             List<Guerreros> Avanzan = new List<Guerreros>();
@@ -88,11 +101,11 @@ namespace CombateZ
 
                     if (ganadorRonda.EleccionUsuario == true)
                     {
-                        Console.WriteLine("Avanzas a la siguiente ronda");
+                        MensajesTerminal.TextoTiempo("Avanzas a la siguiente ronda", 2000, 1);
                     }
                     else
                     {
-                        Console.WriteLine("Fuiste eliminado");
+                        MensajesTerminal.TextoTiempo("Fuiste eliminado", 2000, 1);
                     }
                 }
                 else
@@ -104,7 +117,8 @@ namespace CombateZ
             return Avanzan;
         }
 
-
+        
+        //Checkeado
         public static Guerreros Combate1v1(Guerreros pjL, Guerreros pjR, int tipo)
         {
             int seleccion;
@@ -115,31 +129,32 @@ namespace CombateZ
             string[] opciones1;
             string[] opciones2;
 
-            KiOriginal1 = pjL.KiCombate;
-            KiOriginal2 = pjR.KiCombate;
+            KiOriginalIzquierda = pjL.KiCombate;
+            KiOriginalDerecha = pjR.KiCombate;
+
 
             Random numeroAleatorio = new Random();
 
             //El tipo me define si la batalla será para el usuario o para la pc
             if (tipo == 1)
             {
+                //Selección del menú adecuado al personaje
                 if (pjL.EleccionUsuario)
                 {
-                    //Selección del menú adecuado al personaje
                     opcionesUsuario = pjL.AtaqueEspecial2 ? OpcionesCombate1 : pjL.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
                     opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4 : pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
                 }
                 else
                 {
-                    //Selección del menú adecuado al personaje
-                    opcionesUsuario = pjR.AtaqueEspecial2 ? OpcionesCombate4 : pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
-                    opciones2 = pjL.AtaqueEspecial2 ? OpcionesCombate1 : pjL.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
+                    opcionesUsuario = pjR.AtaqueEspecial2 ? OpcionesCombate1 : pjR.AtaqueEspecial1 ? OpcionesCombate2 : OpcionesCombate3;
+                    opciones2 = pjL.AtaqueEspecial2 ? OpcionesCombate4 : pjL.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
                 }
+
+
                 while (sigueVivo(pjL.Salud) && sigueVivo(pjR.Salud))
                 {
-
                     Console.Clear();
-                    Console.CursorVisible = false;
+                    Console.CursorVisible = false; //Puesto para evitar bugs
 
                     //Obtengo los colores los Peleadores para ser mostrados por pantalla
                     ConsoleColor colorIzquierda = MensajesTerminal.ColorTerminalRaza(pjL.Race);
@@ -154,221 +169,146 @@ namespace CombateZ
                     opcionAleatoria1 = numeroAleatorio.Next(opciones2.Length) + 1;
 
 
-                    //Este if me indica si el usuario esta ubicado a la Izquierda o a la Derecha
+                    //Este if me indica si el usuario esta ubicado a la Izquierda o a la Derecha y obtengo su color para la terminal
                     if (pjL.EleccionUsuario == true)
                     {
                         seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjL.Race);
-                        seleccion = Menus.MenuGuerreros(opcionesUsuario, "Combate");
-                        switch (opcionesUsuario[seleccion])
-                        {
-                            case "Atacar":
-                                AEAS = 1;
-                                break;
-                            case "Esquivar":
-                                AEAS = 2;
-                                break;
-                            case "Ataque Especial":
-                                AEAS = 3;
-                                break;
-                            case "Super Ataque":
-                                AEAS = 4;
-                                break;
-                            case "Rendirse":
-                                pjL.Salud = -9999;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
-
-
-                        DanioEnBatalla(pjL, pjR, AEAS, opcionAleatoria1);
-
+                    }
+                    else
+                    {
+                        seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
                     }
 
-                    else {
-                        seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
-                        seleccion = Menus.MenuGuerreros(opcionesUsuario, "Combate");
-                        switch (opcionesUsuario[seleccion])
-                        {
-                            case "Atacar":
-                                AEAS = 1;
-                                break;
-                            case "Esquivar":
-                                AEAS = 2;
-                                break;
-                            case "Ataque Especial":
-                                AEAS = 3;
-                                break;
-                            case "Super Ataque":
-                                AEAS = 4;
-                                break;
-                            case "Rendirse":
-                                pjR.Salud = -9999;
-                                break;
-                            default:
-                                break;
-                        }
-                        Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
+                    seleccion = Menus.MenuGuerreros(opcionesUsuario, "Combate");
+                    //Uso un switch debido a que las opciones del menú de combate varian segun el personaje
+                    switch (opcionesUsuario[seleccion])
+                    {
+                        case "Atacar": AEAS = 1; break;
+                        case "Esquivar": AEAS = 2; break;
+                        case "Ataque Especial": AEAS = 3; break;
+                        case "Super Ataque": AEAS = 4; break;
+                        case "Rendirse": AEAS = 5; break;
+                        default: break;
+                    }
 
+                    Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
+
+                    if (pjL.EleccionUsuario == true)
+                    {
+                        DanioEnBatalla(pjL, pjR, AEAS, opcionAleatoria1);
+                    }
+                    else
+                    {
                         DanioEnBatalla(pjL, pjR, opcionAleatoria1, AEAS);
-
                     }
                 }
             }
+            //Combate de la PC
             else
             {
                 opciones1 = pjL.AtaqueEspecial2 ? OpcionesCombate4 : pjL.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
                 opciones2 = pjR.AtaqueEspecial2 ? OpcionesCombate4 : pjR.AtaqueEspecial1 ? OpcionesCombate5 : OpcionesCombate6;
-
                 while (sigueVivo(pjL.Salud) && sigueVivo(pjR.Salud))
                 {
                     opcionAleatoria1 = numeroAleatorio.Next(opciones1.Length) + 1;
                     opcionAleatoria2 = numeroAleatorio.Next(opciones2.Length) + 1;
-
-                    DanioEnBatalla(pjL,pjR,opcionAleatoria1, opcionAleatoria2);
-                    if (pjL.Velocidad >= pjR.Velocidad)
-                    {
-                        saludIzquierda = pjL.Salud;
-                        ki1 = pjL.KiCombate;
-
-                        saludDerecha = pjR.Salud;
-                        ki2 = pjR.KiCombate;
-                        DanioEnBatalla(pjL, pjR, opcionAleatoria1, opcionAleatoria2);
-                        pjL.Salud = saludIzquierda;
-                        pjL.KiCombate = ki1;
-
-                        pjR.Salud = saludDerecha;
-                        pjR.KiCombate = ki2;
-                    }
-                    else
-                    {
-                        saludIzquierda = pjR.Salud;
-                        ki1 = pjR.KiCombate;
-
-                        saludDerecha = pjL.Salud;
-                        ki2 = pjL.KiCombate;
-                        DanioEnBatalla(pjR, pjL, opcionAleatoria2, opcionAleatoria1);
-                        pjR.Salud = saludIzquierda;
-                        pjR.KiCombate = ki1;
-
-                        pjL.Salud = saludDerecha;
-                        pjL.KiCombate = ki2;
-                    }
+                    DanioEnBatalla(pjL, pjR, opcionAleatoria1, opcionAleatoria2);
                 }
             }
 
             if (sigueVivo(pjL.Salud))
             {
                 pjL.Salud += 100;
-                pjL.KiCombate = KiOriginal1;
+                pjL.KiCombate = KiOriginalIzquierda;
                 return pjL;
             }
             else
             {
                 pjR.Salud += 100;
-                pjR.KiCombate = KiOriginal2;
+                pjR.KiCombate = KiOriginalDerecha;
                 return pjR;
-
             }
         }
 
+        //Checkeado
         public static void DanioEnBatalla(Guerreros pjL, Guerreros pjR, int movpjL, int movpjR)
         {
-            
+
             //Declaración de variables necesarias para el combate            
             double ataqueIzquierda;
             double ataqueDerecha;
-            double multiplicador1 = 1;
-            double multiplicador2 = 1;
+            double multiplicadorIzquierda;
+            double multiplicadorDerecha;
             bool exitoIzquierda = false;
             bool exitoDerecha = false;
             bool falloIzquierda = true;
             bool falloDerecha = true;
             Random random = new Random();
             int efectividad = random.Next(1, 101);
+            string mensajeIzquierda = "";
+            string mensajeDerecha = "";
 
             ataqueIzquierda = (((pjL.Destreza + pjL.Fuerza) * efectividad) - pjR.Armadura) / AjusteAtaque;
             ataqueDerecha = (((pjR.Destreza + pjR.Fuerza) * efectividad) - pjL.Armadura) / AjusteAtaque;
 
+            saludIzquierda = pjL.Salud;
+            saludDerecha = pjR.Salud;
 
-            if (pjR.Velocidad >= pjL.Velocidad)
-            {
-                saludIzquierda = pjR.Salud;
-                ki1 = pjR.KiCombate;
+            kiIzquierda = pjL.KiCombate;
+            kiDerecha = pjR.KiCombate;
 
-                saludDerecha = pjL.Salud;
-                ki2 = pjL.KiCombate;
-
-
-
-                Console.WriteLine("Daño del pjR = " + ataqueIzquierda);
-                Console.WriteLine("Daño del pjL = " + ataqueDerecha);
-
-                Thread.Sleep(10000);
-
-            }
-            else
-            {
-                saludIzquierda = pjL.Salud;
-                ki1 = pjL.KiCombate;
-
-                saludDerecha = pjR.Salud;
-                ki2 = pjR.KiCombate;
-
-                Console.WriteLine("Daño del pjL = " + ataqueIzquierda);
-                Console.WriteLine("Daño del pjR = " + ataqueDerecha);
-
-                Thread.Sleep(10000);
-            }
-
-
-
+            //Obtengo los multiplicadores segun el Status de cada peleador
             switch (pjL.Status)
             {
                 case "Guerrero Z":
-                    multiplicador1 = 1.5;
+                    multiplicadorIzquierda = 1.5;
                     break;
                 case "Hakaishin":
-                    multiplicador1 = 2;
+                    multiplicadorIzquierda = 2;
                     break;
                 case "Todo Poderoso":
-                    multiplicador1 = 10;
+                    multiplicadorIzquierda = 10;
                     break;
                 default:
-                    break;
-            }
-            switch (pjR.Status)
-            {
-                case "Guerrero Z":
-                    multiplicador2 = 1.5;
-                    break;
-                case "Hakaishin":
-                    multiplicador2 = 2;
-                    break;
-                case "Todo Poderoso":
-                    multiplicador2 = 10;
-                    break;
-                default:
+                    multiplicadorIzquierda = 1;
                     break;
             }
 
+            switch (pjR.Status)
+            {
+                case "Guerrero Z":
+                    multiplicadorDerecha = 1.5;
+                    break;
+                case "Hakaishin":
+                    multiplicadorDerecha = 2;
+                    break;
+                case "Todo Poderoso":
+                    multiplicadorDerecha = 10;
+                    break;
+                default:
+                    multiplicadorDerecha = 1;
+                    break;
+            }
+
+            //MOVIMIENTO IZQUIERDA
             switch (movpjL)
             {
                 //Atacar
                 case 1:
+                    mensajeIzquierda = pjL.Name + " realizó un ataque de " + ataqueIzquierda + " de daño";
                     break;
                 //Esquivar
                 case 2:
                     exitoIzquierda = Esquivar(pjL, pjR);
+                    ataqueIzquierda = 0;
                     break;
                 //Ataque especial
                 case 3:
-                    if (ki1 > 0)
+                    if (kiIzquierda > 0)
                     {
-                        ataqueIzquierda *= multiplicador1;
-                        ki1 -= 1;
+                        ataqueIzquierda *= multiplicadorIzquierda;
+                        kiIzquierda -= 1;
+                        mensajeIzquierda = pjL.Name + " realizó un Ataque Especial de " + ataqueIzquierda + " de daño";
                     }
                     else
                     {
@@ -377,11 +317,12 @@ namespace CombateZ
                     break;
                 //Super Ataque
                 case 4:
-                    if (ki1 > 0)
+                    if (kiIzquierda > 0)
                     {
-                        ataqueIzquierda *= multiplicador1;
+                        ataqueIzquierda *= multiplicadorIzquierda;
                         ataqueIzquierda *= 1.2;
-                        ki1 -= 2;
+                        kiIzquierda -= 2;
+                        mensajeIzquierda = pjL.Name + " realizó un Super Ataque de " + ataqueIzquierda + " de daño";
                     }
                     else
                     {
@@ -390,102 +331,171 @@ namespace CombateZ
                     break;
                 //Rendirse
                 case 5:
+                    saludIzquierda = -99999;
                     MensajesTerminal.TextoTiempo("Mr Satan si se la banca...", 1000, 1);
                     break;
                 default:
+                    mensajeIzquierda = "Error";
                     break;
             }
+
+            //MOVIMIENTO DERECHA
             switch (movpjR)
             {
                 //Atacar
                 case 1:
+                    mensajeDerecha = pjR.Name + " realizó un ataque de " + ataqueDerecha + " de daño";
                     break;
                 //Esquivar
                 case 2:
                     exitoDerecha = Esquivar(pjR, pjL);
+                    ataqueDerecha = 0;
                     break;
                 //Ataque especial
                 case 3:
-                    if (ki2 > 0)
+                    if (kiDerecha > 0)
                     {
-                        ataqueDerecha *= multiplicador2;
-                        ki2 -= 1;
+                        ataqueDerecha *= multiplicadorDerecha;
+                        kiDerecha -= 1;
+                        mensajeDerecha = pjR.Name + " realizó un Ataque Especial de " + ataqueDerecha + " de daño";
                     }
                     else
                     {
+                        mensajeDerecha = pjR.Name + " no pudo realizar un Ataque Especial por falta de ki";
                         falloDerecha = false;
                     }
                     break;
                 //Super Ataque
                 case 4:
-                    if (ki2 > 0)
+                    if (kiDerecha > 0)
                     {
-                        ataqueDerecha *= multiplicador2;
+                        ataqueDerecha *= multiplicadorDerecha;
                         ataqueDerecha *= 1.1;
-                        ki2 -= 2;
+                        kiDerecha -= 2;
+                        mensajeDerecha = pjR.Name + " realizó un Super Ataque de " + ataqueDerecha + " de daño";
                     }
                     else
                     {
+                        mensajeDerecha = pjR.Name + " no pudo realizar un Super Ataque por falta de ki";
                         falloDerecha = false;
                     }
 
                     break;
                 //Rendirse
                 case 5:
+                    saludDerecha = -9999;
                     MensajesTerminal.TextoTiempo("Mr Satan si se la banca...", 1000, 1);
                     break;
                 default:
+
                     break;
             }
 
 
-            if (!exitoDerecha && falloIzquierda && movpjL != 2)
+            //El de la izquierda es más veloz
+            if (pjL.Velocidad > pjR.Velocidad)
             {
-                saludDerecha -= ataqueIzquierda;
-                saludDerecha = Math.Round(saludDerecha);
-            }
-            else
-            {
-                if (exitoDerecha)
+                if (falloIzquierda && !exitoDerecha && movpjL != 2)
                 {
-                    Console.WriteLine(pjR.Name + " esquivó con éxito");
-                    Thread.Sleep(2000);
+                    saludDerecha -= ataqueIzquierda;
+                    Console.WriteLine(mensajeIzquierda);
                 }
-                if (!falloIzquierda)
+                else if (!falloIzquierda)
                 {
-                    Console.WriteLine(pjL.Name + " no tiene Ki suficiente para realizar ese ataque");
-                    Thread.Sleep(2000);
+                    Console.WriteLine(pjL.Name + " no pudo realizar su movimiento por falta de ki");
+                }
+                else if (exitoDerecha)
+                {
+                    Console.WriteLine(pjR.Name + " esquivó con éxito el ataque de " + pjL.Name);
+                }
+                else
+                {
+                    Console.WriteLine(pjL.Name + " intentó esquivar y falló");
                 }
 
-            }
-            if (!exitoIzquierda && falloDerecha && movpjR != 2)
-            {
+
                 if (sigueVivo(saludDerecha))
                 {
-                    saludIzquierda -= ataqueDerecha;
-                    saludIzquierda = Math.Round(saludIzquierda, 2);
+                    if (falloDerecha && !exitoIzquierda && movpjR != 2)
+                    {
+                        saludIzquierda -= ataqueDerecha;
+                        Console.WriteLine(mensajeDerecha);
+                    }
+                    else if (!falloDerecha)
+                    {
+                        Console.WriteLine(pjR.Name + " no pudo realizar su movimiento por falta de ki");
+                    }
+                    else if (exitoIzquierda)
+                    {
+                        Console.WriteLine(pjL.Name + " esquivó con éxito el ataque de " + pjR.Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine(pjR.Name + " intentó esquivar y falló");
+                    }
                 }
+                else
+                {
+                    Console.WriteLine(pjL.Name + " noqueó a " + pjR.Name);
+                }
+
+
             }
+            //El de la derecha es más veloz
             else
             {
-                if (exitoIzquierda)
+                if (falloDerecha && !exitoIzquierda && movpjR != 2)
                 {
-                    Console.WriteLine(pjL.Name + " esquivó con éxito");
-                    Thread.Sleep(1000);
+                    saludIzquierda -= ataqueDerecha;
+                    Console.WriteLine(mensajeDerecha);
                 }
-                if (!falloDerecha)
+                else if (!falloDerecha)
                 {
-                    Console.WriteLine(pjR.Name + " no tiene Ki suficiente para realizar ese ataque");
-                    Thread.Sleep(1000);
+                    Console.WriteLine(pjR.Name + " no pudo realizar su movimiento por falta de ki");
+                }
+                else if (exitoIzquierda)
+                {
+                    Console.WriteLine(pjL.Name + " esquivó con éxito el ataque de " + pjR.Name);
+                }
+                else
+                {
+                    Console.WriteLine(pjR.Name + " intentó esquivar y falló");
+                }
+
+
+                if (sigueVivo(saludIzquierda))
+                {
+                    if (falloIzquierda && !exitoDerecha && movpjL != 2)
+                    {
+                        saludDerecha -= ataqueIzquierda;
+                        Console.WriteLine(mensajeIzquierda);
+                    }
+                    else if (!falloIzquierda)
+                    {
+                        Console.WriteLine(pjL.Name + " no pudo realizar su movimiento por falta de ki");
+                    }
+                    else if (exitoDerecha)
+                    {
+                        Console.WriteLine(pjR.Name + " esquivó con éxito el ataque de " + pjL.Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine(pjL.Name + " intentó esquivar y falló");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(pjR.Name + " noqueó a " + pjL.Name);
                 }
             }
+            Thread.Sleep(5000);
 
-
+            pjL.Salud = saludIzquierda;
+            pjR.Salud = saludDerecha;
 
         }
 
-
-
+        //Checkeado
         private static bool Esquivar(Guerreros pjL, Guerreros pjR)
         {
             int probabilidadEsquivar = pjL.Velocidad - pjR.Destreza;
@@ -493,29 +503,26 @@ namespace CombateZ
             return rnd.Next(0, 20) < probabilidadEsquivar;
         }
 
+        //Checkeado
         public static bool sigueVivo(double hp)
         {
             return hp > 0;
         }
 
-
-
-
         private static int AjusteAtaque = 20;
-        private static string GanadoresZ = @"resources\json\ganadores.json";
         //public bool verCombates = 
         public static ConsoleColor seleccionPlayer;
         public static double saludIzquierda;
         public static double saludDerecha;
-        public static int ki1;
-        public static int ki2;
-        public static int KiOriginal1;
-        public static int KiOriginal2;
-        public static string[] OpcionesCombate1 = { "Atacar", "Esquivar", "Ataque Especial", "Super Ataque", "Rendirse" };
-        public static string[] OpcionesCombate2 = { "Atacar", "Esquivar", "Ataque Especial", "Rendirse" };
-        public static string[] OpcionesCombate3 = { "Atacar", "Esquivar", "Rendirse" };
-        public static string[] OpcionesCombate4 = { "Atacar", "Esquivar", "Ataque Especial", "Super Ataque" };
-        public static string[] OpcionesCombate5 = { "Atacar", "Esquivar", "Ataque Especial" };
-        public static string[] OpcionesCombate6 = { "Atacar", "Esquivar" };
+        public static int kiIzquierda;
+        public static int kiDerecha;
+        public static int KiOriginalIzquierda;
+        public static int KiOriginalDerecha;
+        private static string[] OpcionesCombate1 = { "Atacar", "Esquivar", "Ataque Especial", "Super Ataque", "Rendirse" };
+        private static string[] OpcionesCombate2 = { "Atacar", "Esquivar", "Ataque Especial", "Rendirse" };
+        private static string[] OpcionesCombate3 = { "Atacar", "Esquivar", "Rendirse" };
+        private static string[] OpcionesCombate4 = { "Atacar", "Esquivar", "Ataque Especial", "Super Ataque" };
+        private static string[] OpcionesCombate5 = { "Atacar", "Esquivar", "Ataque Especial" };
+        private static string[] OpcionesCombate6 = { "Atacar", "Esquivar" };
     }
 }

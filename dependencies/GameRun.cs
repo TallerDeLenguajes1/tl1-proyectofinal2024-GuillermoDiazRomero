@@ -4,6 +4,7 @@ using Mensajes;
 using MenusDelJuego;
 using System.Media;
 using CombateZ;
+using LogicaArchivos;
 
 
 namespace StartGame
@@ -25,34 +26,44 @@ namespace StartGame
             /*----------------------------*/
 
             /*      Sección Comienzo del opening del juego      */
-            SoundPlayer Opening = new SoundPlayer(menuSongs[0]);
+            SoundPlayer Opening = new SoundPlayer(Rutas.menuSongs[0]);
             Opening.PlayLooping(); //Pongo el opening en loop
             Thread.Sleep(10);
             /*--------------------------------------------------*/
 
             /*      Menú de selección del tamaño del Torneo     */
-            int tama = Menus.MenuTorneo(menuRondas, 1); //Función que ejecuta el menú principal del juego y me devuelve le tamaño del torneo elegido por el usuario
+            int tama = Menus.MenuTorneo(Rutas.menuRondas, 1); //Función que ejecuta el menú principal del juego y me devuelve le tamaño del torneo elegido por el usuario
             /*--------------------------------------------------*/
 
             //Creo este while para poder navegar entre los menus
             while (IteracionesMenu)
             {
-                /*  Creo la cantidad "tama" de personajes aleatorios    */
-                TorneoSet.AleatorioZ(tama); //Función que genera los personajes aleatorios contenidos por la API
-                /*------------------------------------------------------*/
+                if (tama != 0)
+                {
+                    /*  Creo la cantidad "tama" de personajes aleatorios    */
+                    TorneoSet.AleatorioZ(tama); //Función que genera los personajes aleatorios contenidos por la API
+                    /*------------------------------------------------------*/
 
-                /*      Mostrar el Menú con los personajes Aleatorios     */
-                IteracionesMenu = TorneoSet.SeleccionGuerrero(); //Función que inicia los combates o vuelve al menú principal
-                /*--------------------------------------------------------*/
+                    /*      Mostrar el Menú con los personajes Aleatorios     */
+                    IteracionesMenu = TorneoSet.SeleccionGuerrero(); //Función que inicia los combates o vuelve al menú principal
+                    /*--------------------------------------------------------*/
+                }
+                else
+                {
+                    Console.Clear();
+                    MensajesTerminal.TextoTiempo("Tengo que crear el menú de ganadores", 2000, 1);
+                    Thread.Sleep(10000);
+                }
+
                 if (IteracionesMenu)
                 {
-                    tama = Menus.MenuTorneo(menuRondas, 0); //Muestro el menú principal con el titulo del juego sin la animación de inicio
+                    tama = Menus.MenuTorneo(Rutas.menuRondas, 0); //Muestro el menú principal con el titulo del juego sin la animación de inicio
                 }
             }
 
             /*      Sección Cambio de Música      */
             Opening.Stop(); //Detengo el opening
-            SoundPlayer CombatSong = new SoundPlayer(menuSongs[1]);
+            SoundPlayer CombatSong = new SoundPlayer(Rutas.menuSongs[1]);
             CombatSong.PlayLooping(); //Pongo play al soundtrak de combate
             Thread.Sleep(1200);
             /*------------------------------------*/
@@ -66,15 +77,18 @@ namespace StartGame
 
             /*                 Finalización del Juego                 */
             CombatSong.Stop();
-            MensajesTerminal.TextoTiempo("Gracias por jugar.", 3000, 1);
-            Environment.Exit(0);
+            Console.WriteLine();
+            Thread.Sleep(3000);
+            MensajesTerminal.TextoTiempo("Gracias por jugar",3000,1);
             /*--------------------------------------------------------*/
+
+
         }
 
 
-        private static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Salir del Juego" };
-        private static string[] menuSongs = { @"resources\audio\LimitSurvivor.wav", @"resources\audio\SolidStateScouter.wav" };
+        
         private static bool iteracionesMenu = true;
         public static bool IteracionesMenu { get => iteracionesMenu; set => iteracionesMenu = value; }
+        public static int ganadores = 0;
     }
 }

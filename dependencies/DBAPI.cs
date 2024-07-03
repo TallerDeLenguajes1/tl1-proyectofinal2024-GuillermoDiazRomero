@@ -1,5 +1,6 @@
 using System.Text.Json;
 using DBClass;
+using LogicaArchivos;
 using Mensajes;
 
 namespace DBAPI
@@ -8,31 +9,20 @@ namespace DBAPI
     {
         public async Task<bool> TraerAPI() //Creo el Task de tipo bool para poder hacer un control de conexión con la API web
         {
-            var url = "https://dragonball-api.com/api/characters?limit=58";
-            string rutaCarpeta = @"resources\backup";
 
             try
             {
                 HttpClient cliente = new HttpClient();
-                HttpResponseMessage respuesta = await cliente.GetAsync(url);
+                HttpResponseMessage respuesta = await cliente.GetAsync(Rutas.urlApi);
                 respuesta.EnsureSuccessStatusCode();
+
                 string responseBody = await respuesta.Content.ReadAsStringAsync();
                 var contenidoAPI = JsonSerializer.Deserialize<Root>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
                 //Creo un archivo JSON que contenga toda la información de la API por si en algun momento el juego se ejecuta de forma offline
-                string RespaldoJSON = @"resources\backup\Respaldo.json";
-                //Pongo los foreach adentro de los ifs para evitar recorrer la API si ocurre algún error
-                List<Item> LineasJSON = new List<Item>();
+                LecturaEscritura.ExisteCrearRuta(Rutas.CarpetaBackup, Rutas.Backup);
 
-                if(!Directory.Exists(rutaCarpeta)){
-                    Directory.CreateDirectory(rutaCarpeta);
-                }
-
-                if (!File.Exists(RespaldoJSON))
-                {
-                    using (File.Create(RespaldoJSON)) {/*Soluciona un error de acceso al archivo, porque al crearlo el FileStream deja al archivo abierto mientras que de esta forma se cierra el archivo*/};
-                }
-                string LineasConvertidasJSON = JsonSerializer.Serialize(LineasJSON);
-                await File.WriteAllTextAsync(RespaldoJSON, JsonSerializer.Serialize(contenidoAPI));
+                await File.WriteAllTextAsync(Rutas.Backup, JsonSerializer.Serialize(contenidoAPI));
                 return true;
             }
             catch (Exception ex)
@@ -48,13 +38,12 @@ namespace DBAPI
         {
             ConsumiendoAPI serverON = new ConsumiendoAPI();
             bool control = await serverON.TraerAPI();
-            string rutaRespaldo = @"resources\backup\Respaldo.JSON";
             if (control)
             { //Pregunto si se puede contactar con la API
                 MensajesTerminal.TextoTiempo("Se logró contactar con Zeno-Sama...\nIniciando juego...", 2000, 1);
                 Thread.Sleep(1000);
             }
-            else if (File.Exists(rutaRespaldo))
+            else if (File.Exists(Rutas.Backup))
             { //Pregunto si existe un JSON de respaldo
                 MensajesTerminal.TextoTiempo("Imposible contactar con Zeno-Sama...\nUsando las esferas del dragon... \nShenlong consederá nuestro deseo: Iniciando Juego...", 2500, 1);
                 Thread.Sleep(1000);

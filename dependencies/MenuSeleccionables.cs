@@ -6,7 +6,6 @@ namespace MenusDelJuego
     {
         public static int x;
         public static int y;
-        private static string[] decision = { "Aceptar", "Volver" };
         public static int MenuTorneo(string[] opcionesMenu, int tipo)
         {
             bool estaSeleccionando = true;
@@ -80,6 +79,9 @@ namespace MenusDelJuego
                         Thread.Sleep(2000);
                         break;
                     case 3:
+                        estaSeleccionando = false;
+                        break;
+                    case 4:
                         MensajesTerminal.TextoTiempo("Mr. Satan si se la banca...", 2500, 0);
                         Thread.Sleep(1000);
                         Environment.Exit(0);
@@ -170,7 +172,7 @@ namespace MenusDelJuego
             return indiceSeleccionado;
         }
 
-        public static bool MenuDecision() //Creo esta función para evitar problemas de compatibilidad con el resto de menus
+        public static bool MenuDecision(string[] decision) //Creo esta función para evitar problemas de compatibilidad con el resto de menus
         {
             bool estaSeleccionando = true;
             int indiceSeleccionado = 0;
@@ -179,7 +181,6 @@ namespace MenusDelJuego
             Console.CursorVisible = false;
 
             Console.ForegroundColor = ConsoleColor.White;
-            MensajesTerminal.TextoTiempo("\n¿Quiere usar este guerrero?", 100, 1);
             x = Console.CursorLeft;
             y = Console.CursorTop;
 

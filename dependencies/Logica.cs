@@ -1,16 +1,11 @@
 using System.Text.Json;
 using DBClass;
 using Mensajes;
-using Torneo;
 
-namespace LogicaDeArchivos
+namespace LogicaArchivos
 {
-
-    
     public class LecturaEscritura()
     {
-        
-        
         //Checkeado
         //Deserializo los datos guardados en el .json y los devuelvo en formato texto del tipo Root
         public static Root ObtenerListaAPI(string ruta)
@@ -19,7 +14,7 @@ namespace LogicaDeArchivos
             var datos = JsonSerializer.Deserialize<Root>(texto);
             return datos;
         }
-        
+
         //Checkeado
         public static void EscrituraJson(List<Guerreros> lista, string ruta)
         {
@@ -36,7 +31,7 @@ namespace LogicaDeArchivos
                 MensajesTerminal.ErrorSalir();
             }
         }
-        
+
         //Checkeado
         public static void ExisteCrearRuta(string rutaCarpeta, string rutaArchivo)
         {
@@ -51,15 +46,14 @@ namespace LogicaDeArchivos
             }
         }
 
-        public static List<Guerreros> ObtenerPeleadores(string ruta){
+        public static List<Guerreros> ObtenerPeleadores(string ruta)
+        {
             var texto = File.ReadAllText(ruta);
             List<Guerreros> datos = JsonSerializer.Deserialize<List<Guerreros>>(texto);
             return datos;
         }
 
     }
-
-
 
 
     public class LogicaPersonajes()
@@ -179,7 +173,7 @@ namespace LogicaDeArchivos
             }
             return "Error";
         }
-        
+
         //Checkeado
         public static int BalanceoDeKi(string ki)
         {
@@ -225,5 +219,24 @@ namespace LogicaDeArchivos
 
     }
 
+
+
+    public class Rutas()
+    {
+        public static string urlApi = "https://dragonball-api.com/api/characters?limit=58";
+        public static string CarpetaBackup = @"resources\backup";
+        public static string Backup = @"resources\backup\Respaldo.json"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
+        public static string CarpetaJson = @"resources\json";
+        public static string FightersJSON = @"resources\json\fighters.json";
+        public static string FightersSelectedJSON = @"resources\json\fightersSelected.json";
+        public static string FraseDerrota = @"resources\audio\Frase Final Derrota.wav";
+        public static string FraseVictoria = @"resources\audio\Frase Final Victoria.wav";
+        public static string GanadoresZ = @"resources\json\winners.json";
+        public static string[] decision = { "Aceptar", "Volver" };
+        public static string[] decision2 = { "Volver a jugar", "Salir del juego"};
+        public static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Ver Ganadores", "Salir del Juego" };
+        public static string[] menuSongs = { @"resources\audio\LimitSurvivor.wav", @"resources\audio\SolidStateScouter.wav" };
     
+    }
+
 }

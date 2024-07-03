@@ -2,7 +2,7 @@ using System.Text.Json;
 using DBClass;
 using Mensajes;
 using MenusDelJuego;
-using LogicaDeArchivos;
+using LogicaArchivos;
 
 namespace Torneo
 {
@@ -13,9 +13,9 @@ namespace Torneo
         /*      Función que crea el listado de "tama" guerreros de forma aleatoria traidos del respaldo de la API       */
         public static void AleatorioZ(int tama)
         {
-            LecturaEscritura.ExisteError(RutaRespaldoDB);
+            LecturaEscritura.ExisteError(Rutas.Backup);
 
-            Root datosDB = LecturaEscritura.ObtenerListaAPI(RutaRespaldoDB);
+            Root datosDB = LecturaEscritura.ObtenerListaAPI(Rutas.Backup);
 
 
             //Creación de variables para randomizar el orden
@@ -34,11 +34,11 @@ namespace Torneo
 
             List<Guerreros> Peleadores = LogicaPersonajes.CreacionListadoGuerreros(tama, datosDB, noRepetidos);
 
-            LecturaEscritura.ExisteCrearRuta(RutaCarpeta, RutaFightersJSON);
+            LecturaEscritura.ExisteCrearRuta(Rutas.CarpetaJson, Rutas.FightersJSON);
 
             //Guardo los personajes que tocaron en un archivo characters para ser usado en la fase de ejecución
 
-            LecturaEscritura.EscrituraJson(Peleadores, RutaFightersJSON);
+            LecturaEscritura.EscrituraJson(Peleadores, Rutas.FightersJSON);
 
             Peleadores.Clear(); //Libero datos para evitar memoria basura
         }
@@ -49,9 +49,9 @@ namespace Torneo
             int elegido = 0;
             bool seleccionado = false;
 
-            LecturaEscritura.ExisteError(RutaFightersJSON);
+            LecturaEscritura.ExisteError(Rutas.FightersJSON);
 
-            List<Guerreros> datosZ = LecturaEscritura.ObtenerPeleadores(RutaFightersJSON);
+            List<Guerreros> datosZ = LecturaEscritura.ObtenerPeleadores(Rutas.FightersJSON);
 
             int cantidadGuerreros = datosZ.Count; //Obtengo la cantidad de elementos de la lista
 
@@ -81,28 +81,21 @@ namespace Torneo
                 MensajesTerminal.TextoTiempo("Nivel de Ki: " + datosZ[elegido].Status, 1000, 1);
 
                 Console.ForegroundColor = ConsoleColor.White;
-                seleccionado = Menus.MenuDecision();
+
+                MensajesTerminal.TextoTiempo("\n¿Quiere usar este guerrero?", 100, 1);
+                seleccionado = Menus.MenuDecision(Rutas.decision);
             }
 
-
-            LecturaEscritura.ExisteCrearRuta(RutaCarpeta, RutaFightersSelectedJSON);
+            LecturaEscritura.ExisteCrearRuta(Rutas.CarpetaJson, Rutas.FightersSelectedJSON);
 
 
             datosZ[elegido].EleccionUsuario = true;
             string datosRutaFightersJSON = JsonSerializer.Serialize(datosZ, new JsonSerializerOptions { WriteIndented = true });//Permito que sea legible dandole formato
 
-            File.WriteAllText(RutaFightersSelectedJSON, datosRutaFightersJSON);
+            File.WriteAllText(Rutas.FightersSelectedJSON, datosRutaFightersJSON);
 
             datosZ.Clear();
             return false;
         }
-
-
-
-
-        private static string RutaRespaldoDB = @"resources\backup\Respaldo.json"; //Utilizo siempre el archivo de respaldo de la API para que el juego pueda correr sin problemas
-        private static string RutaCarpeta = @"resources\json";
-        public static string RutaFightersJSON = @"resources\json\fighters.json";
-        public static string RutaFightersSelectedJSON = @"resources\json\fightersSelected.json";
     }
 }
