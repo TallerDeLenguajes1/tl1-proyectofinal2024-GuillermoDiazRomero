@@ -238,7 +238,7 @@ namespace MenusDelJuego
                     }
                     else if (tipo == "Combate")
                     {
-                        Console.ForegroundColor = InterfazCombate.seleccionPlayer;
+                        Console.ForegroundColor = InterfazCombate.seleccionColorPlayer;
                         
                     }
                 }

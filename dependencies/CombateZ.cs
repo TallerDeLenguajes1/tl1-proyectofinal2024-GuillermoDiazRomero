@@ -7,8 +7,6 @@ namespace CombateZ
 {
     public class InterfazCombate
     {
-
-        //Checkeado
         public static void ModuloDeCombate()
         {
 
@@ -87,7 +85,6 @@ namespace CombateZ
 
         }
 
-        //Checkeado
         public static List<Guerreros> Simulador(List<Guerreros> ronda)
         {
             List<Guerreros> Avanzan = new List<Guerreros>();
@@ -113,12 +110,12 @@ namespace CombateZ
                     ganadorRonda = Combate1v1(ronda[i], ronda[i + 1], 0);
                 }
                 Avanzan.Add(ganadorRonda);
+                MensajesTerminal.TextoTiempo(Avanzan.Last().Name + " avanza a la siguiente ronda\n", 2000, 1);
+                Thread.Sleep(2000);
             }
             return Avanzan;
         }
 
-        
-        //Checkeado
         public static Guerreros Combate1v1(Guerreros pjL, Guerreros pjR, int tipo)
         {
             int seleccion;
@@ -170,26 +167,26 @@ namespace CombateZ
 
 
                     //Este if me indica si el usuario esta ubicado a la Izquierda o a la Derecha y obtengo su color para la terminal
-                    if (pjL.EleccionUsuario == true)
+                    if (pjL.EleccionUsuario == true) //Pregunto para evitar bugs
                     {
-                        seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjL.Race);
+                        seleccionColorPlayer = MensajesTerminal.ColorTerminalRaza(pjL.Race);
                     }
                     else
                     {
-                        seleccionPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
+                        seleccionColorPlayer = MensajesTerminal.ColorTerminalRaza(pjR.Race);
                     }
 
                     seleccion = Menus.MenuGuerreros(opcionesUsuario, "Combate");
-                    //Uso un switch debido a que las opciones del menú de combate varian segun el personaje
-                    switch (opcionesUsuario[seleccion])
+                    //Uso un switch hermoso visualmente debido a que las opciones del menú de combate varian segun el personaje
+                    AEAS = opcionesUsuario[seleccion] switch
                     {
-                        case "Atacar": AEAS = 1; break;
-                        case "Esquivar": AEAS = 2; break;
-                        case "Ataque Especial": AEAS = 3; break;
-                        case "Super Ataque": AEAS = 4; break;
-                        case "Rendirse": AEAS = 5; break;
-                        default: break;
-                    }
+                        "Atacar" => 1,
+                        "Esquivar" => 2,
+                        "Ataque Especial" => 3,
+                        "Super Ataque" => 4,
+                        "Rendirse" => 5,
+                        _ => 0 // Default
+                    };
 
                     Console.ForegroundColor = ConsoleColor.White; // Volver el color de la consola me soluciona un bug con los colores
 
@@ -230,7 +227,6 @@ namespace CombateZ
             }
         }
 
-        //Checkeado
         public static void DanioEnBatalla(Guerreros pjL, Guerreros pjR, int movpjL, int movpjR)
         {
 
@@ -317,7 +313,7 @@ namespace CombateZ
                     break;
                 //Super Ataque
                 case 4:
-                    if (kiIzquierda > 0)
+                    if (kiIzquierda > 1)
                     {
                         ataqueIzquierda *= multiplicadorIzquierda;
                         ataqueIzquierda *= 1.2;
@@ -367,7 +363,7 @@ namespace CombateZ
                     break;
                 //Super Ataque
                 case 4:
-                    if (kiDerecha > 0)
+                    if (kiDerecha > 1)
                     {
                         ataqueDerecha *= multiplicadorDerecha;
                         ataqueDerecha *= 1.1;
@@ -488,14 +484,15 @@ namespace CombateZ
                     Console.WriteLine(pjR.Name + " noqueó a " + pjL.Name);
                 }
             }
-            Thread.Sleep(5000);
+            Thread.Sleep(2500);
 
             pjL.Salud = saludIzquierda;
+            pjL.KiCombate = kiIzquierda;
             pjR.Salud = saludDerecha;
+            pjR.KiCombate = kiDerecha;
 
         }
 
-        //Checkeado
         private static bool Esquivar(Guerreros pjL, Guerreros pjR)
         {
             int probabilidadEsquivar = pjL.Velocidad - pjR.Destreza;
@@ -503,7 +500,6 @@ namespace CombateZ
             return rnd.Next(0, 20) < probabilidadEsquivar;
         }
 
-        //Checkeado
         public static bool sigueVivo(double hp)
         {
             return hp > 0;
@@ -511,7 +507,7 @@ namespace CombateZ
 
         private static int AjusteAtaque = 20;
         //public bool verCombates = 
-        public static ConsoleColor seleccionPlayer;
+        public static ConsoleColor seleccionColorPlayer;
         public static double saludIzquierda;
         public static double saludDerecha;
         public static int kiIzquierda;

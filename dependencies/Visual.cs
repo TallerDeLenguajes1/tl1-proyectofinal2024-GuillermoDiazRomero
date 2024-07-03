@@ -88,7 +88,7 @@ namespace Mensajes
             TextoTiempo("Saliendo del juego...", 2000, 1);
             Environment.Exit(0);
         }
-        public static void MostrarBloquesParalelos(Guerreros pjL, Guerreros pjR, ConsoleColor colorJ, ConsoleColor colorE)
+        public static void MostrarBloquesParalelos(Guerreros pjL, Guerreros pjR, ConsoleColor colorL, ConsoleColor colorR)
         {
             int ajusteDelAncho = Console.WindowWidth;
             int anchoTotal = ajusteDelAncho / 2;
@@ -111,9 +111,9 @@ namespace Mensajes
                 $"Fuerza: {pjR.Fuerza}",
                 $"Armadura: {pjR.Armadura}",
             };
-            Console.ForegroundColor = colorJ;
+            Console.ForegroundColor = colorL;
             Console.Write(new string('-', anchoTotal + 1));
-            Console.ForegroundColor = colorE;
+            Console.ForegroundColor = colorR;
             Console.WriteLine(" " + new string('-', anchoTotal - 2));
             for (int i = 0; i < lineas1.Length; i++)
             {
@@ -123,14 +123,14 @@ namespace Mensajes
                 //Bloque Derecha
                 int padding2 = (anchoTotal - 2 - lineas2[i].Length) / 2;
                 string paddedLinea2 = "|" + new string(' ', padding2) + lineas2[i] + new string(' ', anchoTotal - 2 - lineas2[i].Length - padding2);
-                Console.ForegroundColor = colorJ;
+                Console.ForegroundColor = colorL;
                 Console.Write(paddedLinea1);
-                Console.ForegroundColor = colorE;
+                Console.ForegroundColor = colorR;
                 Console.WriteLine(" " + paddedLinea2);
             }
-            Console.ForegroundColor = colorJ;
+            Console.ForegroundColor = colorL;
             Console.Write(new string('-', anchoTotal + 1));
-            Console.ForegroundColor = colorE;
+            Console.ForegroundColor = colorR;
             Console.Write(" " + new string('-', anchoTotal - 2));
         }
         public static void Preparate()
@@ -274,7 +274,7 @@ namespace Mensajes
                 $"Nivel de Ki: {item.Status}",
             };
             int ajusteDelAncho = 50;
-            ColorTerminalRaza(item.Race);   //Invoco a la función que me permite cambiar los colores de la terminal segun la raza
+            ColorTerminalRaza(item.Race);   //Invoco a la función que me permite cambiar los colorRs de la terminal segun la raza
             Console.WriteLine(new string('-', ajusteDelAncho));
             Console.WriteLine("|" + new string(' ', ajusteDelAncho - 2) + "|");
             foreach (var linea in lineas)

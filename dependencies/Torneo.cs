@@ -9,7 +9,6 @@ namespace Torneo
     public class TorneoSet()
     {
 
-        //Checkeado
         /*      Función que crea el listado de "tama" guerreros de forma aleatoria traidos del respaldo de la API       */
         public static void AleatorioZ(int tama)
         {
@@ -43,7 +42,6 @@ namespace Torneo
             Peleadores.Clear(); //Libero datos para evitar memoria basura
         }
 
-        //Checkeado
         public static bool SeleccionGuerrero()
         {
             int elegido = 0;
@@ -97,5 +95,6 @@ namespace Torneo
             datosZ.Clear();
             return false;
         }
+    
     }
 }

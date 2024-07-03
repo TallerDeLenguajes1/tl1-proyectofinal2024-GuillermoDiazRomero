@@ -1,6 +1,4 @@
 ﻿using StartGame;
-using DBClass;
-using CombateZ;
 
 internal class Program
 {

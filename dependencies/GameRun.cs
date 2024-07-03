@@ -22,7 +22,7 @@ namespace StartGame
 
             /*       Control de la API     */
             ControlJSON.ControlAPI();
-            Thread.Sleep(8000);
+            Thread.Sleep(10000);
             /*----------------------------*/
 
             /*      Sección Comienzo del opening del juego      */
@@ -52,9 +52,9 @@ namespace StartGame
                 {
                     Console.Clear();
                     LogicaPersonajes.cargarGanadores();
-                    Thread.Sleep(20000);
-                    MensajesTerminal.CentradoSimple("Redirigiendo al menú principal...",4000,1);
-                    Thread.Sleep(4000);
+                    Console.WriteLine("");
+                    MensajesTerminal.TextoTiempo("Redirigiendo al menú principal",4000,0);
+                    MensajesTerminal.TextoTiempo("...",5000,0);
                 }
 
                 if (IteracionesMenu)
@@ -67,7 +67,7 @@ namespace StartGame
             Opening.Stop(); //Detengo el opening
             SoundPlayer CombatSong = new SoundPlayer(Rutas.menuSongs[1]);
             CombatSong.PlayLooping(); //Pongo play al soundtrak de combate
-            Thread.Sleep(1200);
+            Thread.Sleep(1800);
             /*------------------------------------*/
 
             /*      Sección Inicio del Combate      */
@@ -81,16 +81,13 @@ namespace StartGame
             CombatSong.Stop();
             Console.WriteLine();
             Thread.Sleep(3000);
-            MensajesTerminal.TextoTiempo("Gracias por jugar",3000,1);
+            MensajesTerminal.TextoTiempo("Gracias por jugar",3000,0);
+            MensajesTerminal.TextoTiempo(".",2000,0);
             /*--------------------------------------------------------*/
-
 
         }
 
-
-        
         private static bool iteracionesMenu = true;
         public static bool IteracionesMenu { get => iteracionesMenu; set => iteracionesMenu = value; }
-        public static int ganadores = 0;
     }
 }

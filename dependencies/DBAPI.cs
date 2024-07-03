@@ -9,7 +9,6 @@ namespace DBAPI
     {
         public async Task<bool> TraerAPI() //Creo el Task de tipo bool para poder hacer un control de conexión con la API web
         {
-
             try
             {
                 HttpClient cliente = new HttpClient();
@@ -57,4 +56,3 @@ namespace DBAPI
         }
     }
 }
-
