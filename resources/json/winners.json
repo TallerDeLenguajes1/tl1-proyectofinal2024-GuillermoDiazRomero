@@ -34,5 +34,23 @@
     "Armadura": 5,
     "AtaqueEspecial1": true,
     "AtaqueEspecial2": false
+  },
+  {
+    "EleccionUsuario": true,
+    "Id": 38,
+    "Name": "Jiren",
+    "Race": "Jiren Race",
+    "Description": "Jiren es un poderoso luchador del Universo 11 y uno de los oponentes m\u00E1s formidables en el torneo.",
+    "Salud": 318,
+    "Ki": "121 Quintillion",
+    "Maxki": "12.1 Septillion",
+    "Status": "Hakaishin",
+    "KiCombate": 10,
+    "Velocidad": 8,
+    "Destreza": 7,
+    "Fuerza": 8,
+    "Armadura": 8,
+    "AtaqueEspecial1": true,
+    "AtaqueEspecial2": true
   }
 ]
