@@ -41,16 +41,20 @@ namespace DBAPI
             { //Pregunto si se puede contactar con la API
                 MensajesTerminal.TextoTiempo("Se logró contactar con Zeno-Sama...\nIniciando juego...", 2000, 1);
                 Thread.Sleep(1000);
+                LecturaEscritura.LimpiarBuffer();
             }
             else if (File.Exists(Rutas.Backup))
             { //Pregunto si existe un JSON de respaldo
+                Console.Clear();
                 MensajesTerminal.TextoTiempo("Imposible contactar con Zeno-Sama...\nUsando las esferas del dragon... \nShenlong consederá nuestro deseo: Iniciando Juego...", 2500, 1);
                 Thread.Sleep(1000);
+                LecturaEscritura.LimpiarBuffer();
             }
             else
             { //No inicio el juego por falta de API y de backup
                 MensajesTerminal.TextoTiempo("Nos falta la esfera de 4 estrellas... Imposible iniciar el juego, presione una tecla para salir ", 1500, 1);
                 Thread.Sleep(1000);
+                LecturaEscritura.LimpiarBuffer();
                 Environment.Exit(0);
             }
         }
