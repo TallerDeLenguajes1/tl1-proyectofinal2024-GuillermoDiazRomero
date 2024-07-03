@@ -26,12 +26,24 @@ namespace DBClass
 
     public class Guerreros
     {
-        private int id; private string name; private string race; private string description; private double salud; private string ki; private string maxki; private string status; private int kiCombate; private int velocidad; private int destreza; private int fuerza; private int armadura; 
-
+        private bool eleccionUsuario;
+        private int id;
+        private string name;
+        private string race;
+        private string description;
+        private double salud;
+        private string ki;
+        private string maxki;
+        private string status;
+        private int kiCombate;
+        private int velocidad;
+        private int destreza;
+        private int fuerza;
+        private int armadura;
         private bool ataqueEspecial1;
         private bool ataqueEspecial2;
-        private bool eleccionUsuario;
-        
+
+
         public bool EleccionUsuario { get => eleccionUsuario; set => eleccionUsuario = value; }
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }

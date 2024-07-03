@@ -35,36 +35,6 @@ namespace Mensajes
             centrado = new string(' ', padding) + centrado;
             TextoTiempo(centrado, tiempo, tipo);
         }
-        public static void mostrarPjs(Guerreros item)
-        {
-            //Creo un arreglo de string con todos los datos que llegan desde item para poder obtener las longitudes de los datos que se muestran por pantalla para así poder centrarlos
-            string[] lineas = {
-                $"Id: {item.Id}",
-                $"Nombre: {item.Name}",
-                $"Raza: {item.Race}",
-                $"Ki: {item.Ki}",
-                $"Velocidad: {item.Velocidad}",
-                $"Destreza: {item.Destreza}",
-                $"Fuerza: {item.Fuerza}",
-                $"Armadura: {item.Armadura}",
-                $"Salud: {item.Salud}"
-            };
-            int ajusteDelAncho = 50;
-            ColorTerminalRaza(item.Race);   //Invoco a la función que me permite cambiar los colores de la terminal segun la raza
-
-            Console.WriteLine(new string('-', ajusteDelAncho));
-            Console.WriteLine("|" + new string(' ', ajusteDelAncho - 2) + "|");
-            foreach (var linea in lineas)
-            {
-                int padding = (ajusteDelAncho - 2 - linea.Length) / 2; //Calculo el padding que le dare al texto segun lo que ocupa con el ancho total de la terminal
-                string paddedLinea = new string(' ', padding) + linea + new string(' ', ajusteDelAncho - 2 - linea.Length - padding);
-                Console.WriteLine($"|{paddedLinea}|");
-            }
-            Console.WriteLine("|" + new string(' ', ajusteDelAncho - 2) + "|");
-            Console.WriteLine(new string('-', ajusteDelAncho));
-            Console.WriteLine("\n");
-            Console.ForegroundColor = ConsoleColor.White; //Me aseguro que el color de la consola siempre vuelva a blanco despues de mostrar los personajes
-        }
         public static ConsoleColor ColorTerminalRaza(string raza)
         {
             switch (raza)
@@ -283,7 +253,6 @@ namespace Mensajes
             Thread.Sleep(9000);
 
         }
-
         private static string FraseDerrota = @"resources\audio\Frase Final Derrota.wav";
         private static string FraseVictoria = @"resources\audio\Frase Final Victoria.wav";
     }

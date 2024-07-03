@@ -1,5 +1,4 @@
 using DBAPI;
-using DBClass;
 using Torneo;
 using Mensajes;
 using MenusDelJuego;
@@ -11,13 +10,7 @@ namespace StartGame
 {
     public class GameStart()
     {
-        private static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Salir del Juego" };
 
-        private static string[] menuSongs = {@"resources\audio\LimitSurvivor.wav",@"resources\audio\SolidStateScouter.wav"};
-
-         
-        private static bool iteracionesMenu = true;
-        public static bool IteracionesMenu { get => iteracionesMenu; set => iteracionesMenu = value; }
         public static void GameRun()
         {
             /*      Cosas Necesarias    */
@@ -57,7 +50,7 @@ namespace StartGame
                 }
             }
 
-            /*      Sección Cambio de Música      */ 
+            /*      Sección Cambio de Música      */
             Opening.Stop(); //Detengo el opening
             SoundPlayer CombatSong = new SoundPlayer(menuSongs[1]);
             CombatSong.PlayLooping(); //Pongo play al soundtrak de combate
@@ -73,11 +66,15 @@ namespace StartGame
 
             /*                 Finalización del Juego                 */
             CombatSong.Stop();
-            MensajesTerminal.TextoTiempo("Gracias por jugar.",3000,1);
+            MensajesTerminal.TextoTiempo("Gracias por jugar.", 3000, 1);
             Environment.Exit(0);
             /*--------------------------------------------------------*/
         }
+
+
+        private static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Salir del Juego" };
+        private static string[] menuSongs = { @"resources\audio\LimitSurvivor.wav", @"resources\audio\SolidStateScouter.wav" };
+        private static bool iteracionesMenu = true;
+        public static bool IteracionesMenu { get => iteracionesMenu; set => iteracionesMenu = value; }
     }
-
-
 }

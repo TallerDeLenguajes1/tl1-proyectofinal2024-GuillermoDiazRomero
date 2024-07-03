@@ -1,4 +1,3 @@
-using System.Drawing;
 using Mensajes;
 using CombateZ;
 namespace MenusDelJuego
@@ -30,7 +29,7 @@ namespace MenusDelJuego
             MensajesTerminal.TituloJuego(tiempo);
             Console.ForegroundColor = ConsoleColor.White;
             MensajesTerminal.CentradoSimple("Seleccione un tamaño para el Torneo:", 100, 1);
-
+            //Ubicarlo a esta altura me permite tomar como tope todo lo que se esta mostrando en la terminal hasta este momento
             x = Console.CursorLeft;
             y = Console.CursorTop;
 
@@ -64,6 +63,7 @@ namespace MenusDelJuego
                     MenuCentrado(indiceSeleccionado, opcionesMenu,"Listado");
                 }
 
+                //Este switch es importante ya que me permite seleccionar el tamaño del torneo y manejo 2 parametros (tamaTorneo y estaSeleccionando)
                 switch (indiceSeleccionado)
                 {
                     case 0:
@@ -75,7 +75,7 @@ namespace MenusDelJuego
                     case 2:
                         tamaToreno = (tamaToreno == 0) ? 16 : tamaToreno;
                         MensajesTerminal.TextoTiempo("\n      Preparando luchadores", 1000, 0);
-                        MensajesTerminal.TextoTiempo("......", 5000, 1);
+                        MensajesTerminal.TextoTiempo("......", 3500, 1);
                         estaSeleccionando = false;
                         Thread.Sleep(2000);
                         break;
@@ -89,8 +89,6 @@ namespace MenusDelJuego
                 }
             }
             return tamaToreno;
-
-
         }
 
         public static int MenuGuerreros(string[] opcionesMenu, string tipo)
@@ -107,7 +105,7 @@ namespace MenusDelJuego
             {
                 Console.Clear(); //Limpia la consola para que se muestre solamente el juego
                 Console.WriteLine();
-                MensajesTerminal.TextoTiempo("\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA Listado de Guerreros \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA", 100, 1);
+                MensajesTerminal.TextoTiempo("  \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA Listado de Guerreros \uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA\uD83D\uDCAA", 100, 1);
 
             }
             else if (tipo == "Combate")
