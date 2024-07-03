@@ -253,6 +253,41 @@ namespace Mensajes
 
         }
 
+
+        public static void mostrarGanadores(Guerreros item)
+        {
+            string eleccion;
+            if (item.EleccionUsuario)
+            {
+                eleccion = "Sí";
+            }
+            else{
+                eleccion = "No";
+            }
+            //Creo un arreglo de string con todos los datos que llegan desde item para poder obtener las longitudes de los datos que se muestran por pantalla para así poder centrarlos
+            string[] lineas = {
+                $"Elección del usuario: {eleccion}",
+                $"Nombre: {item.Name}",
+                $"Raza: {item.Race}",
+                $"Ki: {item.Ki}",
+                $"Salud: {item.Salud}",
+                $"Nivel de Ki: {item.Status}",
+            };
+            int ajusteDelAncho = 50;
+            ColorTerminalRaza(item.Race);   //Invoco a la función que me permite cambiar los colores de la terminal segun la raza
+            Console.WriteLine(new string('-', ajusteDelAncho));
+            Console.WriteLine("|" + new string(' ', ajusteDelAncho - 2) + "|");
+            foreach (var linea in lineas)
+            {
+                int padding = (ajusteDelAncho - 2 - linea.Length) / 2; //Calculo el padding que le dare al texto segun lo que ocupa con el ancho total de la terminal
+                string paddedLinea = new string(' ', padding) + linea + new string(' ', ajusteDelAncho - 2 - linea.Length - padding);
+                Console.WriteLine($"|{paddedLinea}|");
+            }
+            Console.WriteLine("|" + new string(' ', ajusteDelAncho - 2) + "|");
+            Console.WriteLine(new string('-', ajusteDelAncho));
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.White; //Me aseguro que el color de la consola siempre vuelva a blanco despues de mostrar los personajes
+        }
     }
 }
 

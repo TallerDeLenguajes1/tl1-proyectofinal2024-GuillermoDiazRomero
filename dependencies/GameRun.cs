@@ -51,8 +51,10 @@ namespace StartGame
                 else
                 {
                     Console.Clear();
-                    MensajesTerminal.TextoTiempo("Tengo que crear el menú de ganadores", 2000, 1);
-                    Thread.Sleep(10000);
+                    LogicaPersonajes.cargarGanadores();
+                    Thread.Sleep(20000);
+                    MensajesTerminal.CentradoSimple("Redirigiendo al menú principal...",4000,1);
+                    Thread.Sleep(4000);
                 }
 
                 if (IteracionesMenu)

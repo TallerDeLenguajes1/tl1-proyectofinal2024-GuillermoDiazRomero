@@ -215,6 +215,28 @@ namespace LogicaArchivos
             return -9999;
         }
 
+        public static void cargarGanadores()
+        {
+            string lecturaArchivoGanadores = File.ReadAllText(Rutas.GanadoresZ);
+
+            //Me asegiró que el archivo no esté vacío para evitar un error al deserializar el json
+            if (string.IsNullOrEmpty(lecturaArchivoGanadores))
+            {
+                MensajesTerminal.CentradoSimple("No se encontraron ganadores todavía", 2000, 1);
+                MensajesTerminal.CentradoSimple("Puedes ser el primero...", 1500, 1);
+                Thread.Sleep(6000);
+            }
+            else
+            {
+                List<Guerreros> ListaGanadores = LecturaEscritura.ObtenerPeleadores(Rutas.GanadoresZ);
+                foreach (Guerreros Z in ListaGanadores)
+                {
+                    MensajesTerminal.mostrarGanadores(Z);
+                    Thread.Sleep(4000);
+                }
+            }
+        }
+
 
 
     }
@@ -233,10 +255,10 @@ namespace LogicaArchivos
         public static string FraseVictoria = @"resources\audio\Frase Final Victoria.wav";
         public static string GanadoresZ = @"resources\json\winners.json";
         public static string[] decision = { "Aceptar", "Volver" };
-        public static string[] decision2 = { "Volver a jugar", "Salir del juego"};
+        public static string[] decision2 = { "Volver a jugar", "Salir del juego" };
         public static string[] menuRondas = { "4 Rondas", "8 Rondas", "16 Rondas", "Ver Ganadores", "Salir del Juego" };
         public static string[] menuSongs = { @"resources\audio\LimitSurvivor.wav", @"resources\audio\SolidStateScouter.wav" };
-    
+
     }
 
 }
